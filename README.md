@@ -17,13 +17,13 @@ Test the live demo directly in your browser: [Demo](https://aurielws.github.io/)
 ## How you can deploy it on your own github.io static page
   - Go to your terminal and enter each line after the the $
   
-        $ mkdir github_username.github.io
-        $ cd github_username.github.io
+        $ mkdir Your_github_username.github.io
+        $ cd Your_github_username.github.io
         $ git clone git@github.com:Aurielws/aurielws.github.io.git
         $ git add --all
         $ git commit -m "Initial commit"
         $ git push -u origin master
       
       
-  - Fire up a browser and go to https://github_username.github.io to see your version of this demo!
+  - Fire up a browser and go to https://Your_github_username.github.io to see your version of this demo!
   - Read more about github.io pages here(https://pages.github.com/)
