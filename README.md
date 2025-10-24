@@ -13,3 +13,16 @@ Here's how it works:
 Test the live demo directly in your browser: [Demo](https://aurielws.github.io/)
 **Works best if there is no subject motion.**
 
+## Run locally
+
+You can serve the static files on `localhost` with any lightweight web server. One
+option that ships with Python is `http.server`:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open [http://localhost:8000](http://localhost:8000) in your browser and
+navigate to `index.html`. Press the **Start measurement** button to allow camera
+access and begin the demo.
+
