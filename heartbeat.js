@@ -36,6 +36,7 @@ export class Heartbeat {
       });
     } catch (e) {
       console.log(e);
+      throw e;
     }
     if (!this.stream) {
       throw new Error('Could not obtain video from webcam.');
@@ -101,6 +102,7 @@ export class Heartbeat {
       this.rppgTimer = setInterval(this.rppg.bind(this), this.rppgInterval);
     } catch (e) {
       console.log(e);
+      throw e;
     }
   }
   // Add one frame to raw signal

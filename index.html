@@ -1,18 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Heartbeat</title>
-</head>
-<body>
-  <h1>Heartbeat demo</h1>
-  </br>
-  <p>This demo runs a simple variant of rPPG directly in your browser to measure your heart rate based on subtle changes in skin color.</p>
-  <p>For best results, try in a constantly well lit space with minimal device and subject motion.</p>
-  </br>
-  <div>
-    <video  hidden  id="webcam" width="640" height="480"></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
-  </div>
-  <script type="module" src="index.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Heartbeat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="aurora-layer aurora-layer--one" aria-hidden="true"></div>
+    <div class="aurora-layer aurora-layer--two" aria-hidden="true"></div>
+    <div class="aurora-layer aurora-layer--three" aria-hidden="true"></div>
+
+    <main class="card" aria-labelledby="page-title">
+      <header class="card__header">
+        <span class="eyebrow">Live browser experiment</span>
+        <h1 id="page-title">Heartbeat sensing in your browser</h1>
+        <p>
+          Measure subtle changes in skin color to estimate your heart rate directly inside the browser—no wearables required.
+          Find a steady light source, stay still, and let the computer vision take care of the rest.
+        </p>
+      </header>
+
+      <section class="card__body" aria-label="Heartbeat demo controls">
+        <div class="visualizer" id="visualizer">
+          <canvas id="canvas" width="640" height="480" role="img" aria-label="Heartbeat visualization"></canvas>
+          <video
+            id="webcam"
+            width="640"
+            height="480"
+            hidden
+            playsinline
+            aria-hidden="true"
+          ></video>
+        </div>
+
+        <div class="controls" aria-live="polite">
+          <button id="start-demo" type="button" class="button">Preparing sensors…</button>
+          <p id="status-text" class="status-text">
+            We are loading the computer-vision runtime required for the demo.
+          </p>
+          <ul class="tips">
+            <li>Use a well-lit environment without strong shadows.</li>
+            <li>Hold the camera steady and keep your face centered.</li>
+            <li>Stay still for at least 30 seconds for a stable reading.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
