@@ -1,59 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Heartbeat</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="aurora-layer aurora-layer--one" aria-hidden="true"></div>
-    <div class="aurora-layer aurora-layer--two" aria-hidden="true"></div>
-    <div class="aurora-layer aurora-layer--three" aria-hidden="true"></div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auriel</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose:    #A8485A;
+  --coral:   #C8786A;
+  --apricot: #E0A880;
+  --gold:    #D4B870;
+  --sage:    #8A9A7A;
+  --navy:    #4A5878;
+  --cream:   #FDF9F4;
+  --paper:   #F7EFE5;
+  --ink:     #1A1408;
+  --muted:   #9A8878;
+  --rule:    #E8DDD0;
+}
 
-    <main class="card" aria-labelledby="page-title">
-      <header class="card__header">
-        <span class="eyebrow">Live browser experiment</span>
-        <h1 id="page-title">Heartbeat sensing in your browser</h1>
-        <p>
-          Measure subtle changes in skin color to estimate your heart rate directly inside the browser—no wearables required.
-          Find a steady light source, stay still, and let the computer vision take care of the rest.
-        </p>
-      </header>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-      <section class="card__body" aria-label="Heartbeat demo controls">
-        <div class="visualizer" id="visualizer">
-          <canvas id="canvas" width="640" height="480" role="img" aria-label="Heartbeat visualization"></canvas>
-          <video
-            id="webcam"
-            width="640"
-            height="480"
-            hidden
-            playsinline
-            aria-hidden="true"
-          ></video>
-        </div>
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+}
 
-        <div class="controls" aria-live="polite">
-          <button id="start-demo" type="button" class="button">Preparing sensors…</button>
-          <p id="status-text" class="status-text">
-            We are loading the computer-vision runtime required for the demo.
-          </p>
-          <ul class="tips">
-            <li>Use a well-lit environment without strong shadows.</li>
-            <li>Hold the camera steady and keep your face centered.</li>
-            <li>Stay still for at least 30 seconds for a stable reading.</li>
-          </ul>
-        </div>
-      </section>
-    </main>
+/* ── STRIPE ── */
+.stripe {
+  height: 6px;
+  background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot), var(--gold), var(--sage), var(--navy));
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
 
-    <script type="module" src="index.js"></script>
-  </body>
+/* ── LAYOUT ── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  padding: 80px 0 64px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--rose), var(--coral), var(--apricot), var(--gold), var(--sage), var(--navy));
+}
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--coral);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  color: var(--cream);
+  line-height: 1.08;
+  margin-bottom: 24px;
+}
+.hero-title strong {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  color: var(--rose);
+}
+.hero-sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.hero-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.hero-tag {
+  padding: 5px 14px;
+  background: rgba(168, 72, 90, 0.2);
+  border: 1px solid rgba(168, 72, 90, 0.35);
+  color: var(--coral);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section:last-child { border-bottom: none; }
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 8px;
+}
+.sec-title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.6rem;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.sec-title strong {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  color: var(--rose);
+}
+.sec-rule {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot));
+  margin-bottom: 28px;
+}
+.sec-body {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 600px;
+}
+.sec-body strong { color: var(--ink); }
+
+/* ── WRITING LIST ── */
+.writing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.writing-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+}
+.writing-item:last-child { border-bottom: none; }
+.writing-item:hover { background: var(--paper); margin: 0 -12px; padding-left: 12px; padding-right: 12px; border-radius: 6px; }
+.wi-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.wi-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.wi-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.wi-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.wi-status.draft { background: rgba(212,184,112,.15); color: var(--gold); }
+.wi-status.live { background: rgba(138,154,122,.15); color: var(--sage); }
+.wi-status.soon { background: rgba(200,120,106,.12); color: var(--coral); }
+
+/* ── LINKS GRID ── */
+.links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.link-card {
+  display: block;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 18px 20px;
+  text-decoration: none;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}
+.link-card:hover {
+  border-left-color: var(--rose);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.lc-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+.lc-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 40px 0;
+  text-align: center;
+}
+.footer-name {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.footer-name strong {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  color: var(--rose);
+}
+.footer-bio {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.footer-stripe {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot), var(--gold), var(--sage), var(--navy));
+  margin: 20px auto 0;
+}
+
+@media (max-width: 600px) {
+  .writing-item { grid-template-columns: 1fr auto; }
+  .wi-num { display: none; }
+  .links-grid { grid-template-columns: 1fr; }
+  .hero { padding: 60px 0 48px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">AI Strategy &middot; Post-Training &middot; Agentic Quality</div>
+    <h1 class="hero-title">
+      <strong>Auriel</strong>
+    </h1>
+    <p class="hero-sub">AI strategy consulting, angel investing, and writing about what actually works when you're building with models. ex-Google DeepMind (Gemini), Google Brain, Waymo. YC W20.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Post-Training</span>
+      <span class="hero-tag">Agentic Systems</span>
+      <span class="hero-tag">RL Evaluation</span>
+      <span class="hero-tag">Angel Investor</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── WRITING ── -->
+<div class="container">
+
+<section class="section">
+  <div class="sec-label">01 &middot; Writing</div>
+  <h2 class="sec-title">Current <strong>Series</strong></h2>
+  <div class="sec-rule"></div>
+
+  <ul class="writing-list">
+    <li class="writing-item">
+      <span class="wi-num">01</span>
+      <div>
+        <div class="wi-title">Trajectory Eyeballing</div>
+        <div class="wi-sub">You never eyeball your custom model and your product pays for it</div>
+      </div>
+      <span class="wi-status draft">Draft</span>
+    </li>
+    <li class="writing-item">
+      <span class="wi-num">02</span>
+      <div>
+        <div class="wi-title">Rubrics &amp; Verifiers That Don't Lie</div>
+        <div class="wi-sub">Why your evals are measuring the wrong thing</div>
+      </div>
+      <span class="wi-status soon">Coming</span>
+    </li>
+    <li class="writing-item">
+      <span class="wi-num">03</span>
+      <div>
+        <div class="wi-title">Environment Quality</div>
+        <div class="wi-sub">The pre-training problems that doom your run before it starts</div>
+      </div>
+      <span class="wi-status soon">Coming</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="section">
+  <div class="sec-label">02 &middot; About</div>
+  <h2 class="sec-title">What I <strong>do</strong></h2>
+  <div class="sec-rule"></div>
+  <p class="sec-body">I help startups and teams figure out what's actually going wrong with their models and what to do about it. <strong>AI strategy consulting</strong> for companies doing post-training, agent evaluation, and production ML. I also angel invest in AI infrastructure and tooling.</p>
+</section>
+
+<!-- ── LINKS ── -->
+<section class="section">
+  <div class="sec-label">03 &middot; Find me</div>
+  <h2 class="sec-title">Links</h2>
+  <div class="sec-rule"></div>
+
+  <div class="links-grid">
+    <a href="https://x.com/Lonna1774204" class="link-card" target="_blank">
+      <div class="lc-label">Social</div>
+      <div class="lc-title">X / Twitter</div>
+    </a>
+    <a href="https://linkedin.com" class="link-card" target="_blank">
+      <div class="lc-label">Professional</div>
+      <div class="lc-title">LinkedIn</div>
+    </a>
+    <a href="https://substack.com" class="link-card" target="_blank">
+      <div class="lc-label">Newsletter</div>
+      <div class="lc-title">Substack</div>
+    </a>
+    <a href="https://github.com/Aurielws" class="link-card" target="_blank">
+      <div class="lc-label">Code</div>
+      <div class="lc-title">GitHub</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-name"><strong>Auriel</strong></div>
+  <div class="footer-bio">AI Strategy &middot; ex-DeepMind &middot; YC W20</div>
+  <div class="footer-stripe"></div>
+</footer>
+
+</div><!-- /container -->
+
+</body>
 </html>
