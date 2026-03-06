@@ -4,314 +4,97 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Auriel</title>
+<meta name="description" content="I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --rose:    #A8485A;
-  --coral:   #C8786A;
-  --apricot: #E0A880;
-  --gold:    #D4B870;
-  --sage:    #8A9A7A;
-  --navy:    #4A5878;
-  --cream:   #FDF9F4;
-  --paper:   #F7EFE5;
-  --ink:     #1A1408;
-  --muted:   #9A8878;
-  --rule:    #E8DDD0;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--cream);
-  color: var(--ink);
-  line-height: 1.6;
-}
-
-/* ── STRIPE ── */
-.stripe {
-  height: 6px;
-  background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot), var(--gold), var(--sage), var(--navy));
-  position: sticky;
-  top: 0;
-  z-index: 200;
-}
-
-/* ── LAYOUT ── */
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 28px;
-}
-
-/* ── HERO ── */
-.hero {
-  background: var(--ink);
-  padding: 80px 0 64px;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 4px;
-  background: linear-gradient(180deg, var(--rose), var(--coral), var(--apricot), var(--gold), var(--sage), var(--navy));
-}
-.hero .container {
-  position: relative;
-  z-index: 1;
-}
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--coral);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  margin-bottom: 20px;
-}
-.hero-title {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  color: var(--cream);
-  line-height: 1.08;
-  margin-bottom: 24px;
-}
-.hero-title strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-style: normal;
-  font-weight: 800;
-  color: var(--rose);
-}
-.hero-sub {
-  font-size: 0.92rem;
-  color: var(--muted);
-  max-width: 520px;
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-.hero-tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.hero-tag {
-  padding: 5px 14px;
-  background: rgba(168, 72, 90, 0.2);
-  border: 1px solid rgba(168, 72, 90, 0.35);
-  color: var(--coral);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  font-family: 'DM Mono', monospace;
-}
-
-/* ── SECTION ── */
-.section {
-  padding: 56px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.section:last-child { border-bottom: none; }
-.sec-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  margin-bottom: 8px;
-}
-.sec-title {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 1.6rem;
-  color: var(--ink);
-  line-height: 1.15;
-  margin-bottom: 8px;
-}
-.sec-title strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-style: normal;
-  font-weight: 800;
-  color: var(--rose);
-}
-.sec-rule {
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot));
-  margin-bottom: 28px;
-}
-.sec-body {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.75;
-  max-width: 600px;
-}
-.sec-body strong { color: var(--ink); }
-
-/* ── WRITING LIST ── */
-.writing-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.writing-item {
-  display: grid;
-  grid-template-columns: 56px 1fr auto;
-  gap: 16px;
-  align-items: center;
-  padding: 18px 0;
-  border-bottom: 1px solid var(--rule);
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.15s;
-}
-.writing-item:last-child { border-bottom: none; }
-.writing-item:hover { background: var(--paper); margin: 0 -12px; padding-left: 12px; padding-right: 12px; border-radius: 6px; }
-.wi-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-weight: 500;
-}
-.wi-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.35;
-}
-.wi-sub {
-  font-size: 0.72rem;
-  color: var(--muted);
-  margin-top: 2px;
-}
-.wi-status {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.58rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 3px 10px;
-  border-radius: 3px;
-  white-space: nowrap;
-}
-.wi-status.draft { background: rgba(212,184,112,.15); color: var(--gold); }
-.wi-status.live { background: rgba(138,154,122,.15); color: var(--sage); }
-.wi-status.soon { background: rgba(200,120,106,.12); color: var(--coral); }
-
-/* ── LINKS GRID ── */
-.links-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.link-card {
-  display: block;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 18px 20px;
-  text-decoration: none;
-  transition: all 0.15s;
-  border-left: 3px solid transparent;
-}
-.link-card:hover {
-  border-left-color: var(--rose);
-  box-shadow: 0 2px 12px rgba(0,0,0,.06);
-}
-.lc-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.58rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 4px;
-}
-.lc-title {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-/* ── FOOTER ── */
-.footer {
-  padding: 40px 0;
-  text-align: center;
-}
-.footer-name {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 1.4rem;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.footer-name strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-style: normal;
-  font-weight: 800;
-  color: var(--rose);
-}
-.footer-bio {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-.footer-stripe {
-  width: 80px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot), var(--gold), var(--sage), var(--navy));
-  margin: 20px auto 0;
-}
-
-@media (max-width: 600px) {
-  .writing-item { grid-template-columns: 1fr auto; }
-  .wi-num { display: none; }
-  .links-grid { grid-template-columns: 1fr; }
-  .hero { padding: 60px 0 48px; }
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="stripe"></div>
 
-<!-- ── HERO ── -->
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><strong>Auriel</strong></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="advising.html">Advising</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="contact.html" class="btn btn--primary" style="padding:6px 18px;font-size:0.75rem">Work With Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-eyebrow">AI Strategy &middot; Post-Training &middot; Agentic Quality</div>
+    <div class="hero-eyebrow">AI Builder &middot; Investor &middot; Coach</div>
     <h1 class="hero-title">
-      <strong>Auriel</strong>
+      I build frontier AI products, back early-stage founders, and help leaders navigate the <strong>AI era.</strong>
     </h1>
-    <p class="hero-sub">AI strategy consulting, angel investing, and writing about what actually works when you're building with models. ex-Google DeepMind (Gemini), Google Brain, Waymo. YC W20.</p>
-    <div class="hero-tags">
-      <span class="hero-tag">Post-Training</span>
-      <span class="hero-tag">Agentic Systems</span>
-      <span class="hero-tag">RL Evaluation</span>
-      <span class="hero-tag">Angel Investor</span>
+    <p class="hero-credentials">Post-Training &amp; Gemini at Google DeepMind &middot; Google Brain &middot; YC W20 Founder &middot; Harvard CS</p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn btn--primary">Work with me</a>
+      <a href="writing.html" class="btn btn--secondary">Read my writing</a>
+      <a href="advising.html" class="btn btn--secondary">Advise / Invest</a>
     </div>
   </div>
 </section>
 
-<!-- ── WRITING ── -->
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-bar-inner">
+    <span class="proof-item">Google DeepMind</span>
+    <span class="proof-item">Google Brain</span>
+    <span class="proof-item">Y Combinator</span>
+    <span class="proof-item">Harvard</span>
+  </div>
+</div>
+
+<!-- WHAT I DO -->
 <div class="container">
 
 <section class="section">
-  <div class="sec-label">01 &middot; Writing</div>
-  <h2 class="sec-title">Current <strong>Series</strong></h2>
+  <div class="sec-label">What I Do</div>
+  <h2 class="sec-title">Three ways I <strong>work</strong></h2>
+  <div class="sec-rule"></div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">Build</div>
+      <h3 class="card-title">Frontier AI Products</h3>
+      <p class="card-body">I'm a Senior PM Lead working on frontier AI autonomous agents, self-coding systems, and generative AI at scale. At Google Brain, I built the AI systems that powered Alphabet's most important products, including work recognized with a Cannes Lion award. At Google DeepMind, I worked on Gemini, self-evolving systems, and RL research.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">Invest &amp; Advise</div>
+      <h3 class="card-title">Early-Stage AI</h3>
+      <p class="card-body">I angel invest in early-stage AI companies and advise founders on product strategy, go-to-market, and how to navigate the AI landscape. I bring a practitioner lens: I've been in the seat as a YC founder and as a builder at the world's leading AI labs.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">Coach &amp; Convene</div>
+      <h3 class="card-title">Executive AI Coaching</h3>
+      <p class="card-body">I coach senior executives at Fortune 500 companies on leading through AI transformation, from hands-on personal AI stack development to leadership team workshops. I also host intimate AI founder dinners and the Females in Tech Tea Party series for high-signal people doing real work in AI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED WRITING -->
+<section class="section">
+  <div class="sec-label">Writing</div>
+  <h2 class="sec-title">Latest <strong>Posts</strong></h2>
   <div class="sec-rule"></div>
 
   <ul class="writing-list">
     <li class="writing-item">
       <span class="wi-num">01</span>
       <div>
-        <div class="wi-title">Trajectory Eyeballing</div>
-        <div class="wi-sub">You never eyeball your custom model and your product pays for it</div>
+        <div class="wi-title">You've Never Spent Real Time with Your Model and We Can ALL Tell</div>
+        <div class="wi-sub">A no-BS guide for startups post-training their own models</div>
       </div>
       <span class="wi-status draft">Draft</span>
     </li>
@@ -334,48 +117,25 @@ body {
   </ul>
 </section>
 
-<!-- ── ABOUT ── -->
-<section class="section">
-  <div class="sec-label">02 &middot; About</div>
-  <h2 class="sec-title">What I <strong>do</strong></h2>
-  <div class="sec-rule"></div>
-  <p class="sec-body">I help startups and teams figure out what's actually going wrong with their models and what to do about it. <strong>AI strategy consulting</strong> for companies doing post-training, agent evaluation, and production ML. I also angel invest in AI infrastructure and tooling.</p>
-</section>
+<!-- FOOTER CTA -->
+<div class="cta-block">
+  <p class="cta-block-text">Want to connect? I'm always open to conversations with founders, operators, and executives building at the frontier.</p>
+  <a href="contact.html" class="btn btn--primary">Get in touch</a>
+</div>
 
-<!-- ── LINKS ── -->
-<section class="section">
-  <div class="sec-label">03 &middot; Find me</div>
-  <h2 class="sec-title">Links</h2>
-  <div class="sec-rule"></div>
-
-  <div class="links-grid">
-    <a href="https://x.com/Lonna1774204" class="link-card" target="_blank">
-      <div class="lc-label">Social</div>
-      <div class="lc-title">X / Twitter</div>
-    </a>
-    <a href="https://linkedin.com" class="link-card" target="_blank">
-      <div class="lc-label">Professional</div>
-      <div class="lc-title">LinkedIn</div>
-    </a>
-    <a href="https://substack.com" class="link-card" target="_blank">
-      <div class="lc-label">Newsletter</div>
-      <div class="lc-title">Substack</div>
-    </a>
-    <a href="https://github.com/Aurielws" class="link-card" target="_blank">
-      <div class="lc-label">Code</div>
-      <div class="lc-title">GitHub</div>
-    </a>
-  </div>
-</section>
-
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-name"><strong>Auriel</strong></div>
   <div class="footer-bio">AI Strategy &middot; ex-DeepMind &middot; YC W20</div>
+  <div class="footer-links">
+    <a href="https://x.com/Lonna1774204" target="_blank">X / Twitter</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Aurielws" target="_blank">GitHub</a>
+  </div>
   <div class="footer-stripe"></div>
 </footer>
 
-</div><!-- /container -->
+</div>
 
 </body>
 </html>

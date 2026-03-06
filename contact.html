@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work With Me &middot; Auriel</title>
+<meta name="description" content="I'm selectively open to new coaching engagements, advising relationships, speaking invitations, and introductions to exceptional founders.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><strong>Auriel</strong></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="advising.html">Advising</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="contact.html" class="btn btn--primary active" style="padding:6px 18px;font-size:0.75rem">Work With Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-label">Work With Me</div>
+    <h1 class="page-header-title">Let's <strong>Talk</strong></h1>
+    <p class="page-header-sub">I'm selectively open to new coaching engagements, advising relationships, speaking invitations, and introductions to exceptional founders.</p>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- WAYS TO WORK TOGETHER -->
+<section class="section">
+  <div class="sec-label">Offerings</div>
+  <h2 class="sec-title">Ways to <strong>work together</strong></h2>
+  <div class="sec-rule"></div>
+
+  <div class="offering-list">
+    <div class="offering-item">
+      <span class="offering-label">Executive Coaching</span>
+      <span class="offering-desc">1:1 engagements and leadership team workshops. In-person in SF, Atlanta, New York, and Miami, or virtual.</span>
+    </div>
+    <div class="offering-item">
+      <span class="offering-label">Startup Advising</span>
+      <span class="offering-desc">Early-stage AI companies, pre-seed to Series A. I work with a small number of companies at a time.</span>
+    </div>
+    <div class="offering-item">
+      <span class="offering-label">Angel Investing</span>
+      <span class="offering-desc">Early-stage AI. Send a brief intro with company, stage, what you're building, and a deck.</span>
+    </div>
+    <div class="offering-item">
+      <span class="offering-label">Speaking</span>
+      <span class="offering-desc">AI/ML conferences, executive summits, panels, and private events.</span>
+    </div>
+    <div class="offering-item">
+      <span class="offering-label">Events</span>
+      <span class="offering-desc">Collaboration, co-hosting, and sponsorship inquiries for the dinner and salon series.</span>
+    </div>
+  </div>
+</section>
+
+<!-- RESPONSE TIME -->
+<section class="section">
+  <div class="sec-label">Expectations</div>
+  <h2 class="sec-title">Response <strong>time</strong></h2>
+  <div class="sec-rule"></div>
+  <p class="sec-body">I receive a high volume of messages and respond selectively. If you're a founder building something genuinely new, an executive with a specific and urgent coaching need, or an event or speaking organizer with a real fit, your note will get priority. Everyone else: please be concise, specific, and patient. Generic outreach gets deprioritized.</p>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="section">
+  <div class="sec-label">Get In Touch</div>
+  <h2 class="sec-title">Send a <strong>message</strong></h2>
+  <div class="sec-rule"></div>
+
+  <form class="form" action="https://formspree.io/f/placeholder" method="POST">
+    <div class="detail-grid">
+      <div class="form-group">
+        <label class="form-label" for="name">Name</label>
+        <input class="form-input" type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" type="email" id="email" name="email" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="topic">What are you reaching out about?</label>
+      <select class="form-select" id="topic" name="topic" required>
+        <option value="" disabled selected>Select one</option>
+        <option value="coaching">Coaching</option>
+        <option value="advising">Advising</option>
+        <option value="investing">Investing</option>
+        <option value="speaking">Speaking</option>
+        <option value="events">Events</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="message">Brief message</label>
+      <textarea class="form-textarea" id="message" name="message" placeholder="3-4 sentences max" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="url">LinkedIn or company URL</label>
+      <input class="form-input" type="url" id="url" name="url" placeholder="https://...">
+    </div>
+
+    <button type="submit" class="btn btn--primary">Send message</button>
+  </form>
+</section>
+
+<footer class="footer">
+  <div class="footer-name"><strong>Auriel</strong></div>
+  <div class="footer-bio">AI Strategy &middot; ex-DeepMind &middot; YC W20</div>
+  <div class="footer-links">
+    <a href="https://x.com/Lonna1774204" target="_blank">X / Twitter</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Aurielws" target="_blank">GitHub</a>
+  </div>
+  <div class="footer-stripe"></div>
+</footer>
+
+</div>
+
+</body>
+</html>
