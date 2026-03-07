@@ -316,22 +316,56 @@
 
 <div class="post-content">
 <header class="post-header">
-<div class="series-tag">Auriel's RL Pet Peeves &middot; Part 1 of N</div>
+<div class="series-tag">Auriel&rsquo;s RL Pet Peeves &middot; Part 1 of N</div>
 <h1>You never spend time<br>with your model and we can<br><em>ALL</em> tell &#x1F440;</h1>
-<p class="subtitle">My personal do&rsquo;s and don&rsquo;ts for startups post-training their own model. These are my very opinionated Eyeballing best practices.</p>
+<p class="subtitle">My personal do&rsquo;s and don&rsquo;ts for startups post-training their own model. These are my very opinionated Eyeballing Best Practices.</p>
 <div class="byline">Auriel</div>
 </header>
-<p style="font-style:italic;font-size:14px;color:var(--muted);margin-top:4px">These are my opinions. They&rsquo;re strong ones. But if your RL data keeps ending up in an abandoned directory, maybe start here &#x1F937;.</p>
-<div class="wyg"><div class="wyg-label">What you&rsquo;ll get from this post</div><h4>After reading, you&rsquo;ll be able to:</h4><ul>
+
+<p>This mini-series is a collection of rants on RL from my POV. Pure, unfiltered, first-person opinions from someone who&rsquo;s spent years deep in the trenches of pre-training, post-training/fine-tuning, inference time, and every layer of the stack for models from small distilled models (Pixel Real Tone) to frontier systems (Gemini + Nano Banana + Human detection models for Waymo, Google Search).</p>
+
+<p>I&rsquo;ve eyeballed thousands of trajectories, judged parametric wins and losses until my eyes bled at 2AM, and sat through more &ldquo;data&rdquo; pitches than I care to count.</p>
+
+<p><strong>Who this is for:</strong></p>
+<ul>
+<li>Startups post-training your own custom models for the first time</li>
+<li>Big companies considering building domain-specific agents</li>
+<li>Fresh grad researchers running your first real post-training loop (particularly for RL since that&rsquo;s one of the main ways we do agentic post-training these days)</li>
+<li>RL researchers might probably also find this useful, but probably too rudimentary</li>
+</ul>
+
+<p>This is not the consensus view of every big AI lab researcher. This is just me. But colleagues say I&rsquo;m pretty good at spotting what&rsquo;s going to work and what&rsquo;s going to waste everyone&rsquo;s time.</p>
+
+<p>If your RL data keeps ending up in an abandoned directory, maybe start here &#x1F937;.</p>
+
+<h2>Today&rsquo;s Rant: Agentic Trajectory Eyeballing</h2>
+
+<p>You just fine-tuned an open-source model you found on <a href="https://x.com/akshay_pachaar/status/2029212227438518406?s=20">X/Twitter</a> for your customer-facing SaaS agent. Training loss looked reasonable, eval scores hit 81%. You ship it. Three days later, users are rage-quitting in the exact scenarios your product is supposed to handle. Half your team says retrain with more data. The other half says the evals were wrong. Nobody has opened a single trajectory.</p>
+
+<p><strong>This is what I mean when I say &ldquo;you&rsquo;ve never spent time with your model and we can ALL tell&rdquo; &#x1F440;</strong></p>
+
+<p>There is no substitute for sitting down with your model&rsquo;s actual traces&mdash;the thinking tokens, the tool calls, the outputs&mdash;and just reading them.</p>
+<ul>
+<li>Not skimming aggregate metrics.</li>
+<li>Not glancing at pass/fail rates on a dashboard.</li>
+<li><strong>Actually reading what the model did, step by step, for a meaningful sample of tasks.</strong></li>
+</ul>
+
+<p>Ramble out loud and talk to yourself about why something does or does not make sense as a model behavior.</p>
+
+<h2>What I do Instead</h2>
+<hr>
+
+<p><strong>Basically I wrote a guide about how I think about reviewing agentic trajectories.</strong></p>
+
+<div class="wyg"><div class="wyg-label">After reading, hopefully you&rsquo;ll be able to:</div><ul>
 <li>Learn the basics of how to read an agentic trace and trajectory (normally a 90 min process overall)</li>
 <li>See my quick gut-check diagnostic framework to split &ldquo;your agent&rsquo;s harness problem&rdquo; from &ldquo;your custom model&rsquo;s training job problem&rdquo;</li>
 <li>Run a 4-point trajectory eyeballing session</li>
 <li>Vibe-code a basic trajectory viewer in 30 mins (my custom vibe coding prompt included)</li>
 </ul></div>
-<p>You just fine-tuned some open-source model you found on <a href="https://x.com/akshay_pachaar/status/2029212227438518406?s=20">X/Twitter</a> for your customer-facing SaaS agent. Training loss looked reasonable, eval scores hit 81%. You ship it. Three days later, users are rage-quitting in the exact scenarios your product is supposed to handle. Half your team says retrain with more data. The other half says the evals were wrong. Nobody has opened a single trajectory.</p>
-<p>I&rsquo;ve eyeballed thousands of trajectories, judged parametric wins and losses until my eyes bled at 2AM, and sat through more &ldquo;data&rdquo; pitches than I care to count. The fix is almost never &ldquo;let&rsquo;s try to add in more new data guys!&rdquo; The fix is <strong>spending time with your model</strong> looking through what it actually did, thought about doing, and also what it didn&rsquo;t do. The insights you need are in your traces. You just haven&rsquo;t looked. You don&rsquo;t Eyeball enough or you don&rsquo;t Eyeball well yet.</p>
-<p>I&rsquo;m targeting this to be useful for startups post-training their own custom models, big companies considering building domain-specific agents, and fresh grad researchers running their first real post-training loop (particularly for RL since that&rsquo;s one of the main ways we do agentic post-training these days). Future posts will broaden out to the bigger question of how to build good production-grade agents (from my POV at least), but today we focus on your model :).</p>
-<p>Note: This is not the consensus view of every big AI lab researcher. This is just me and what I find helpful in reviewing agentic trajectories.</p>
+
+<p>Alright so here we go&hellip;</p>
 <hr>
 <h2><span class="section-num">#01</span> What is a trajectory, really</h2>
 <p>A trajectory is a receipt for everything your model did on a task. Every decision, every tool call, every mistake. Not a chat log, but a complete decision record: every input your model saw, every intermediate output, every piece of reasoning it generated, from task start to final submission. Think tokens, API calls, drafted outputs, self-corrections. All of it, in sequence.</p>
