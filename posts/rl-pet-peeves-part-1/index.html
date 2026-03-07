@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RL Pet Peeves Part 1 &middot; Auriel</title>
+<meta name="description" content="My personal do's and don'ts for startups post-training their own model. A guide to trajectory eyeballing, harness debugging, and RL failure modes.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+
+:root{
+  --cream:#FAF7F2;--paper:#F5EFE6;--ink:#1C1410;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#6B2A5A;--border:#E0D4C8;
+  --s1:#C85080;--s2:#E89040;--s3:#6080C8;--s4:#40A870;
+  --red:#9B2020;--red-bg:#FFF0F0;--green:#1E7A40;--green-bg:#EAF7EF;
+  --yellow:#8A6A10;--yellow-bg:#FFFBEE;--blue:#2040A0;--blue-bg:#EEF2FF;
+  --mono:"DM Mono",monospace;
+}
+.post-content{font-family:"Plus Jakarta Sans",sans-serif;font-size:17px;line-height:1.82;color:var(--ink2);max-width:800px;margin:0 auto;padding:0 28px 80px}
+.post-content .stripe{height:5px;background:linear-gradient(to right,var(--s1) 0 25%,var(--s2) 25% 50%,var(--s3) 50% 75%,var(--s4) 75%);position:sticky;top:0;z-index:100}
+.post-content .post-header{padding:52px 0 8px}
+.post-content .series-tag{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.post-content h1{font-family:"Fraunces",serif;font-style:italic;font-size:40px;line-height:1.12;font-weight:300;color:var(--ink);margin-bottom:10px}
+.post-content h1 em{font-style:normal;font-weight:700;color:var(--accent)}
+.post-content .subtitle{font-size:16px;color:var(--muted);line-height:1.55;margin-bottom:18px;font-style:italic}
+.post-content .byline{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-bottom:32px;border-bottom:1px solid var(--border)}
+.post-content h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:28px;color:var(--accent2);margin:52px 0 14px;border-top:2px solid var(--accent2);padding-top:7px}
+.post-content p{margin-bottom:18px}.post-content p strong{color:var(--ink)}
+.post-content a{color:var(--accent);text-decoration-color:var(--border)}.post-content a:hover{text-decoration-color:var(--accent)}
+.post-content code{font-family:var(--mono);font-size:13px;background:var(--paper);padding:2px 7px;border-radius:3px;color:var(--accent2);border:1px solid var(--border)}
+.post-content hr{border:none;border-top:1px solid var(--border);margin:52px 0}
+.post-content ul,.post-content ol{padding-left:24px;margin-bottom:18px}.post-content li{margin-bottom:9px}
+.post-content blockquote{font-family:"Fraunces",serif;font-style:italic;font-size:22px;line-height:1.48;color:var(--accent2);border-left:4px solid var(--accent);padding:4px 0 4px 22px;margin:32px 0}
+.post-content .tldr{background:var(--ink);color:var(--cream);padding:30px 34px;border-radius:8px;margin:32px 0 40px}
+.post-content .tldr-top{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;margin-bottom:20px}
+.post-content .tldr-head{font-family:"Fraunces",serif;font-style:italic;font-size:24px;line-height:1.2;font-weight:300}
+.post-content .tldr-head strong{font-style:normal;font-weight:700;color:#E89040}
+.post-content .tldr-score{text-align:center;padding:12px 18px;border:1px solid #2A2218;border-radius:6px;background:#120E0A}
+.post-content .tldr-score-num{font-family:var(--mono);font-size:28px;font-weight:700;color:#EF6060}
+.post-content .tldr-score-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:1px;color:#7A5060;margin-top:2px}
+.post-content .tldr-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid #2A2218;border-radius:6px;overflow:hidden}
+.post-content .tldr-step{padding:14px 16px;border-right:1px solid #2A2218}
+.post-content .tldr-step:last-child{border-right:none}
+.post-content .tldr-step-num{font-family:var(--mono);font-size:9px;color:#5A4A40;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.post-content .tldr-step-text{font-size:12px;color:#B0906E;line-height:1.5}
+.post-content .tldr-step-text strong{color:var(--cream)}
+.post-content .tldr-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.post-content .tc{font-size:13px;line-height:1.55;color:#B0906E}
+.post-content .tc-head{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#7A5060;margin-bottom:5px}
+.post-content .wyg{background:var(--paper);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:0 5px 5px 0;padding:20px 24px;margin:28px 0}
+.post-content .wyg-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+.post-content .wyg h4{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.post-content .wyg ul{margin-bottom:0;padding-left:20px}.post-content .wyg li{font-size:15px;margin-bottom:7px}
+.post-content .fm-row{display:grid;grid-template-columns:110px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);align-items:start}
+.post-content .fm-row:last-child{border-bottom:none}
+.post-content .fm-badge{font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;padding:6px 8px;border-radius:4px;text-align:center;line-height:1.4;letter-spacing:.5px}
+.post-content .fm-badge.red{background:var(--red-bg);color:var(--red)}
+.post-content .fm-badge.yellow{background:var(--yellow-bg);color:var(--yellow)}
+.post-content .fm-badge.blue{background:var(--blue-bg);color:var(--blue)}
+.post-content .fm-badge.purple{background:#F0E8F5;color:#7040A0}
+.post-content .fm-body h4{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.post-content .fm-body p{font-size:15px;margin-bottom:8px;line-height:1.6}
+.post-content .fix-tag{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:3px;display:inline-block;font-weight:600}
+.post-content .fix-model{background:#E8F4FF;color:#1040A0}
+.post-content .fix-harness{background:var(--yellow-bg);color:var(--yellow)}
+.post-content .fix-both{background:var(--paper);color:var(--ink2)}
+.post-content .diag-tree{border:2px solid var(--border);border-radius:8px;overflow:hidden;margin:28px 0}
+.post-content .dt-header{background:var(--ink);color:var(--cream);padding:14px 22px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:2px}
+.post-content .dt-.post-content{font-family:"Plus Jakarta Sans",sans-serif;font-size:17px;line-height:1.82;color:var(--ink2);max-width:800px;margin:0 auto;padding:0 28px 80px}
+.post-content .dt-row{display:grid;grid-template-columns:1fr 20px 1fr;gap:10px;align-items:center}
+.post-content .dt-cell{background:var(--paper);border:1px solid var(--border);border-radius:5px;padding:14px 16px;font-size:14px;line-height:1.55}
+.post-content .dt-cell .dt-q{font-weight:700;color:var(--ink);margin-bottom:5px}
+.post-content .dt-cell .dt-hint{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.post-content .dt-arrow{color:var(--muted);font-size:18px;text-align:center;font-weight:700}
+.post-content .dt-cell.outcome-model{border-left:4px solid var(--blue);background:var(--blue-bg)}
+.post-content .dt-cell.outcome-harness{border-left:4px solid var(--s2);background:var(--yellow-bg)}
+.post-content .dt-outcome-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700}
+.post-content .checklist{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
+.post-content .checklist th{background:var(--ink);color:var(--cream);padding:10px 14px;text-align:left;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:500}
+.post-content .checklist td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55}
+.post-content .checklist tr:last-child td{border-bottom:none}
+.post-content .checklist tr:nth-child(even) td{background:var(--paper)}
+.post-content .item-name{font-weight:700;color:var(--ink);display:block;margin-bottom:3px}
+.post-content .item-desc{color:var(--muted);font-size:12px;font-family:var(--mono)}
+.post-content .ci-model{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;background:var(--blue-bg);color:var(--blue);font-weight:600;display:inline-block}
+.post-content .ci-harness{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;background:var(--yellow-bg);color:var(--yellow);font-weight:600;display:inline-block}
+.post-content .ci-either{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;background:var(--red-bg);color:var(--red);font-weight:600;display:inline-block}
+.post-content .receipt{margin:32px -8px;border-radius:8px;overflow:hidden;border:2px solid var(--border)}
+.post-content .receipt-header{background:var(--paper);padding:11px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.post-content .rh-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.post-content .rh-domain{font-family:var(--mono);font-size:10px;color:var(--accent);font-weight:600}
+.post-content .receipt img{width:100%;display:block}
+.post-content .receipt-footer{background:var(--paper);padding:12px 18px;border-top:1px solid var(--border);font-size:14px;color:var(--ink2);line-height:1.6}
+.post-content .receipt-footer strong{color:var(--ink)}
+.post-content .domain-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:28px 0}
+.post-content .d3-card{border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--paper)}
+.post-content .d3-card img{width:100%;display:block;border-bottom:1px solid var(--border)}
+.post-content .d3-.post-content{font-family:"Plus Jakarta Sans",sans-serif;font-size:17px;line-height:1.82;color:var(--ink2);max-width:800px;margin:0 auto;padding:0 28px 80px}
+.post-content .d3-type{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:4px}
+.post-content .d3-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.3}
+.post-content .d3-flag{font-family:var(--mono);font-size:11px;color:var(--red);line-height:1.4}
+.post-content .traj-map{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin:28px 0}
+.post-content .tm-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:var(--muted);margin-bottom:12px}
+.post-content .tm-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.post-content .tm-step{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:10px 11px}
+.post-content .tm-num{font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:1px;display:block;margin-bottom:4px}
+.post-content .tm-step h5{font-size:12px;color:var(--ink);margin-bottom:4px;line-height:1.3}
+.post-content .tm-step p{font-size:11px;color:var(--muted);line-height:1.45;margin:0}
+.post-content .tm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.post-content .tm-row{background:var(--cream);border-left:3px solid var(--accent);padding:10px 11px}
+.post-content .tm-row-head{font-family:var(--mono);font-size:10px;color:var(--ink);margin-bottom:3px;text-transform:uppercase;letter-spacing:.8px}
+.post-content .tm-row p{font-size:12px;line-height:1.45;margin:0;color:var(--ink2)}
+.post-content .tm-viewers{display:flex;flex-wrap:wrap;gap:8px}
+.post-content .tm-chip{font-family:var(--mono);font-size:10px;padding:4px 8px;border-radius:999px;background:var(--cream);border:1px solid var(--border);color:var(--ink2)}
+.post-content .tm-snippet{background:#1A1218;border-radius:6px;padding:14px 16px;border:1px solid #3a2a34}
+.post-content .tm-snip-head{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:#b98ca0;margin-bottom:8px}
+.post-content .tm-code{font-family:var(--mono);font-size:11px;line-height:1.55;color:#e3c8d6;white-space:pre-wrap;margin:0}
+.post-content .tm-teach{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:11px 12px;margin:0 0 10px}
+.post-content .tm-teach h5{font-size:12px;color:var(--ink);margin:0 0 6px}
+.post-content .tm-teach ol{margin:0;padding-left:18px}
+.post-content .tm-teach li{font-size:12px;color:var(--ink2);line-height:1.45;margin:3px 0}
+.post-content .tm-map{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.post-content .tm-map-item{background:#2a1d26;border-left:3px solid #c85080;padding:8px 9px}
+.post-content .tm-map-item h6{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#f0d6e3;margin:0 0 3px}
+.post-content .tm-map-item p{font-size:11px;color:#d1b6c4;line-height:1.4;margin:0}
+.post-content .prompt-block{background:#1A1218;border-radius:6px;padding:22px 26px;margin:28px 0}
+.post-content .pb-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#7A5060;margin-bottom:12px}
+.post-content .pb-text{font-family:var(--mono);font-size:13px;line-height:1.75;color:#C0A0B0}
+.post-content .pb-ph{color:#E89040}
+.post-content .pb-copy{margin-top:12px;font-size:11px;color:#6A4050;font-family:var(--mono)}
+.post-content .q-stack{margin:20px 0}
+.post-content .q-item{display:grid;grid-template-columns:28px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:start}
+.post-content .q-item:last-child{border-bottom:none}
+.post-content .q-num{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent);padding-top:2px}
+.post-content .q-ask{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.post-content .q-how{font-size:14px;color:var(--ink2);line-height:1.55}
+.post-content .q-tag{font-family:var(--mono);font-size:10px;margin-top:5px;display:inline-block;padding:2px 7px;border-radius:3px}
+.post-content .cta-box{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:24px 28px;margin:36px 0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.post-content .cta-item h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.post-content .cta-item p{font-size:14px;color:var(--ink2);margin-bottom:8px;line-height:1.55}
+.post-content .cta-btn{display:inline-block;font-family:var(--mono);font-size:11px;padding:7px 14px;border-radius:4px;text-decoration:none;font-weight:600}
+.post-content .btn-primary{background:var(--accent);color:#fff}
+.post-content .btn-secondary{background:var(--cream);color:var(--accent);border:1.5px solid var(--accent)}
+.post-content .next-up{margin:36px 0}
+.post-content .nu-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:14px}
+.post-content .nu-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.post-content .nu-card{border:1px solid var(--border);border-radius:6px;padding:16px;background:var(--paper)}
+.post-content .nu-card.active{background:var(--cream);border-left:4px solid var(--accent)}
+.post-content .nu-you-are-here{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.post-content .nu-num{font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:5px}
+.post-content .nu-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:5px}
+.post-content .nu-desc{font-size:12px;color:var(--muted);line-height:1.45}
+.post-content .signoff{margin-top:52px;padding-top:24px;border-top:1px solid var(--border)}
+.post-content .signoff-name{font-family:"Fraunces",serif;font-style:italic;font-size:26px;color:var(--accent2)}
+.post-content .signoff-bio{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px}
+.post-content .signoff-disc{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:10px;font-style:italic}
+/* Pipeline Flow */
+.post-content .pf-flow{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding:12px 0}
+.post-content .pf-stage{flex-shrink:0;width:164px;border:1.5px solid;border-radius:8px;background:var(--white);overflow:hidden}
+.post-content .pf-stage-head{padding:8px 10px;font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:7px}
+.post-content .pf-stage-num{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0}
+.post-content .pf-stage-.post-content{font-family:"Plus Jakarta Sans",sans-serif;font-size:17px;line-height:1.82;color:var(--ink2);max-width:800px;margin:0 auto;padding:0 28px 80px}
+.post-content .pf-stage-json{margin-top:6px;padding:6px 8px;background:#1A0F18;border-radius:4px;font-family:var(--mono);font-size:9.5px;line-height:1.45;color:#C0A0B8;white-space:pre-wrap}
+.post-content .pf-stage-json .jk{color:#90B0E0}.post-content .pf-stage-json .jv{color:#D0B080}.post-content .pf-stage-json .jn{color:#80D098}.post-content .pf-stage-json .jm{color:#6A5868}
+.post-content .pf-stage.pf-input{border-color:#6080C8}.post-content .pf-stage.pf-input .pf-stage-head{background:#EEF2FF;color:#6080C8}.post-content .pf-stage.pf-input .pf-stage-num{background:#6080C8}
+.post-content .pf-stage.pf-messages{border-color:var(--accent)}.post-content .pf-stage.pf-messages .pf-stage-head{background:#F5EFF8;color:var(--accent)}.post-content .pf-stage.pf-messages .pf-stage-num{background:var(--accent)}
+.post-content .pf-stage.pf-output{border-color:#E89040}.post-content .pf-stage.pf-output .pf-stage-head{background:#FFFBEE;color:#9A6A10}.post-content .pf-stage.pf-output .pf-stage-num{background:#E89040}
+.post-content .pf-stage.pf-tests{border-color:#40A870}.post-content .pf-stage.pf-tests .pf-stage-head{background:#EAF7EF;color:#1E7A40}.post-content .pf-stage.pf-tests .pf-stage-num{background:#40A870}
+.post-content .pf-stage.pf-scores{border-color:#7A6A60}.post-content .pf-stage.pf-scores .pf-stage-head{background:var(--paper);color:#7A6A60}.post-content .pf-stage.pf-scores .pf-stage-num{background:#7A6A60}
+.post-content .pf-conn{flex-shrink:0;width:24px;display:flex;align-items:center;justify-content:center;align-self:center}
+.post-content .pf-conn svg{display:block}
+.post-content .pf-msg-mini{display:flex;flex-direction:column;gap:2px;margin-top:5px}
+.post-content .pf-pill{font-family:var(--mono);font-size:8.5px;font-weight:500;padding:2px 6px;border-radius:3px;display:flex;align-items:center;gap:5px}
+.post-content .pf-pill-role{font-weight:600;text-transform:uppercase;letter-spacing:.3px;font-size:7.5px}
+.post-content .pf-pill-sys{background:#F0EAF5;color:#6B2A5A}.post-content .pf-pill-usr{background:#EEF2FF;color:#2040A0}.post-content .pf-pill-ast{background:#F5EFF0;color:#6B3A2A}.post-content .pf-pill-tool{background:#EAF7EF;color:#1E7A40}
+.post-content .pf-pill-dots{color:#7A6A60;font-size:9px;text-align:center;padding:1px 0}
+/* Annotated JSON — Blueprint Style */
+.post-content .aj-outer{border-radius:8px;overflow:hidden;border:1px solid #2A1A28;margin-top:16px}
+.post-content .aj-titlebar{background:#120A14;padding:8px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid #2A1A28;font-family:var(--mono);font-size:10px;color:#8A7A90}
+.post-content .aj-dot{width:7px;height:7px;border-radius:50%}
+.post-content .aj-wrap{display:grid;grid-template-columns:1fr 250px;gap:0;background:#1A0F18}
+.post-content .aj-json{padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:10.5px;line-height:1.65;color:#C0A0B8;background-image:radial-gradient(circle,rgba(192,160,184,.07) 1px,transparent 1px);background-size:20px 20px}
+.post-content .aj-line{display:block;padding:0 0 0 26px;position:relative;white-space:pre}
+.post-content .aj-ln{position:absolute;left:0;width:20px;text-align:right;color:#4A3A48;font-size:9px;user-select:none}
+.post-content .aj-json .jk{color:#90B0E0}.post-content .aj-json .jv{color:#D0B080}.post-content .aj-json .jn{color:#80D098}.post-content .aj-json .jb{color:#8A7A90}.post-content .aj-json .jc{color:#6A5068;font-style:italic}
+.post-content .aj-region{position:relative;border-radius:4px;margin:2px 0}
+.post-content .aj-region::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:2px}
+.post-content .aj-r-input::before{background:#6080C8;box-shadow:0 0 8px rgba(96,128,200,.4)}.post-content .aj-r-input{background:rgba(96,128,200,.14);border:1px solid rgba(96,128,200,.25);border-left:none}
+.post-content .aj-r-messages::before{background:var(--accent);box-shadow:0 0 8px rgba(155,46,90,.4)}.post-content .aj-r-messages{background:rgba(155,46,90,.14);border:1px solid rgba(155,46,90,.25);border-left:none}
+.post-content .aj-r-output::before{background:#E89040;box-shadow:0 0 8px rgba(232,144,64,.4)}.post-content .aj-r-output{background:rgba(232,144,64,.14);border:1px solid rgba(232,144,64,.25);border-left:none}
+.post-content .aj-r-tests::before{background:#40A870;box-shadow:0 0 8px rgba(64,168,112,.4)}.post-content .aj-r-tests{background:rgba(64,168,112,.14);border:1px solid rgba(64,168,112,.25);border-left:none}
+.post-content .aj-r-meta::before{background:#7A6A60;box-shadow:0 0 6px rgba(122,106,96,.3)}.post-content .aj-r-meta{background:rgba(122,106,96,.12);border:1px solid rgba(122,106,96,.2);border-left:none}
+.post-content .aj-annots{background:#140C16;padding:12px;border-left:1px solid #2A1A28;display:flex;flex-direction:column;gap:8px}
+.post-content .aj-ann{padding:8px 10px;background:rgba(255,255,255,.04);border:1px solid #2A1A28;border-radius:5px;flex:1;position:relative}
+.post-content .aj-ann::before{content:'';position:absolute;left:-6px;top:12px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:6px solid rgba(255,255,255,.04)}
+.post-content .aj-ann::after{content:'';position:absolute;left:-7px;top:12px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:6px solid #2A1A28;z-index:-1}
+.post-content .aj-ann h6{font-family:var(--mono);font-size:8.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}
+.post-content .aj-ann p{font-size:10.5px;color:#B0A0A8;line-height:1.4;margin:0}
+.post-content .aj-ann p code{font-family:var(--mono);font-size:9.5px;background:rgba(255,255,255,.06);padding:1px 3px;border-radius:2px;color:#D0C0C8}
+.post-content .aj-ann p strong{color:#D0C0C8}
+.post-content .aj-ann-input{border-left:3px solid #6080C8}.post-content .aj-ann-input h6{color:#90B0E0}
+.post-content .aj-ann-messages{border-left:3px solid var(--accent)}.post-content .aj-ann-messages h6{color:#D080A0}
+.post-content .aj-ann-output{border-left:3px solid #E89040}.post-content .aj-ann-output h6{color:#E8A060}
+.post-content .aj-ann-tests{border-left:3px solid #40A870}.post-content .aj-ann-tests h6{color:#60C090}
+.post-content .aj-ann-meta{border-left:3px solid #8A7A70}.post-content .aj-ann-meta h6{color:#A09088}
+.post-content .aj-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:8px 14px;background:rgba(255,255,255,.03);border-top:1px solid #2A1A28;font-family:var(--mono);font-size:9px;color:#8A7A90}
+.post-content .aj-legend-item{display:flex;align-items:center;gap:5px}
+.post-content .aj-legend-sw{width:9px;height:9px;border-radius:2px}
+@media (max-width:720px){.post-content .tm-flow{grid-template-columns:1fr 1fr}.post-content .tm-grid{grid-template-columns:1fr}.post-content .tm-map{grid-template-columns:1fr}.post-content .pf-flow{flex-direction:column;align-items:stretch}.post-content .pf-stage{width:100%}.post-content .pf-conn{width:auto;height:20px;transform:rotate(90deg)}.post-content .aj-wrap{grid-template-columns:1fr}.post-content .aj-annots{border-left:none;border-top:1px solid #2A1A28}}
+/* ─── SECTION NUMBER BADGES ─── */
+.post-content h2 .section-num{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1.5px;color:var(--cream);background:var(--accent2);padding:3px 9px;border-radius:3px;margin-right:10px;vertical-align:2px;display:inline-block}
+/* ─── NUMPYDOC WALKTHROUGH (scoped) ─── */
+.post-content .nw-wrap{--nw-ink:#2A1A28;--nw-ink2:#5A4A58;--nw-ink3:#8A7A88;--nw-border:#E8E0D8;--nw-accent:#C85080;--nw-blue:#6080C8;--nw-green:#40A870;--nw-red:#9B2020;--nw-orange:#E89040;--nw-yellow:#B8860B;--nw-paper:#FFFFFF;--nw-dark-bg:#1A0F18;--nw-dark-surface:#221428;--nw-dark-border:#2A1A28;--nw-dark-text:#D8D0D4;--nw-dark-muted:#8A7A90;--nw-glow-green:rgba(64,168,112,.4);--nw-glow-red:rgba(155,32,32,.5);--nw-glow-yellow:rgba(184,134,11,.4)}
+.post-content .nw-wrap .nw-intro{margin-bottom:28px}
+.post-content .nw-wrap .nw-intro p{font-size:15px;color:var(--nw-ink2);max-width:720px;line-height:1.65}
+.post-content .nw-wrap .nw-intro p strong{color:var(--nw-ink)}
+.post-content .nw-wrap .receipt-tag{font-family:var(--mono);font-size:11px;color:var(--nw-paper);background:var(--nw-ink);padding:3px 10px;border-radius:3px;display:inline-block;margin-bottom:12px;letter-spacing:.5px}
+.post-content .nw-wrap .nw-tldr{width:100%;border-collapse:collapse;margin-bottom:28px;font-size:14px;border:1px solid var(--nw-border);border-radius:6px;overflow:hidden}
+.post-content .nw-wrap .nw-tldr th{background:var(--nw-ink);color:var(--cream);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;text-align:left}
+.post-content .nw-wrap .nw-tldr td{padding:10px 16px;border-bottom:1px solid var(--nw-border);vertical-align:top;background:var(--nw-paper)}
+.post-content .nw-wrap .nw-tldr tr:last-child td{border-bottom:none}
+.post-content .nw-wrap .nw-tldr .nw-field{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--nw-ink3);white-space:nowrap;width:160px}
+.post-content .nw-wrap .nw-tldr code{font-family:var(--mono);font-size:12px;background:#F0EAE4;padding:1px 5px;border-radius:2px}
+.post-content .nw-wrap .nw-badge{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;letter-spacing:.3px;display:inline-block}
+.post-content .nw-wrap .nw-badge.pass{background:rgba(64,168,112,.12);color:var(--nw-green)}
+.post-content .nw-wrap .nw-badge.fail{background:rgba(239,96,96,.12);color:#D42B2B}
+.post-content .nw-wrap .nw-badge.warn{background:rgba(184,134,11,.12);color:var(--nw-yellow)}
+.post-content .nw-wrap .nw-context{margin-bottom:28px;padding:16px 20px;background:var(--nw-paper);border:1px solid var(--nw-border);border-left:4px solid var(--nw-blue);border-radius:0 6px 6px 0;font-size:14px;color:var(--nw-ink2);line-height:1.6}
+.post-content .nw-wrap .nw-context strong{color:var(--nw-ink)}
+.post-content .nw-wrap .bp-outer{border-radius:10px;overflow:hidden;border:1px solid var(--nw-dark-border);background:var(--nw-dark-bg);margin-bottom:32px}
+.post-content .nw-wrap .bp-titlebar{background:#120A14;padding:9px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--nw-dark-border);font-family:var(--mono);font-size:10px;color:var(--nw-dark-muted)}
+.post-content .nw-wrap .bp-dot{width:10px;height:10px;border-radius:50%}
+.post-content .nw-wrap .bp-titlebar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.post-content .nw-wrap .bp-badge-pass{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--nw-green);background:rgba(64,168,112,.12);padding:2px 8px;border-radius:3px;letter-spacing:.5px}
+.post-content .nw-wrap .bp-badge-fail{font-family:var(--mono);font-size:9px;font-weight:600;color:#EF6060;background:rgba(239,96,96,.12);padding:2px 8px;border-radius:3px;letter-spacing:.5px}
+.post-content .nw-wrap .bp-steps{padding:20px;display:flex;flex-direction:column;gap:0;background-image:radial-gradient(circle,rgba(192,160,184,.06) 1px,transparent 1px);background-size:20px 20px;position:relative}
+.post-content .nw-wrap .bp-steps::before{content:'';position:absolute;left:32px;top:40px;bottom:40px;width:2px;background:linear-gradient(to bottom,var(--nw-green) 0%,#EF6060 30%,#EF6060 80%,var(--nw-yellow) 100%);opacity:.35;border-radius:1px}
+.post-content .nw-wrap .bp-step{display:grid;grid-template-columns:64px 1fr 260px;gap:16px;padding:16px 0;position:relative;align-items:start}
+@media(max-width:780px){.post-content .nw-wrap .bp-step{grid-template-columns:50px 1fr;gap:10px}.post-content .nw-wrap .bp-annotation{grid-column:1/-1;margin-left:50px}}
+.post-content .nw-wrap .bp-num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600;position:relative;z-index:2;flex-shrink:0;margin-top:4px}
+.post-content .nw-wrap .bp-num.num-green{background:rgba(64,168,112,.15);color:var(--nw-green);border:1.5px solid rgba(64,168,112,.35);box-shadow:0 0 12px var(--nw-glow-green)}
+.post-content .nw-wrap .bp-num.num-yellow{background:rgba(184,134,11,.15);color:var(--nw-yellow);border:1.5px solid rgba(184,134,11,.35);box-shadow:0 0 12px var(--nw-glow-yellow)}
+.post-content .nw-wrap .bp-num.num-red{background:rgba(155,32,32,.18);color:#EF6060;border:1.5px solid rgba(239,96,96,.35);box-shadow:0 0 12px var(--nw-glow-red)}
+.post-content .nw-wrap .bp-code-area{min-width:0}
+.post-content .nw-wrap .bp-msg-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.post-content .nw-wrap .bp-msg-badge{font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px;letter-spacing:.3px;text-transform:uppercase}
+.post-content .nw-wrap .bp-msg-badge.msg-num{background:rgba(255,255,255,.06);color:var(--nw-dark-muted)}
+.post-content .nw-wrap .bp-msg-badge.role-tool{background:rgba(64,168,112,.15);color:var(--nw-green)}
+.post-content .nw-wrap .bp-msg-badge.role-assistant{background:rgba(200,80,128,.12);color:var(--nw-accent)}
+.post-content .nw-wrap .bp-msg-badge.role-finish{background:rgba(64,168,112,.12);color:var(--nw-green)}
+.post-content .nw-wrap .bp-msg-badge.traj-element{background:rgba(96,128,200,.12);color:var(--nw-blue);font-size:8px;letter-spacing:.6px}
+.post-content .nw-wrap .bp-step-title{font-family:"Plus Jakarta Sans",sans-serif;font-size:13px;font-weight:600;color:var(--nw-dark-text);margin-left:4px}
+.post-content .nw-wrap .bp-code{background:#0E0810;border:1px solid var(--nw-dark-border);border-radius:6px;padding:12px 14px;font-family:var(--mono);font-size:11px;line-height:1.55;color:var(--nw-dark-text);white-space:pre-wrap;word-break:break-word;overflow-x:auto}
+.post-content .nw-wrap .bp-code.code-green{border-left:3px solid var(--nw-green);box-shadow:inset 3px 0 8px rgba(64,168,112,.1)}
+.post-content .nw-wrap .bp-code.code-yellow{border-left:3px solid var(--nw-yellow);box-shadow:inset 3px 0 8px rgba(184,134,11,.1)}
+.post-content .nw-wrap .bp-code.code-red{border-left:3px solid #EF6060;box-shadow:inset 3px 0 8px rgba(239,96,96,.12)}
+.post-content .nw-wrap .hl-pass{color:var(--nw-green)}
+.post-content .nw-wrap .hl-fail{color:#EF6060;font-weight:600}
+.post-content .nw-wrap .hl-bad{background:rgba(239,96,96,.12);color:#EF6060;padding:1px 4px;border-radius:2px;border-bottom:1.5px solid rgba(239,96,96,.4)}
+.post-content .nw-wrap .hl-warn{background:rgba(184,134,11,.15);color:#D4A830;padding:1px 4px;border-radius:2px}
+.post-content .nw-wrap .hl-muted{color:var(--nw-dark-muted)}
+.post-content .nw-wrap .bp-annotation{background:#140C16;border:1px solid var(--nw-dark-border);border-radius:6px;padding:12px 14px;font-size:12px;line-height:1.55;color:var(--nw-dark-muted);position:relative;align-self:start;margin-top:24px}
+.post-content .nw-wrap .bp-annotation::before{content:'';position:absolute;left:-9px;top:16px;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:8px solid var(--nw-dark-border)}
+.post-content .nw-wrap .bp-annotation::after{content:'';position:absolute;left:-7px;top:17px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:7px solid #140C16}
+.post-content .nw-wrap .bp-annotation strong{color:var(--nw-dark-text);font-weight:600}
+.post-content .nw-wrap .ann-label{font-family:var(--mono);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+.post-content .nw-wrap .ann-label.label-healthy{color:var(--nw-green)}
+.post-content .nw-wrap .ann-label.label-warning{color:var(--nw-yellow)}
+.post-content .nw-wrap .ann-label.label-danger{color:#EF6060}
+.post-content .nw-wrap .bp-separator{height:1px;background:linear-gradient(to right,transparent,var(--nw-dark-border),transparent);margin:4px 0 4px 64px}
+.post-content .nw-wrap .bp-layers{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.post-content .nw-wrap .bp-layer{display:flex;gap:10px;align-items:start;padding:8px 10px;background:rgba(239,96,96,.05);border:1px solid rgba(239,96,96,.15);border-radius:4px;font-size:11px;color:var(--nw-dark-muted);line-height:1.5}
+.post-content .nw-wrap .bp-layer-num{font-family:var(--mono);font-size:9px;font-weight:600;color:#EF6060;background:rgba(239,96,96,.12);padding:2px 6px;border-radius:2px;flex-shrink:0;margin-top:1px}
+.post-content .nw-wrap .bp-score-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--nw-dark-border);border-top:1px solid var(--nw-dark-border)}
+.post-content .nw-wrap .bp-score-cell{padding:14px 20px;background:var(--nw-dark-bg);text-align:center}
+.post-content .nw-wrap .bp-score-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--nw-dark-muted);margin-bottom:4px}
+.post-content .nw-wrap .bp-score-value{font-family:var(--mono);font-size:22px;font-weight:600}
+.post-content .nw-wrap .bp-score-value.score-pass{color:var(--nw-green)}
+.post-content .nw-wrap .bp-score-value.score-fail{color:#EF6060}
+.post-content .nw-wrap .bp-score-value.score-warn{color:#D4A830}
+.post-content .nw-wrap .bp-score-desc{font-family:var(--mono);font-size:9px;color:var(--nw-dark-muted);margin-top:2px}
+.post-content .nw-wrap .bp-legend{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:10px 16px;background:rgba(255,255,255,.02);border-top:1px solid var(--nw-dark-border);font-family:var(--mono);font-size:9px;color:var(--nw-dark-muted)}
+.post-content .nw-wrap .bp-legend-item{display:flex;align-items:center;gap:5px}
+.post-content .nw-wrap .bp-legend-sw{width:9px;height:9px;border-radius:2px}
+.post-content .nw-wrap .bp-source{font-family:var(--mono);font-size:11px;color:var(--nw-dark-muted);padding:8px 16px;border-top:1px solid var(--nw-dark-border)}
+.post-content .nw-wrap .bp-source a{color:var(--nw-blue);text-decoration:none}
+.post-content .nw-wrap .bp-source a:hover{text-decoration:underline}
+.post-content .nw-wrap .bp-takeaway{margin-top:24px;padding:20px 24px;background:var(--nw-paper);border:1px solid var(--nw-border);border-radius:8px;border-left:4px solid var(--nw-accent)}
+.post-content .nw-wrap .bp-takeaway h4{font-family:"Fraunces",serif;font-size:16px;font-weight:600;color:var(--nw-ink);margin-bottom:8px}
+.post-content .nw-wrap .bp-takeaway p{font-size:14px;color:var(--nw-ink2);line-height:1.6}
+.post-content .nw-wrap .bp-takeaway strong{color:var(--nw-ink)}
+
+</style>
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo"><strong>Auriel</strong></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/coaching.html">Coaching</a></li>
+      <li><a href="/advising.html">Advising</a></li>
+      <li><a href="/writing.html" class="active">Writing</a></li>
+      <li><a href="/community.html">Community</a></li>
+      <li><a href="/contact.html" class="btn btn--primary" style="padding:6px 18px;font-size:0.75rem">Work With Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="post-content">
+<header class="post-header">
+<div class="series-tag">Auriel's RL Pet Peeves &middot; Part 1 of N</div>
+<h1>You never spend time<br>with your model and we can<br><em>ALL</em> tell &#x1F440;</h1>
+<p class="subtitle">My personal do&rsquo;s and don&rsquo;ts for startups post-training their own model. These are my very opinionated Eyeballing best practices.</p>
+<div class="byline">Auriel</div>
+</header>
+<p style="font-style:italic;font-size:14px;color:var(--muted);margin-top:4px">These are my opinions. They&rsquo;re strong ones. But if your RL data keeps ending up in an abandoned directory, maybe start here &#x1F937;.</p>
+<div class="wyg"><div class="wyg-label">What you&rsquo;ll get from this post</div><h4>After reading, you&rsquo;ll be able to:</h4><ul>
+<li>Learn the basics of how to read an agentic trace and trajectory (normally a 90 min process overall)</li>
+<li>See my quick gut-check diagnostic framework to split &ldquo;your agent&rsquo;s harness problem&rdquo; from &ldquo;your custom model&rsquo;s training job problem&rdquo;</li>
+<li>Run a 4-point trajectory eyeballing session</li>
+<li>Vibe-code a basic trajectory viewer in 30 mins (my custom vibe coding prompt included)</li>
+</ul></div>
+<p>You just fine-tuned some open-source model you found on <a href="https://x.com/akshay_pachaar/status/2029212227438518406?s=20">X/Twitter</a> for your customer-facing SaaS agent. Training loss looked reasonable, eval scores hit 81%. You ship it. Three days later, users are rage-quitting in the exact scenarios your product is supposed to handle. Half your team says retrain with more data. The other half says the evals were wrong. Nobody has opened a single trajectory.</p>
+<p>I&rsquo;ve eyeballed thousands of trajectories, judged parametric wins and losses until my eyes bled at 2AM, and sat through more &ldquo;data&rdquo; pitches than I care to count. The fix is almost never &ldquo;let&rsquo;s try to add in more new data guys!&rdquo; The fix is <strong>spending time with your model</strong> looking through what it actually did, thought about doing, and also what it didn&rsquo;t do. The insights you need are in your traces. You just haven&rsquo;t looked. You don&rsquo;t Eyeball enough or you don&rsquo;t Eyeball well yet.</p>
+<p>This is a highly requested topic of discussion from my friends, peers who want to know how I think about agentic modelling, and mentees. I&rsquo;m targeting this to be useful for startups post-training their own custom models, big companies considering building domain-specific agents, and fresh grad researchers running their first real post-training loop (particularly for RL since that&rsquo;s one of the main ways we do agentic post-training these days). Future posts will broaden out to the bigger question of how to build good production-grade agents (from my POV at least), but today we focus on your model :).</p>
+<p>Note: This is not the consensus view of every big AI lab researcher. This is just me and what I find helpful in reviewing agentic trajectories.</p>
+<hr>
+<h2><span class="section-num">#01</span> What is a trajectory, really</h2>
+<p>A trajectory is a receipt for everything your model did on a task. Every decision, every tool call, every mistake. Not a chat log, but a complete decision record: every input your model saw, every intermediate output, every piece of reasoning it generated, from task start to final submission. Think tokens, API calls, drafted outputs, self-corrections. All of it, in sequence.</p>
+<!-- Pipeline Flow: trajectory lifecycle overview -->
+<div class="pf-flow">
+  <div class="pf-stage pf-input">
+    <div class="pf-stage-head"><span class="pf-stage-num">1</span> Input</div>
+    <div class="pf-stage-body">The task prompt, repo, constraints. What the model sees before it starts.
+      <div class="pf-stage-json"><span class="jk">"task_id"</span>: <span class="jv">"sdf-xarray-34"</span>
+<span class="jk">"repo"</span>: <span class="jv">"sdf-xarray"</span>
+<span class="jk">"description"</span>: <span class="jv">"Fix
+  ValueError..."</span>
+<span class="jk">"constraints"</span>: [<span class="jv">"Don't
+  modify tests"</span>]</div>
+    </div>
+  </div>
+  <div class="pf-conn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M14 7l5 5-5 5" stroke="#7A6A60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="pf-stage pf-messages">
+    <div class="pf-stage-head"><span class="pf-stage-num">2</span> Messages</div>
+    <div class="pf-stage-body">Every turn between model and environment, in order.
+      <div class="pf-msg-mini">
+        <div class="pf-pill pf-pill-sys"><span class="pf-pill-role">system</span> tools + rules</div>
+        <div class="pf-pill pf-pill-usr"><span class="pf-pill-role">user</span> task prompt</div>
+        <div class="pf-pill pf-pill-ast"><span class="pf-pill-role">asst</span> ls /workspace</div>
+        <div class="pf-pill pf-pill-tool"><span class="pf-pill-role">tool</span> file listing</div>
+        <div class="pf-pill-dots">&middot;&middot;&middot; 181 more &middot;&middot;&middot;</div>
+        <div class="pf-pill pf-pill-ast"><span class="pf-pill-role">asst</span> finish</div>
+      </div>
+    </div>
+  </div>
+  <div class="pf-conn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M14 7l5 5-5 5" stroke="#7A6A60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="pf-stage pf-output">
+    <div class="pf-stage-head"><span class="pf-stage-num">3</span> Output</div>
+    <div class="pf-stage-body">What the model submitted: a patch, answer, or deliverable.
+      <div class="pf-stage-json"><span class="jk">"patch"</span>: <span class="jv">"diff --git
+  +sanitized = name
+    .replace('/', '_')"</span>
+<span class="jk">"summary"</span>: <span class="jv">"Fixed
+  the ValueError..."</span></div>
+    </div>
+  </div>
+  <div class="pf-conn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M14 7l5 5-5 5" stroke="#7A6A60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="pf-stage pf-tests">
+    <div class="pf-stage-head"><span class="pf-stage-num">4</span> Tests</div>
+    <div class="pf-stage-body">Did the output satisfy the tests? Two kinds matter.
+      <div class="pf-stage-json"><span class="jm">// model's own tests:</span>
+<span class="jk">"gen_tests"</span>: <span class="jn">1.0</span> <span class="jm">pass</span>
+
+<span class="jm">// gold-standard tests:</span>
+<span class="jk">"gold_tests"</span>: <span style="color:#EF6060">0.0</span> <span class="jm">fail</span></div>
+    </div>
+  </div>
+  <div class="pf-conn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M14 7l5 5-5 5" stroke="#7A6A60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="pf-stage pf-scores">
+    <div class="pf-stage-head"><span class="pf-stage-num">5</span> Scores</div>
+    <div class="pf-stage-body">Final metadata: model, cost, timing, resolved or not.
+      <div class="pf-stage-json"><span class="jk">"resolved"</span>: <span style="color:#EF6060">false</span>
+<span class="jk">"model"</span>: <span class="jv">"openhands"</span>
+<span class="jk">"messages"</span>: <span class="jn">185</span>
+<span class="jk">"cost"</span>: <span class="jn">$0.42</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Annotated JSON: what the file actually looks like -->
+<div class="aj-outer">
+  <div class="aj-titlebar">
+    <span class="aj-dot" style="background:#C85080"></span>
+    <span class="aj-dot" style="background:#E89040"></span>
+    <span class="aj-dot" style="background:#40A870"></span>
+    trajectory_0.json &mdash; <a href="https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories" style="color:#C85080;font-size:10px">nebius/SWE-rebench-openhands-trajectories</a>
+  </div>
+  <div class="aj-wrap">
+    <div class="aj-json">
+      <span class="aj-line"><span class="aj-ln"> 1</span><span class="jb">{</span></span>
+      <div class="aj-region aj-r-input">
+        <span class="aj-line"><span class="aj-ln"> 2</span>  <span class="jk">"task_id"</span>: <span class="jv">"sdf-xarray__sdf-xarray-34"</span>,</span>
+        <span class="aj-line"><span class="aj-ln"> 3</span>  <span class="jk">"task_description"</span>: <span class="jv">"Fix ValueError: Forward slashes</span></span>
+        <span class="aj-line"><span class="aj-ln"> 4</span>    <span class="jv">not allowed in variable names..."</span>,</span>
+        <span class="aj-line"><span class="aj-ln"> 5</span>  <span class="jk">"repo"</span>: <span class="jv">"sdf-xarray/sdf-xarray"</span>,</span>
+      </div>
+      <span class="aj-line"><span class="aj-ln"> 6</span></span>
+      <div class="aj-region aj-r-messages">
+        <span class="aj-line"><span class="aj-ln"> 7</span>  <span class="jk">"messages"</span>: <span class="jb">[</span></span>
+        <span class="aj-line"><span class="aj-ln"> 8</span>    <span class="jb">{</span> <span class="jk">"role"</span>: <span class="jv">"system"</span>,  <span class="jk">"content"</span>: <span class="jv">"Tools: execute_bash, ..."</span> <span class="jb">}</span>,</span>
+        <span class="aj-line"><span class="aj-ln"> 9</span>    <span class="jb">{</span> <span class="jk">"role"</span>: <span class="jv">"user"</span>,    <span class="jk">"content"</span>: <span class="jv">"Fix the ValueError..."</span> <span class="jb">}</span>,</span>
+        <span class="aj-line"><span class="aj-ln">10</span>    <span class="jb">{</span> <span class="jk">"role"</span>: <span class="jv">"assistant"</span>,<span class="jk">"content"</span>: <span class="jv">"execute_bash: ls"</span> <span class="jb">}</span>,</span>
+        <span class="aj-line"><span class="aj-ln">11</span>    <span class="jb">{</span> <span class="jk">"role"</span>: <span class="jv">"tool"</span>,     <span class="jk">"content"</span>: <span class="jv">"setup.py tests/ ..."</span> <span class="jb">}</span>,</span>
+        <span class="aj-line"><span class="aj-ln">12</span>    <span class="jc">// ... 181 more message objects ...</span></span>
+        <span class="aj-line"><span class="aj-ln">13</span>    <span class="jb">{</span> <span class="jk">"role"</span>: <span class="jv">"assistant"</span>,<span class="jk">"content"</span>: <span class="jv">"finish: Summary..."</span> <span class="jb">}</span></span>
+        <span class="aj-line"><span class="aj-ln">14</span>  <span class="jb">]</span>,</span>
+      </div>
+      <span class="aj-line"><span class="aj-ln">15</span></span>
+      <div class="aj-region aj-r-output">
+        <span class="aj-line"><span class="aj-ln">16</span>  <span class="jk">"patch"</span>: <span class="jv">"diff --git a/sdf_xarray/__init__.py ..."</span>,</span>
+        <span class="aj-line"><span class="aj-ln">17</span>  <span class="jk">"model_summary"</span>: <span class="jv">"Eliminated the ValueError..."</span>,</span>
+      </div>
+      <span class="aj-line"><span class="aj-ln">18</span></span>
+      <div class="aj-region aj-r-tests">
+        <span class="aj-line"><span class="aj-ln">19</span>  <span class="jk">"pred_passes_gen_tests"</span>: <span class="jn">1.0</span>,   <span class="jc">// model's own tests</span></span>
+        <span class="aj-line"><span class="aj-ln">20</span>  <span class="jk">"pred_passes_gold_tests"</span>: <span style="color:#EF6060">0.0</span>,  <span class="jc">// gold-standard tests</span></span>
+        <span class="aj-line"><span class="aj-ln">21</span>  <span class="jk">"test_results"</span>: <span class="jb">{</span></span>
+        <span class="aj-line"><span class="aj-ln">22</span>    <span class="jk">"test_variable_names"</span>: <span style="color:#80D098">"PASSED"</span>,</span>
+        <span class="aj-line"><span class="aj-ln">23</span>    <span class="jk">"test_sdffile"</span>: <span style="color:#80D098">"PASSED"</span>,</span>
+        <span class="aj-line"><span class="aj-ln">24</span>    <span class="jk">"test_basic"</span>: <span style="color:#EF6060">"FAILED"</span></span>
+        <span class="aj-line"><span class="aj-ln">25</span>  <span class="jb">}</span>,</span>
+      </div>
+      <span class="aj-line"><span class="aj-ln">26</span></span>
+      <div class="aj-region aj-r-meta">
+        <span class="aj-line"><span class="aj-ln">27</span>  <span class="jk">"model"</span>: <span class="jv">"openhands-agent"</span>,</span>
+        <span class="aj-line"><span class="aj-ln">28</span>  <span class="jk">"total_messages"</span>: <span class="jn">185</span>,</span>
+        <span class="aj-line"><span class="aj-ln">29</span>  <span class="jk">"resolved"</span>: <span style="color:#EF6060">false</span>,</span>
+        <span class="aj-line"><span class="aj-ln">30</span>  <span class="jk">"cost"</span>: <span class="jn">0.42</span></span>
+      </div>
+      <span class="aj-line"><span class="aj-ln">31</span><span class="jb">}</span></span>
+    </div>
+    <div class="aj-annots">
+      <div class="aj-ann aj-ann-input"><h6>1 &middot; Input / Task</h6><p>What the model was asked to do. The task description, repo, and constraints.</p></div>
+      <div class="aj-ann aj-ann-messages"><h6>2 &middot; Messages</h6><p>The full conversation: system setup, user prompt, then assistant actions and tool responses. This is usually the core of the trajectory&mdash;the complete thought traces and tool calls and decision record.</p></div>
+      <div class="aj-ann aj-ann-output"><h6>3 &middot; Output</h6><p>What the model delivered: a code patch, a final answer, or a summary. This is what your eval scores.</p></div>
+      <div class="aj-ann aj-ann-tests"><h6>4 &middot; Tests</h6><p>Did the output work? For this project, I had two scores: <strong>gen_tests</strong> (model grading itself) vs. <strong>gold_tests</strong> (human ground truth).</p></div>
+      <div class="aj-ann aj-ann-meta"><h6>5 &middot; Metadata</h6><p>Run info: model, message count, cost, duration, resolved or not.</p></div>
+    </div>
+  </div>
+  <div class="aj-legend">
+    <div class="aj-legend-item"><span class="aj-legend-sw" style="background:#6080C8"></span> Input</div>
+    <div class="aj-legend-item"><span class="aj-legend-sw" style="background:#9B2E5A"></span> Messages</div>
+    <div class="aj-legend-item"><span class="aj-legend-sw" style="background:#E89040"></span> Output</div>
+    <div class="aj-legend-item"><span class="aj-legend-sw" style="background:#40A870"></span> Tests</div>
+    <div class="aj-legend-item"><span class="aj-legend-sw" style="background:#8A7A70"></span> Metadata</div>
+  </div>
+</div>
+<p>Your eval metrics only score the final output. That&rsquo;s it. Your trajectory shows you <em>how</em> the model got there &mdash; whether it actually reasoned correctly, stumbled into the right answer by dumb luck, found a shortcut your rubric didn&rsquo;t catch, or did something that you&rsquo;ve genuinely never seen before. A model that passes your eval can still be doing something that will embarrass you in front of paying users. Your trajectories are where that shows up first.</p>
+<hr>
+<h2><span class="section-num">#02</span> Sanity Check Your Harness</h2>
+<div class="harness-def" style="background:var(--ink);color:var(--cream);padding:30px 34px;border-radius:8px;margin:40px 0;border-left:4px solid var(--yellow)">
+<div style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);margin-bottom:14px">Quick definition</div>
+<h3 style="font-family:’Fraunces’,serif;font-style:italic;font-weight:300;font-size:22px;color:var(--cream);margin-bottom:12px;line-height:1.3">What is a <strong style="font-style:normal;font-weight:700;color:var(--yellow)">harness</strong>?</h3>
+<p style="font-size:15px;line-height:1.75;color:#C0B0A0;margin-bottom:14px">When you do RL, your Harness is the complete interactive system your model trains and evaluates inside. Think of it as a programmable staging environment: a working replica of the real product experience &mdash; the mock dashboard, the simulated IDE, the fake SaaS tool &mdash; that your agent clicks through, types into, and calls APIs against, just like a real user would.</p>
+<p style="font-size:15px;line-height:1.75;color:#C0B0A0;margin-bottom:14px">It does three things:</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+<div style="background:#120E0A;border:1px solid #2A2218;border-radius:6px;padding:14px 16px">
+<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--yellow);margin-bottom:6px">1. State</div>
+<div style="font-size:13px;color:#A09080;line-height:1.5">Defines what the agent &ldquo;sees&rdquo; right now &mdash; the current page, API response, file contents</div>
+</div>
+<div style="background:#120E0A;border:1px solid #2A2218;border-radius:6px;padding:14px 16px">
+<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--yellow);margin-bottom:6px">2. Actions</div>
+<div style="font-size:13px;color:#A09080;line-height:1.5">Defines what the agent can do from here &mdash; click, type, submit, call an endpoint</div>
+</div>
+<div style="background:#120E0A;border:1px solid #2A2218;border-radius:6px;padding:14px 16px">
+<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--yellow);margin-bottom:6px">3. Reward</div>
+<div style="font-size:13px;color:#A09080;line-height:1.5">Returns a score after each action &mdash; +1 for resolving a ticket, &minus;0.1 for wasted steps</div>
+</div>
+</div>
+<p style="font-size:14px;line-height:1.7;color:#8A7A6A"><strong style="color:var(--cream)">Why this matters here:</strong> In RL, the environment is your data generator. A broken harness doesn&rsquo;t just add noise &mdash; it actively generates garbage training data. Your model will learn to exploit your broken mechanics instead of learning the actual task. Fix the harness before you retrain.</p>
+</div>
+<p>Whenever I’m debugging a Reinforcement Learning (RL) run I usually try and first figure out if my error is a harness problem or a training run problem. The best way to do this is to just sanity check my Harness. This is basically my first 3 things I look into when I do that (not exhaustive though~).</p>
+<div class="diag-tree"><div class="dt-header">Diagnostic split: is it your harness or your training job?</div><div class="dt-body">
+<div class="dt-row"><div class="dt-cell"><div class="dt-q">Could I solve this task with the same context the model was given?</div><div class="dt-hint">Read the task description, tools available, context window</div></div><div class="dt-arrow">&rarr;</div><div class="dt-cell outcome-harness"><div class="dt-outcome-label" style="color:var(--yellow)">NO &rarr; Harness problem</div>The model might be failing on a task that was already broken before training. Environment is underspecified, context is missing, or the eval is flawed. <strong>Don&rsquo;t retrain. Fix the harness first.</strong></div></div>
+<div class="dt-row"><div class="dt-cell"><div class="dt-q">Does the model get the right answer via a shortcut my rubric didn&rsquo;t catch?</div><div class="dt-hint">Check tool call sequence vs. actual task requirement</div></div><div class="dt-arrow">&rarr;</div><div class="dt-cell outcome-model"><div class="dt-outcome-label" style="color:var(--blue)">YES &rarr; Training problem</div>Model could be reward-hacking. The harness is fine; the training signal is corrupted. Fix: add adversarial examples, strengthen rubric, anti-hack tests. Also check hyperparams!</div></div>
+<div class="dt-row"><div class="dt-cell"><div class="dt-q">Does the model fail at the same decision point across multiple traces on the same task type?</div><div class="dt-hint">Compare 5+ traces on the failing category</div></div><div class="dt-arrow">&rarr;</div><div class="dt-cell outcome-model"><div class="dt-outcome-label" style="color:var(--blue)">YES &rarr; Training gap</div>Consistent fork = missing training coverage for that decision type. But first: is the context available to solve it in your task definitions in the first place? If not, fix harness before adding more training data.</div></div>
+</div></div>
+<p>I&rsquo;ll do a full deep dive on harness architecture in a future post, but here&rsquo;s the TLDR is really check your harness before you jump to retraining. Your model learns from the trajectories it generates. If those have bad context, missing verifiers, or gameable rubrics, more training teaches the model to be confidently wrong. <strong>Read the traces before you rerun.</strong></p>
+<hr>
+<h2><span class="section-num">#03</span> The failure modes I look for first</h2>
+<p>After staring at enough of these, you start seeing the same failure modes over and over. Most trajectory failures fall into predictable buckets. Here&rsquo;s how I break it down on first Eyeballing pass:</p>
+<div class="fm-row"><div class="fm-badge red">CATEGORY 1<br>CHEATING<br>CREATIVELY</div><div class="fm-body"><h4>Your rubric is being satisfied. The skill is not being learned.</h4><p>Your e-commerce rec model regex-matches the expected answer format instead of reasoning. Your support bot pads every response to trigger thoroughness rewards. Your code agent traces the Python call stack, finds the correct answer already in the grader&rsquo;s memory, returns it directly, and disables CUDA sync to fake fast execution. <em>(METR caught this exact pattern on a real frontier model in 2025.)</em> Aggregate score: pass. Actual learning: zero.</p><p><strong>In prod:</strong> aces your eval set, produces confident garbage the moment a user phrases something differently.</p><span class="fix-tag fix-model">&rarr; Training job problem</span><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:8px">add anti-hack rubric checks, diversify task phrasings</span></div></div>
+<div class="fm-row"><div class="fm-badge yellow">CATEGORY 2<br>STUCK AT<br>THE SAME<br>FORK</div><div class="fm-body"><h4>The model fails at the same 2&ndash;3 decision points across every trajectory.</h4><p>A particular ambiguity in your domain &mdash; a claim classification edge case, a missing context type your harness doesn&rsquo;t provide, a tool call sequence it doesn&rsquo;t know how to exit cleanly. These patterns are <em>gold</em> for your next training iteration if you catch them. Completely invisible in aggregate pass rates.</p><p><strong>In prod:</strong> consistent failure on a task category your evals don&rsquo;t cover. Ten traces will show you the exact fork. Retraining won&rsquo;t fix what you haven&rsquo;t found.</p><span class="fix-tag fix-harness">&rarr; Often a harness problem first</span><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:8px">see if you can add extra system instructions and ask the agent to check its work for problems like this &mdash; really focus on making sure your product is giving the model proper context before you retrain</span></div></div>
+<div class="fm-row"><div class="fm-badge purple">CATEGORY 3<br>PRODUCT-<br>SPECIFIC<br>FAILURES</div><div class="fm-body"><h4>The stuff only your product, your customers, and the way you use the model can surface.</h4><p>These are the failures that are unique to your specific product and customer success workflows. They&rsquo;re confusing to parse because they look like model failures, harness failures, and product bugs all at once. You have to do custom eval work and eyeballing research to tease apart which is which. Legal review bot flags a UK contract clause as &ldquo;non-standard&rdquo; because it was trained on US norms, and the product routes both through the same pipeline &mdash; not a model failure, not a harness bug. A product routing issue that surfaces as bad output. Support agent escalates a refund correctly per policy, but the customer already got a partial refund through a different channel the agent can&rsquo;t see &mdash; model did the right thing. Product didn&rsquo;t pipe in refund history.</p><p><strong>In prod:</strong> Not a model regression, not a harness bug &mdash; a failure mode unique to how your product uses the model.</p><span class="fix-tag fix-both">&rarr; Covered in a future post</span><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:8px">requires custom eval and eyeballing work specific to your product</span></div></div>
+<div class="fm-row"><div class="fm-badge blue">CATEGORY 4<br>WTF IS<br>THAT :)</div><div class="fm-body"><h4>WTF is that :)</h4><p>Your custom code agent starts self-modifying its own test files to force passes. Your support bot begins prefacing every response with an unprompted disclaimer that wasn&rsquo;t in any training example. You can&rsquo;t write a detector for something you&rsquo;ve never seen &mdash; and by the time you notice in aggregate metrics, it&rsquo;s been baking into your model for hundreds of gradient steps.</p><p><strong>In prod:</strong> sometimes you don&rsquo;t know what&rsquo;s going on and you don&rsquo;t know why, and you just have to start sitting with that and doing the hard work of root cause analysis to fix it.</p><span class="fix-tag fix-both">&rarr; Could be either &mdash; read the trace to tell</span></div></div>
+<hr>
+<h2><span class="section-num">#04</span> Auriel&rsquo;s Summarized 10-point eyeballing checklist for post training agentic models (mainly RL)</h2>
+<p>This is my final opinionated checklist I go through when I sit down with a batch of traces. For each item: what to look for, and whether it points to a harness problem, a training job problem, or could be either. For like ten trajectories it usually takes me around 90 minutes.</p>
+<table class="checklist"><thead><tr><th style="width:30%">What to check</th><th style="width:48%">What to look for</th><th style="width:22%">My Hypothesis of the Problem</th></tr></thead><tbody>
+<tr><td><span class="item-name">1. Did it earn the score?</span><span class="item-desc">tool calls vs. task requirement</span></td><td>Right answer via shortcut (web search, regex match, grader memory)? Correct answer by luck rather than reasoning?</td><td><span class="ci-model">Training</span></td></tr>
+<tr><td><span class="item-name">2. Where did it hesitate?</span><span class="item-desc">repeated calls, oscillating edits</span></td><td>Loops at the same decision type across traces? Same missing context every time? The pattern reveals the gap.</td><td><span class="ci-either">Either</span></td></tr>
+<tr><td><span class="item-name">3. Could I solve it with the same context?</span><span class="item-desc">the human-in-the-loop test</span></td><td>If you had exactly the context the model had, could you succeed? If no, the harness is broken before training starts.</td><td><span class="ci-harness">Harness</span></td></tr>
+<tr><td><span class="item-name">4. Reward hacking patterns</span><span class="item-desc">regex, verbosity, execution hacks</span></td><td>Does the model pad its reasoning? Return outputs matching the rubric&rsquo;s surface pattern without doing the actual task?</td><td><span class="ci-model">Training</span></td></tr>
+<tr><td><span class="item-name">5. Self-test vs. gold-test split</span><span class="item-desc">the 1.0 / 0.0 problem</span></td><td>Do the tests the model wrote validate the right behavior, or validate its own (wrong) output? Are you surfacing both scores separately?</td><td><span class="ci-harness">Harness</span></td></tr>
+<tr><td><span class="item-name">6. Policy / constraint consistency</span><span class="item-desc">multi-turn drift check</span></td><td>If constrained behavior is required, does the model maintain it under pushback across turns, or soften by turn 4?</td><td><span class="ci-model">Training</span></td></tr>
+<tr><td><span class="item-name">7. Tool call volume</span><span class="item-desc">the cost signal you're missing</span></td><td>How many tool calls per substantive output? Error-retry cascades that shouldn&rsquo;t be there? This is your cost discrepancy source.</td><td><span class="ci-harness">Harness</span></td></tr>
+<tr><td><span class="item-name">8. Spec / requirement coverage</span><span class="item-desc">what did it silently skip?</span></td><td>Which required behaviors are absent? Did the model substitute something that looks right without satisfying the actual requirement?</td><td><span class="ci-either">Either</span></td></tr>
+<tr><td><span class="item-name">9. Punishment fairness</span><span class="item-desc">is the low score the model's fault?</span></td><td>Was the model penalized for a task unsolvable with the context it had? Training on unfair penalties makes your model worse across runs.</td><td><span class="ci-harness">Harness</span></td></tr>
+<tr><td><span class="item-name">10. Anything new and weird</span><span class="item-desc">the emergent behavior watch</span></td><td>Any behavior you&rsquo;ve genuinely never seen? Log it immediately. Emergent patterns bake in fast.</td><td><span class="ci-either">Either</span></td></tr>
+</tbody></table>
+<hr>
+<h2><span class="section-num">#05</span> Build your Agentic Eyeballing Trajectory Viewer in 30 minutes</h2>
+<p>Sometimes, to make it easier, I will also vibe-code myself a viewer tool &mdash; a tinder-style swipe-through interface &mdash; or use tools like <a href="https://hud.ai">hud.ai</a> where I can step through each trajectory action by action. I look at my 10 point checklist above and I go through the trajectories, and from each Trajectory, I look at a single Trace and I begin critically thinking and reading through them. Here&rsquo;s a sample prompt I use to vibe code a Coding Trajectory Viewer on the fly:</p>
+<div class="prompt-block"><div class="pb-label">One-shot master prompt &rarr; Hugging Face URL to trajectory dashboard</div><div class="pb-text" style="font-size:12px;line-height:1.7">You are a coding agent. Build a complete local trajectory dashboard from a Hugging Face dataset URL, end-to-end, with no manual file moving by the user.<br><br><strong style="color:#E89040">User input (only this should need editing or you can swap it for a JSON scheme example trajectory)</strong><br><span class="pb-ph">HUGGINGFACE_VIEWER_URL</span>="https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories/viewer/default/train"<br><span class="pb-ph">ROW_COUNT</span>=25<br><span class="pb-ph">OUTPUT_DIR</span>="trajectory_dashboard"<br><br><strong style="color:#E89040">Goal</strong><br>From HUGGINGFACE_VIEWER_URL, automatically:<br>1. Download trajectory rows into trajectories.json<br>2. Build trajectory_viewer.html (single-file app)<br>3. Place both files in OUTPUT_DIR<br>4. Start a localhost server and print the exact URL to open<br><br><strong style="color:#E89040">Required workflow</strong><br>1) Parse dataset params from URL (dataset id, config, split)<br>2) Download rows from HF datasets-server API, save raw response<br>3) Convert to dashboard input JSON &mdash; extract .rows[].row, validate array length &gt; 0, each item has a message list field<br>4) Normalize each item to: trajectory_id, instance_id, repo, trajectory, tools, model_patch, exit_status, resolved<br><br><strong style="color:#E89040">Generate trajectory_viewer.html</strong><br>Single HTML file only (no framework/build tools/npm). Only external dep: Prism.js CDN. Load data via fetch('trajectories.json').<br><br>4-column layout, full viewport height, each panel independently scrollable:<br>&bull; <strong>Sidebar</strong> (280px): trajectories list, status badge, message count, per-trajectory label counts<br>&bull; <strong>Main content</strong> (1fr): overview + full trace viewer<br>&bull; <strong>Notes panel</strong> (340px): labels (good/problematic/review), notes, trajectory-level notes<br>&bull; <strong>Tests panel</strong> (400px): polished testing UX with scorecard, test run timeline, per-run summary cards, created test files<br><br>Message rendering: role-colored cards, assistant tool-calls as sub-cards, TLDR header summaries, long text auto-collapses (&gt;2000 chars), unified diff rendering, markdown-ish rendering.<br><br>Tool-specific rendering: execute_bash (syntax-highlighted command), str_replace_editor (view/create/str_replace/insert modes), think (highlighted reasoning), finish (completion style), unknown tools (generic fallback).<br><br>Keyboard shortcuts: j/k next/prev message, h/l prev/next trajectory, Enter expand/collapse, n focus notes, 1/2/3 label + auto-advance, 0 clear label, Esc deselect.<br><br>Persistence in localStorage for notes, labels, trajNotes. Escape untrusted text, handle malformed tool-call arguments, handle missing fields gracefully.<br><br>6) Run and verify locally &mdash; start server, print path + URL + trajectory count.<br>7) If any step fails, self-correct and retry automatically. Complete the full pipeline in one run.</div><div class="pb-copy">&rarr; Only change one line: <code style="font-size:11px">HUGGINGFACE_VIEWER_URL</code>.</div></div>
+<p>Takes around 30 minutes with your coding assistant of choice. Here&rsquo;s a video sample of what it should look like and some screenshots of what I got when I vibe coded with Codex CLI and Claude Code in 1 shot:</p>
+<!-- YouTube embed -->
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:24px 0;border:1px solid var(--border)">
+<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" src="https://www.youtube.com/embed/HFxc2hhcEO0" title="Trajectory Viewer Walkthrough" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+</div>
+<!-- Screenshot gallery -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0">
+<div>
+<div style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">Codex CLI</div>
+<img src="CODEX-TRAJECTORY-VIEWERS.png" alt="Trajectory viewer built with Codex CLI" style="width:100%;border-radius:6px;border:1px solid var(--border)">
+</div>
+<div>
+<div style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">Claude Code</div>
+<img src="claude code viewer.png" alt="Trajectory viewer built with Claude Code" style="width:100%;border-radius:6px;border:1px solid var(--border)">
+</div>
+</div>
+<p>Once you have a viewer, the five questions I ask on every trace:</p>
+<div class="q-stack">
+<div class="q-item"><div class="q-num">01</div><div class="q-body"><div class="q-ask">Did this model actually earn its score?</div><div class="q-how">Read the tool call sequence. Does the reasoning in the think tokens justify the output? Or did it arrive at the right answer through a path your rubric didn&rsquo;t anticipate?</div><span class="q-tag ci-model">Training job if shortcut</span></div></div>
+<div class="q-item"><div class="q-num">02</div><div class="q-body"><div class="q-ask">Where did it hesitate, loop, or get stuck?</div><div class="q-how">Repeated tool calls, oscillating edits, sudden topic pivots, the decision points your training data doesn&rsquo;t cover. Log them. They&rsquo;re your next rubric or data improvement.</div><span class="q-tag ci-either">Diagnose further</span></div></div>
+<div class="q-item"><div class="q-num">03</div><div class="q-body"><div class="q-ask">Could I solve this task with the same context it was given?</div><div class="q-how">If no, harness problem. The model is failing on a task broken before training started. Don&rsquo;t add data to a broken environment.</div><span class="q-tag ci-harness">Harness fix first</span></div></div>
+<div class="q-item"><div class="q-num">04</div><div class="q-body"><div class="q-ask">Is the model being penalized for something that&rsquo;s the environment&rsquo;s fault?</div><div class="q-how">Low score on a badly-designed task is noise, not signal. Training on it teaches the wrong thing. This is how teams accidentally make their models worse.</div><span class="q-tag ci-harness">Remove from training set</span></div></div>
+<div class="q-item"><div class="q-num">05</div><div class="q-body"><div class="q-ask">Is there anything here I&rsquo;ve genuinely never seen before?</div><div class="q-how">Log it immediately, even if minor. Emergent behaviors compound quietly. The ones that surface in prod are always the ones nobody logged at step 100.</div><span class="q-tag ci-either">Log it now, classify later</span></div></div>
+</div>
+<p>Do this enough and you build an intuition that no metric can replace. You start to <em>feel</em> when data is going to produce real learning versus when it&rsquo;s going to be noise. That intuition is what makes someone effective at RL evaluation, and there is no shortcut to developing it other than putting in the hours with the actual traces and though this guide is a start it&rsquo;s definitely very opinionated and 100% not exhaustive.</p>
+<hr>
+<h2>Homework</h2>
+<div class="cta-box"><div class="cta-item"><h4>Grab 10 trajectories from your last training run.</h4><p>Run the checklist. Note what flags and whether it points to harness or training. DM me what you found.</p><a href="https://x.com/aurielws" class="cta-btn btn-primary">&#8594; DM me on X</a> <a href="https://www.linkedin.com/in/aurielws" class="cta-btn btn-secondary" style="margin-left:6px">&#8594; Tag me on LinkedIn</a></div><div class="cta-item"><h4>No trajectories yet and just wanna practice?</h4><p>Use the public dataset from this post: <code style="font-size:11px">nebius/SWE-rebench-openhands-trajectories</code> on Hugging Face. Row 0 is the failure shown above.</p><a href="https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories/viewer/default/train?views%5B%5D=train" class="cta-btn btn-secondary">&#8594; Open on Hugging Face</a></div></div>
+<div class="next-up"><div class="nu-label">Other things I&rsquo;m thinking about writing on</div>
+<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+<li style="font-size:15px;font-weight:600;color:var(--ink);padding:10px 14px;background:var(--paper);border:1px solid var(--border);border-radius:6px;border-left:4px solid var(--accent)">&#x2713; How I do Agentic Trajectory Eyeballing</li>
+<li style="font-size:15px;font-weight:600;color:var(--ink);padding:10px 14px;background:var(--paper);border:1px solid var(--border);border-radius:6px">Rubrics and Verifiers</li>
+<li style="font-size:15px;font-weight:600;color:var(--ink);padding:10px 14px;background:var(--paper);border:1px solid var(--border);border-radius:6px">Environment Quality: How to think about Harness Quality for Training and Evals in RL</li>
+<li style="font-size:15px;font-weight:600;color:var(--ink);padding:10px 14px;background:var(--paper);border:1px solid var(--border);border-radius:6px">Debugging Walk Through</li>
+<li style="font-size:15px;font-weight:600;color:var(--ink);padding:10px 14px;background:var(--paper);border:1px solid var(--border);border-radius:6px">Benchmarking</li>
+</ul>
+<p style="font-size:14px;color:var(--ink2);margin-top:16px;line-height:1.65">Beyond this, I talk about angel investing, AI futurism, and agentic quality and you can find my full content plan for this year <a href="https://aurielws.github.io/writing.html">here</a>.</p>
+</div>
+<div class="signoff"><div class="signoff-name">Auriel</div><div class="signoff-disc"><em>These opinions are my own and don&rsquo;t represent the views of any of my affiliations or employer, but if you keep wondering why your RL data ends up in an abandoned directory, maybe start here &#x1F937;.</em></div></div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-name"><strong>Auriel</strong></div>
+  <div class="footer-links">
+    <a href="https://x.com/aurielws" target="_blank">X / Twitter</a>
+    <a href="https://www.linkedin.com/in/aurielws/" target="_blank">LinkedIn</a>
+  </div>
+  <div class="footer-stripe"></div>
+</footer>
+
+</body>
+</html>
