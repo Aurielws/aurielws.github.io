@@ -330,7 +330,7 @@
 </ul></div>
 <p>You just fine-tuned some open-source model you found on <a href="https://x.com/akshay_pachaar/status/2029212227438518406?s=20">X/Twitter</a> for your customer-facing SaaS agent. Training loss looked reasonable, eval scores hit 81%. You ship it. Three days later, users are rage-quitting in the exact scenarios your product is supposed to handle. Half your team says retrain with more data. The other half says the evals were wrong. Nobody has opened a single trajectory.</p>
 <p>I&rsquo;ve eyeballed thousands of trajectories, judged parametric wins and losses until my eyes bled at 2AM, and sat through more &ldquo;data&rdquo; pitches than I care to count. The fix is almost never &ldquo;let&rsquo;s try to add in more new data guys!&rdquo; The fix is <strong>spending time with your model</strong> looking through what it actually did, thought about doing, and also what it didn&rsquo;t do. The insights you need are in your traces. You just haven&rsquo;t looked. You don&rsquo;t Eyeball enough or you don&rsquo;t Eyeball well yet.</p>
-<p>This is a highly requested topic of discussion from my friends, peers who want to know how I think about agentic modelling, and mentees. I&rsquo;m targeting this to be useful for startups post-training their own custom models, big companies considering building domain-specific agents, and fresh grad researchers running their first real post-training loop (particularly for RL since that&rsquo;s one of the main ways we do agentic post-training these days). Future posts will broaden out to the bigger question of how to build good production-grade agents (from my POV at least), but today we focus on your model :).</p>
+<p>I&rsquo;m targeting this to be useful for startups post-training their own custom models, big companies considering building domain-specific agents, and fresh grad researchers running their first real post-training loop (particularly for RL since that&rsquo;s one of the main ways we do agentic post-training these days). Future posts will broaden out to the bigger question of how to build good production-grade agents (from my POV at least), but today we focus on your model :).</p>
 <p>Note: This is not the consensus view of every big AI lab researcher. This is just me and what I find helpful in reviewing agentic trajectories.</p>
 <hr>
 <h2><span class="section-num">#01</span> What is a trajectory, really</h2>
@@ -547,7 +547,7 @@
 </div>
 <p>Do this enough and you build an intuition that no metric can replace. You start to <em>feel</em> when data is going to produce real learning versus when it&rsquo;s going to be noise. That intuition is what makes someone effective at RL evaluation, and there is no shortcut to developing it other than putting in the hours with the actual traces and though this guide is a start it&rsquo;s definitely very opinionated and 100% not exhaustive.</p>
 <hr>
-<h2>Homework</h2>
+<h2>What you can do immediately</h2>
 <div class="cta-box"><div class="cta-item"><h4>Grab 10 trajectories from your last training run.</h4><p>Run the checklist. Note what flags and whether it points to harness or training. DM me what you found.</p><a href="https://x.com/aurielws" class="cta-btn btn-primary">&#8594; DM me on X</a> <a href="https://www.linkedin.com/in/aurielws" class="cta-btn btn-secondary" style="margin-left:6px">&#8594; Tag me on LinkedIn</a></div><div class="cta-item"><h4>No trajectories yet and just wanna practice?</h4><p>Use the public dataset from this post: <code style="font-size:11px">nebius/SWE-rebench-openhands-trajectories</code> on Hugging Face. Row 0 is the failure shown above.</p><a href="https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories/viewer/default/train?views%5B%5D=train" class="cta-btn btn-secondary">&#8594; Open on Hugging Face</a></div></div>
 <div class="next-up"><div class="nu-label">Other things I&rsquo;m thinking about writing on</div>
 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
@@ -560,6 +560,8 @@
 <p style="font-size:14px;color:var(--ink2);margin-top:16px;line-height:1.65">Beyond this, I talk about angel investing, AI futurism, and agentic quality and you can find my full content plan for this year <a href="https://aurielws.github.io/writing.html">here</a>.</p>
 </div>
 <div class="signoff"><div class="signoff-name">Auriel</div><div class="signoff-disc"><em>These opinions are my own and don&rsquo;t represent the views of any of my affiliations or employer, but if you keep wondering why your RL data ends up in an abandoned directory, maybe start here &#x1F937;.</em></div></div>
+
+<p style="font-size:14px;color:var(--ink2);margin-top:32px;line-height:1.65">Thank you to my friends who edited this so many times over and over again with me and helped me take the first leap at posting on the internet: <a href="https://www.linkedin.com/in/davidpantera/">David Pantera</a>, <a href="https://www.linkedin.com/in/journeyer/">Daniel Kim</a>, <a href="https://www.linkedin.com/in/jessicafeiyali/">Jessica Li</a>, <a href="https://www.linkedin.com/in/shagunohri/">Shagun</a>, and Jay.</p>
 
 </div>
 
