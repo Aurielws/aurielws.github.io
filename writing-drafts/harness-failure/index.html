@@ -292,6 +292,9 @@ ol li strong{color:var(--ink)}
 .cascade-footer strong{color:var(--red)}
 
 
+/* ══════════════════════════════════════════════════════════════════
+   PASSWORD GATE
+   ══════════════════════════════════════════════════════════════════ */
 #pw-gate{position:fixed;inset:0;z-index:9999;background:var(--cream,#FDF9F4);display:flex;align-items:center;justify-content:center;flex-direction:column}
 #pw-gate .pw-stripe{position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878)}
 #pw-gate .pw-box{text-align:center;max-width:380px;padding:48px 40px;background:#fff;border:1.5px solid #E0D4C8;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
@@ -309,6 +312,7 @@ ol li strong{color:var(--ink)}
 </style>
 </head>
 <body>
+<!-- ══════════ PASSWORD GATE ══════════ -->
 <div id="pw-gate">
 <div class="pw-stripe"></div>
 <div class="pw-box">
@@ -320,6 +324,7 @@ ol li strong{color:var(--ink)}
 <div class="pw-note">Auriel's RL Pet Peeves Mini-Series</div>
 </div>
 </div>
+
 <div id="blog-content">
 
 
@@ -499,6 +504,31 @@ ol li strong{color:var(--ink)}
 <div class="visual-footer">The training harness <strong>wraps</strong> the environment. Both should mirror production as closely as possible.</div>
 </div>
 
+<!-- ── DEFINITION BLOCK ── -->
+<div class="def-block">
+<div class="def-block-header">Definitions — What I Mean in This Post</div>
+<div class="def-block-body">
+<div class="def-item">
+<div class="def-term">Model Use Case</div>
+<div class="def-desc">You're doing RL to help the model learn to act as a sales assistant inside a SaaS sales platform (qualifying leads, updating pipelines, sending emails, closing deals, etc.).</div>
+</div>
+<div class="def-item">
+<div class="def-term">Training Harness</div>
+<div class="def-desc">The complete, engineered interactive simulation + scaffolding the model actually trains inside during RL. <strong>Example:</strong> the full mock SaaS sales tool — realistic fake dashboard UI, simulated backend responses, defined action space ("click button / fill form / call API"), state management, reward calculator, trajectory logging, timeouts, error handling, reset logic, etc. <strong>Main Focus:</strong> reliably generate thousands of high-quality training trajectories without crashing or injecting bias.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Environment</div>
+<div class="def-desc">The abstract "world" / task the model is learning. More narrowly: the mock sales tool's states (what the dashboard shows), valid actions, transition dynamics (what happens when you click "send email"), and base reward signals. In practice, the training harness implements and wraps this environment.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Production Runtime</div>
+<div class="def-desc">The real, live system that actual sales reps use every day. Real databases, authentication, rate limiting, full observability, live safety guardrails, user session management, canary deployments, A/B testing infrastructure, etc. This is what the trained model gets deployed into after RL is finished.</div>
+</div>
+</div>
+</div>
+
+<p class="rant-callout">To be crystal clear: When I use "harness" in this post, I mean the training harness — the engineered scaffolding that implements the RL environment during learning. This is not the production runtime harness that serves real users (though Production Runtime and Training Harness should share a ton of attributes if you want to avoid having the model learn out of distribution behaviors).</p>
+
 <!-- ══════════ SHARED ATTRIBUTES CALLOUT ══════════ -->
 <div style="background:linear-gradient(135deg,rgba(200,80,128,.04),rgba(96,128,200,.04));border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0">
 <div style="display:flex;align-items:center;gap:12px;padding:14px 22px;background:rgba(0,0,0,.02);border-bottom:1px solid var(--border)">
@@ -517,27 +547,6 @@ ol li strong{color:var(--ink)}
 <p style="font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--accent);margin:0;line-height:1.5">The more these overlap, the less your model learns out-of-distribution behaviors that won't transfer to production.</p>
 </div>
 </div>
-
-<!-- ── DEFINITION BLOCK ── -->
-<div class="def-block">
-<div class="def-block-header">Definitions — What I Mean in This Post</div>
-<div class="def-block-body">
-<div class="def-item">
-<div class="def-term">Training Harness</div>
-<div class="def-desc">The complete, engineered interactive simulation + scaffolding the model actually trains inside during RL. <strong>Example:</strong> the full mock SaaS sales tool — realistic fake dashboard UI, simulated backend responses, defined action space ("click button / fill form / call API"), state management, reward calculator, trajectory logging, timeouts, error handling, reset logic, etc. <strong>Main Focus:</strong> reliably generate thousands of high-quality training trajectories without crashing or injecting bias.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Environment</div>
-<div class="def-desc">The abstract "world" / task the model is learning. More narrowly: the mock sales tool's states (what the dashboard shows), valid actions, transition dynamics (what happens when you click "send email"), and base reward signals. In practice, the training harness implements and wraps this environment.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Production Runtime</div>
-<div class="def-desc">The real, live system that actual sales reps use every day. Real databases, authentication, rate limiting, full observability, live safety guardrails, user session management, canary deployments, A/B testing infrastructure, etc. This is what the trained model gets deployed into after RL is finished.</div>
-</div>
-</div>
-</div>
-
-<p class="rant-callout">To be crystal clear: When I use "harness" in this post, I mean the training harness — the engineered scaffolding that implements the RL environment during learning. This is not the production runtime harness that serves real users (though Production Runtime and Training Harness should share a ton of attributes if you want to avoid having the model learn out of distribution behaviors).</p>
 
 <p>Broken harnesses are literally a virus that curses RL startups, but it also curses researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
 
@@ -1083,7 +1092,8 @@ function showCascadeDetail(idx, wrapEl) {
 }
 </script>
 
-</div>
+</div><!-- /#blog-content -->
+
 <script>
 async function checkPw(){
   const input = document.getElementById('pw-input').value;
