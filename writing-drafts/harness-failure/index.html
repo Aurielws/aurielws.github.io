@@ -292,9 +292,6 @@ ol li strong{color:var(--ink)}
 .cascade-footer strong{color:var(--red)}
 
 
-/* ══════════════════════════════════════════════════════════════════
-   PASSWORD GATE
-   ══════════════════════════════════════════════════════════════════ */
 #pw-gate{position:fixed;inset:0;z-index:9999;background:var(--cream,#FDF9F4);display:flex;align-items:center;justify-content:center;flex-direction:column}
 #pw-gate .pw-stripe{position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878)}
 #pw-gate .pw-box{text-align:center;max-width:380px;padding:48px 40px;background:#fff;border:1.5px solid #E0D4C8;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
@@ -312,7 +309,6 @@ ol li strong{color:var(--ink)}
 </style>
 </head>
 <body>
-<!-- ══════════ PASSWORD GATE ══════════ -->
 <div id="pw-gate">
 <div class="pw-stripe"></div>
 <div class="pw-box">
@@ -324,7 +320,6 @@ ol li strong{color:var(--ink)}
 <div class="pw-note">Auriel's RL Pet Peeves Mini-Series</div>
 </div>
 </div>
-
 <div id="blog-content">
 
 
@@ -353,7 +348,7 @@ ol li strong{color:var(--ink)}
 <div class="visual">
 <div class="visual-header">
 <span class="visual-label">Blueprint</span>
-<span class="visual-style">The Anatomy of a Good Harness</span>
+<span class="visual-style">The Anatomy of a Good Training Harness</span>
 </div>
 <div class="visual-body">
 <div class="blueprint-grid">
@@ -1088,8 +1083,7 @@ function showCascadeDetail(idx, wrapEl) {
 }
 </script>
 
-</div><!-- /#blog-content -->
-
+</div>
 <script>
 async function checkPw(){
   const input = document.getElementById('pw-input').value;
