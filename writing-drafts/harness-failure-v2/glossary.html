@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft — RL Glossary</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
+.pw-box{text-align:center;max-width:380px;padding:40px}
+.pw-box h2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;color:#1A1408;margin-bottom:8px}
+.pw-box p{font-size:14px;color:#7A6A60;margin-bottom:24px}
+.pw-input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-size:16px;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;outline:none;transition:border-color .2s}
+.pw-input:focus{border-color:#9B2E5A}
+.pw-btn{margin-top:12px;width:100%;padding:12px;background:#9B2E5A;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.pw-btn:hover{background:#C85080}
+.pw-error{color:#9B2020;font-size:13px;margin-top:10px;display:none}
+.pw-stripe{height:4px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878);margin-bottom:32px;border-radius:2px}
+#protected-content{display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+<div class="pw-box">
+<div class="pw-stripe"></div>
+<h2>Draft Preview</h2>
+<p>This is a private draft. Enter the password to continue.</p>
+<input type="password" class="pw-input" id="pw-input" placeholder="Password" autocomplete="off">
+<button class="pw-btn" id="pw-btn" onclick="checkPw()">Enter</button>
+<div class="pw-error" id="pw-error">Incorrect password.</div>
+</div>
+</div>
+
+<div id="protected-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RL Glossary — Auriel's RL Pet Peeves</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
+  --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
+  --cream:#FDF9F4;--paper:#F7EFE5;--ink:#1A1408;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#C85080;--border:#E0D4C8;
+  --mono:"DM Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Plus Jakarta Sans",sans-serif;background:var(--cream);color:var(--ink2);line-height:1.72;font-size:16.5px}
+
+.stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
+
+.hero{background:var(--ink);padding:56px 0 44px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.container{max-width:760px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+.hero-series{font-family:var(--mono);font-size:11px;color:var(--coral);text-transform:uppercase;letter-spacing:3px;margin-bottom:12px}
+.hero h1{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:clamp(1.8rem,4vw,2.4rem);color:var(--cream);line-height:1.15;margin-bottom:12px}
+.hero-sub{font-size:14px;color:#6a5a48;max-width:560px;line-height:1.65;font-style:italic}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--accent);text-decoration:none;text-transform:uppercase;letter-spacing:2px;padding:28px 0 0;transition:color .2s}
+.back-link:hover{color:var(--accent2)}
+
+article{padding-bottom:80px}
+
+.def-section{margin-top:48px}
+.def-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:24px}
+.def-card-header{padding:14px 22px;background:var(--paper);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.def-card-term{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:2px}
+.def-card-body{padding:22px 24px}
+.def-card-body p{margin-bottom:14px;font-size:15.5px;line-height:1.7;color:var(--ink2)}
+.def-card-body p:last-child{margin-bottom:0}
+.def-card-body strong{color:var(--ink);font-weight:700}
+.def-card-body code{font-family:var(--mono);font-size:13px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
+.def-card-body ol,.def-card-body ul{margin:12px 0;padding-left:24px;font-size:15px;line-height:1.7}
+.def-card-body li{margin-bottom:8px}
+
+.note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:48px;line-height:1.6;text-align:center;font-style:italic}
+
+/* SL vs RL Visual */
+.visual-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:32px 0}
+.visual-card-header{display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--paper);border-bottom:1px solid var(--border)}
+.visual-card-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:#fff;background:var(--accent);padding:3px 10px;border-radius:4px;font-weight:600}
+.visual-card-style{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:300}
+.visual-card-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2)}
+.visual-card-footer strong{color:var(--accent)}
+
+.vb-container{display:grid;grid-template-columns:1fr 1fr;position:relative;min-height:320px}
+@media(max-width:600px){.vb-container{grid-template-columns:1fr;gap:0}}
+.vb-vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--ink);color:var(--cream);font-family:var(--mono);font-size:11px;font-weight:700;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:5;letter-spacing:1px}
+@media(max-width:600px){.vb-vs{left:50%;top:auto;position:relative;margin:-18px auto}}
+.vb-panel{padding:28px 24px}
+.vb-sl{border-right:1px solid var(--border)}
+@media(max-width:600px){.vb-sl{border-right:none;border-bottom:1px solid var(--border)}}
+.vb-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:4px}
+.vb-title{font-family:"Fraunces",serif;font-style:italic;font-size:15px;color:var(--ink);font-weight:300;margin-bottom:20px}
+.vb-pipe{display:flex;flex-direction:column;gap:12px}
+.vb-step{display:flex;align-items:flex-start;gap:10px}
+.vb-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.vb-step-text{font-size:13px;line-height:1.45}
+.vb-step-label{font-weight:700;display:block;margin-bottom:1px}
+.vb-step-sub{color:var(--muted);font-size:12px}
+.vb-loop{margin-top:16px;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.5;text-align:center}
+.vb-loop-icon{font-size:18px;display:block;margin-bottom:4px}
+
+/* Key detail box */
+.key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
+.key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
+
+/* Section heading */
+.section-heading{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.5rem;color:var(--ink);margin:48px 0 18px;line-height:1.2}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+
+<div class="hero">
+<div class="container">
+<div class="hero-series">Auriel's RL Pet Peeves Mini-Series</div>
+<h1>Glossary: Key Concepts for RL Newcomers</h1>
+<div class="hero-sub">New to RL, or pivoting into post-training for autoregressive models from another ML specialty or from school? This section grounds you in the core vocabulary used throughout the post. Each definition is written to bridge from engineering concepts you already maybe know.</div>
+</div>
+</div>
+
+<article>
+<div class="container">
+
+<a href="v8-restructured.html" class="back-link">&larr; Back to the post</a>
+
+<div class="def-section">
+
+<!-- MODEL -->
+<div class="def-card" id="model">
+<div class="def-card-header">
+<div class="def-card-term">Model</div>
+</div>
+<div class="def-card-body">
+<p>At its core, a model is a mathematical function that takes inputs and produces predictions. If you've ever written <code>y = mx + b</code> in a math class, that's the simplest possible model. In machine learning, models are the same idea taken to an extreme: instead of two parameters (m and b), a modern neural network might have billions of parameters, and the computer adjusts all of them during training to minimize how wrong the model's predictions are. The result is a system that can recognize images, generate text, or make decisions &mdash; all by learning patterns from data.</p>
+</div>
+</div>
+
+<!-- REINFORCEMENT LEARNING -->
+<div class="def-card" id="rl">
+<div class="def-card-header">
+<div class="def-card-term">Reinforcement Learning (RL)</div>
+</div>
+<div class="def-card-body">
+<p>Reinforcement learning is a way to train a model by letting it learn through trial and error, rather than showing it a pre-labeled answer key.</p>
+<p><strong>Analogy:</strong> think about how you learned to ride a bike. Nobody handed you a textbook of "correct" body positions for each millisecond. Instead, you got on, wobbled, fell, adjusted, and eventually figured it out. You received a "reward signal" in the form of staying upright and moving forward, and a "penalty" in the form of hitting the pavement.</p>
+<p>RL works the same way. An <strong>agent</strong> (the model) takes actions inside an <strong>environment</strong> (the world it interacts with), and receives numerical rewards that tell it how well it's doing. Over many rounds of trial and error, the agent's <strong>policy</strong> &mdash; its learned strategy for which action to take in any given situation &mdash; improves to maximize the total reward it accumulates.</p>
+<p>This stands in contrast to <strong>supervised learning</strong>, the paradigm most people who have been in ML a while are probably more familiar with &mdash; think classifying tumors from labeled X-ray datasets, predicting house prices from a CSV of historical features, or flagging spam from a pre-collected corpus of emails. In all of these cases, you give the model a dataset of input-output pairs and it learns to map inputs to the correct outputs. In supervised learning, the data is static &mdash; you collect it once and train on it. In RL, the agent generates its own data by interacting with the environment, which is why environment quality is so critical and why we're here today.</p>
+</div>
+</div>
+
+<!-- SL VS RL VISUAL + ENV IS YOUR DATA GENERATOR -->
+<h2 class="section-heading">The Environment Is Your Data Generator</h2>
+
+<p style="margin-bottom:18px;font-size:15.5px;line-height:1.7">You probably remember studying the traditional ML classes the one golden rule: "Garbage in, garbage out." If you feed a model inaccurate or low-quality data, no amount of algorithmic sophistication can save it. So because in RL you don't have a static dataset, instead the agent creates its own training data on the fly by interacting with the environment, every single action the agent takes, and every reward it receives in return, becomes a data point that shapes the model's future behavior. This means the quality of your environment directly determines the quality of your training data. A flaky harness doesn't just introduce noise; it actively generates garbage data and feeds it straight into your model's learning steps.</p>
+
+<div class="visual-card">
+<div class="visual-card-header">
+<span class="visual-card-label">Data Flow</span>
+<span class="visual-card-style">Supervised Learning vs. Reinforcement Learning</span>
+</div>
+<div class="vb-container">
+<div class="vb-vs">VS</div>
+<!-- SL -->
+<div class="vb-panel vb-sl">
+<div class="vb-tag" style="color:var(--navy)">Supervised Learning</div>
+<div class="vb-title">Static data in, predictions out</div>
+<div class="vb-pipe">
+<div class="vb-step">
+<div class="vb-num" style="background:var(--navy)">1</div>
+<div class="vb-step-text"><span class="vb-step-label">Collect Dataset</span><span class="vb-step-sub">Images, text, labels &mdash; fixed</span></div>
+</div>
+<div class="vb-step">
+<div class="vb-num" style="background:var(--navy)">2</div>
+<div class="vb-step-text"><span class="vb-step-label">Train Model</span><span class="vb-step-sub">Minimize loss on static pairs</span></div>
+</div>
+<div class="vb-step">
+<div class="vb-num" style="background:var(--navy)">3</div>
+<div class="vb-step-text"><span class="vb-step-label">Deploy &amp; Predict</span><span class="vb-step-sub">One direction. Data never changes.</span></div>
+</div>
+</div>
+</div>
+<!-- RL -->
+<div class="vb-panel">
+<div class="vb-tag" style="color:var(--accent)">Reinforcement Learning</div>
+<div class="vb-title">The environment generates your data</div>
+<div class="vb-pipe">
+<div class="vb-step">
+<div class="vb-num" style="background:var(--accent)">1</div>
+<div class="vb-step-text"><span class="vb-step-label">Agent Acts</span><span class="vb-step-sub">Takes action in environment</span></div>
+</div>
+<div class="vb-step">
+<div class="vb-num" style="background:var(--accent)">2</div>
+<div class="vb-step-text"><span class="vb-step-label">Environment Responds</span><span class="vb-step-sub">Returns state + reward</span></div>
+</div>
+<div class="vb-step">
+<div class="vb-num" style="background:var(--accent)">3</div>
+<div class="vb-step-text"><span class="vb-step-label">Policy Updates</span><span class="vb-step-sub">Model learns from its own experience</span></div>
+</div>
+<div class="vb-loop" style="background:rgba(155,46,90,.05);border:1px solid rgba(155,46,90,.12);color:var(--ink2)">
+<span class="vb-loop-icon">&#x1F504;</span>
+Continuous loop. Every interaction = new training data. Break the environment = break the data.
+</div>
+</div>
+</div>
+</div>
+<div class="visual-card-footer">In SL, bad data is a static problem you can fix. In RL, bad data is <strong>generated live</strong> &mdash; and it feeds directly into the model.</div>
+</div>
+
+<div class="key-detail">
+<div class="key-detail-text">Important detail: In reinforcement learning, the environment is your data generator.</div>
+</div>
+
+<!-- HARNESS -->
+<div class="def-card" id="harness">
+<div class="def-card-header">
+<div class="def-card-term">Harness</div>
+</div>
+<div class="def-card-body">
+<p>A harness (or, more precisely, a training/evaluation harness) is the interactive system that the RL agent trains in and is evaluated against. It is a simulation or emulation of the real product experience that the agent is supposed to learn to operate in.</p>
+<p><strong>Example:</strong> if you're building an RL agent that's supposed to learn to use a customer support tool, the harness is a working replica of that tool. It's a piece of running software that the agent can interact with in real time &mdash; clicking buttons, typing into fields, reading responses &mdash; just like a real user would. The harness is responsible for three things:</p>
+<ol>
+<li><strong>Defining the current state of the world:</strong> What does the agent "see" right now? (e.g., the current page of the dashboard, the contents of a text field, an API response it just received.)</li>
+<li><strong>Defining what actions are valid:</strong> What can the agent do from here? (e.g., click this button, type in this field, submit this form, call this API endpoint.)</li>
+<li><strong>Returning a reward after a state transition:</strong> After the agent takes an action, how good was it? (e.g., +1 for successfully resolving a ticket, -0.1 for each unnecessary step, -1 for crashing the workflow.)</li>
+</ol>
+<p>In formal RL terms, the harness implements the components of a <strong>Markov Decision Process (MDP)</strong> &mdash; the State space, the valid Actions, the Transition dynamics (how actions change the state), and the Reward function.</p>
+<p>If you've ever used a testing framework like Selenium or Playwright to write end-to-end tests for a web app, you already have a decent mental model. The harness is like a programmable staging environment that your agent interacts with instead of your QA team. The key difference is that in RL, this environment needs to be robust enough to handle not just the happy path, but thousands of creative, adversarial, and outright bizarre interaction patterns &mdash; because an RL agent will explore all of them.</p>
+</div>
+</div>
+
+<!-- PARAMETRIC KNOWLEDGE -->
+<div class="def-card" id="parametric-knowledge">
+<div class="def-card-header">
+<div class="def-card-term">Parametric Knowledge</div>
+</div>
+<div class="def-card-body">
+<p>When we say a model has "learned something," what does that actually mean physically? It means the model's parameters (those billions of numbers mentioned earlier) have been adjusted so that the right patterns are encoded in them. This is the model's true knowledge and understanding &mdash; we call this <strong>parametric knowledge</strong>.</p>
+<p>The goal of RL training is to get the model to acquire <strong>generalizable</strong> parametric knowledge &mdash; genuine understanding of how to solve the task that holds up even in new situations. We don't want the model to just memorize a specific sequence of clicks that happened to work one time. We want it to understand the underlying task deeply enough to generalize. When the environment is broken, the model can't build this real understanding. Instead, it overfits to the harness's specific flaws, learning brittle surface-level tricks to cope with the broken environment. This is a form of parametric knowledge, but it's useless &mdash; it won't transfer to the real task.</p>
+</div>
+</div>
+
+<!-- TRAJECTORY -->
+<div class="def-card" id="trajectory">
+<div class="def-card-header">
+<div class="def-card-term">Trajectory</div>
+</div>
+<div class="def-card-body">
+<p>A trajectory is a single complete episode of an agent interacting with the environment &mdash; the full sequence of states, actions, and rewards from start to finish. Think of it like a recorded session or a log of everything the agent did during one attempt at the task. When researchers "review trajectories," they're watching replays of the agent's behavior to diagnose what went right or wrong.</p>
+</div>
+</div>
+
+<!-- GRADIENT NOISE -->
+<div class="def-card" id="gradient-noise">
+<div class="def-card-header">
+<div class="def-card-term">Gradient Noise</div>
+</div>
+<div class="def-card-body">
+<p><strong>Variance in policy updates.</strong> Even when your harness is solid, gradients are estimated from a small set of samples. Limited sampling makes updates high variance by default, which is normal in RL. Some update noise is unavoidable before any harness bugs enter the picture.</p>
+</div>
+</div>
+
+<!-- ENVIRONMENT NOISE -->
+<div class="def-card" id="environment-noise">
+<div class="def-card-header">
+<div class="def-card-term">Environment Noise</div>
+</div>
+<div class="def-card-body">
+<p><strong>Stochastic rewards and random transitions.</strong> Real environments often have some randomness baked in. A robot's sensor readings are slightly noisy; a user's behavior isn't perfectly predictable from prod post-training data. In most post-training teams across major labs, people spend substantial time making sure the setup and pipelines can handle this kind of natural stochasticity.</p>
+</div>
+</div>
+
+</div><!-- /.def-section -->
+
+<p class="note">I had Claude generate this glossary but I reviewed it myself by hand to be sure I stand by the outputs lol. Hope it helps.</p>
+
+</div><!-- /.container -->
+</article>
+
+</body>
+</html>
+
+</div>
+
+<script>
+async function checkPw(){
+  var pw=document.getElementById('pw-input').value;
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw));
+  var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+  if(hash==='8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-overlay').style.display='none';
+    document.getElementById('protected-content').style.display='block';
+  }else{
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+</script>
+</body>
+</html>
