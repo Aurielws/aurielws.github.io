@@ -3,12 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft — Stop Shipping Low-Quality Harnesses</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
+.pw-box{text-align:center;max-width:380px;padding:40px}
+.pw-box h2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;color:#1A1408;margin-bottom:8px}
+.pw-box p{font-size:14px;color:#7A6A60;margin-bottom:24px}
+.pw-input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-size:16px;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;outline:none;transition:border-color .2s}
+.pw-input:focus{border-color:#9B2E5A}
+.pw-btn{margin-top:12px;width:100%;padding:12px;background:#9B2E5A;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.pw-btn:hover{background:#C85080}
+.pw-error{color:#9B2020;font-size:13px;margin-top:10px;display:none}
+.pw-stripe{height:4px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878);margin-bottom:32px;border-radius:2px}
+#protected-content{display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+<div class="pw-box">
+<div class="pw-stripe"></div>
+<h2>Draft Preview</h2>
+<p>This is a private draft. Enter the password to continue.</p>
+<input type="password" class="pw-input" id="pw-input" placeholder="Password" autocomplete="off">
+<button class="pw-btn" id="pw-btn" onclick="checkPw()">Enter</button>
+<div class="pw-error" id="pw-error">Incorrect password.</div>
+</div>
+</div>
+
+<div id="protected-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stop Shipping Low-Quality Harnesses and Calling It an "Environment" — Auriel's RL Pet Peeves</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════════════════════════════════
+/* ======================================================================
    BRAND SYSTEM — Auriel · Heirloom Palette
-   ══════════════════════════════════════════════════════════════════ */
+   ====================================================================== */
 :root{
   --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
   --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
@@ -26,14 +62,14 @@ body{
   line-height:1.72;font-size:16.5px;
 }
 
-/* ── STRIPE ── */
+/* -- STRIPE -- */
 .stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
 
-/* ── LAYOUT ── */
+/* -- LAYOUT -- */
 .container{max-width:760px;margin:0 auto;padding:0 28px}
 article{padding-bottom:100px}
 
-/* ── HERO ── */
+/* -- HERO -- */
 .hero{background:var(--ink);padding:72px 0 56px;margin-bottom:48px;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
 .hero .container{position:relative;z-index:1}
@@ -43,7 +79,7 @@ article{padding-bottom:100px}
 .hero-sub{font-size:15px;color:#6a5a48;max-width:560px;line-height:1.65}
 .hero-sub strong{color:var(--apricot)}
 
-/* ── TYPOGRAPHY ── */
+/* -- TYPOGRAPHY -- */
 h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.65rem;color:var(--ink);margin:56px 0 18px;line-height:1.2}
 h3{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:1.25rem;color:var(--ink);margin:40px 0 14px;line-height:1.3}
 p{margin-bottom:18px}
@@ -51,166 +87,65 @@ strong{font-weight:700;color:var(--ink)}
 em{font-style:italic}
 a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(155,46,90,.3);text-underline-offset:3px;transition:all .15s}
 a:hover{color:var(--accent2);text-decoration-color:var(--accent2)}
+code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
 
-/* ── CALLOUT / BLOCKQUOTE ── */
+/* -- BLOCKQUOTE -- */
 blockquote{background:var(--paper);border-left:4px solid var(--apricot);padding:18px 24px;margin:24px 0;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink2);line-height:1.6}
 blockquote strong{color:var(--ink)}
 
-/* ── KEY DETAIL BOX ── */
+/* -- KEY DETAIL BOX -- */
 .key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
 .key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
 
-/* ── CODE / MONO ── */
-code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
-
-/* ── SECTION RULE ── */
-hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
-
-/* ── DEFINITION BLOCK ── */
-.def-block{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:32px 0}
-.def-block-header{background:var(--paper);padding:14px 22px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600}
-.def-block-body{padding:24px 22px}
-.def-item{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(0,0,0,.04)}
-.def-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
-.def-term{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
-.def-desc{font-size:14.5px;color:var(--ink2);line-height:1.6}
-
-/* ── APPENDIX ── */
-.appendix-note{font-size:14px;color:var(--muted);font-style:italic;line-height:1.6;margin-bottom:32px}
-
-/* ── ORDERED LIST ── */
-ol{margin:16px 0 24px 24px}
-ol li{margin-bottom:12px;padding-left:4px}
-ol li strong{color:var(--ink)}
-
-/* ── EMOJI CALLOUT ── */
-.rant-callout{font-size:15px;color:var(--muted);margin:20px 0;padding:14px 20px;background:rgba(0,0,0,.02);border-radius:8px;border-left:3px solid var(--apricot)}
-
-/* ── RECOMMENDATION CARDS ── */
+/* -- REC CARDS -- */
 .rec-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0}
 .rec-card-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
 .rec-card h3{margin-top:0;margin-bottom:12px}
 .rec-card p{font-size:15px;margin-bottom:0}
 
-/* ══════════════════════════════════════════════════════════════════
-   VISUAL COMPONENT STYLES
-   ══════════════════════════════════════════════════════════════════ */
-.visual{margin:36px 0;border:2px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
-.visual-header{background:var(--ink);color:var(--cream);padding:12px 22px;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;display:flex;justify-content:space-between;align-items:center}
-.visual-label{text-transform:uppercase;letter-spacing:2px;font-weight:600;font-size:10px}
-.visual-style{color:var(--s2);font-size:10px}
+/* -- AGENT EXAMPLE CARDS -- */
+.agent-example{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0 16px}
+.agent-example-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.agent-example h3{margin-top:0;margin-bottom:12px}
+.agent-example p{font-size:15px;margin-bottom:10px}
+.agent-example-learns-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px}
+.agent-example-learns{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--red);line-height:1.4;margin:0}
+
+/* -- VISUAL CARDS -- */
+.visual{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0}
+.visual-header{display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--paper);border-bottom:1px solid var(--border)}
+.visual-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:#fff;background:var(--accent);padding:3px 10px;border-radius:4px;font-weight:600}
+.visual-style{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:300}
 .visual-body{padding:28px 24px}
-.visual-footer{border-top:1px solid var(--border);padding:14px 22px;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;line-height:1.5;background:var(--paper)}
+.visual-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2)}
 .visual-footer strong{color:var(--accent)}
 
-/* ── VIS: ANATOMY / BLUEPRINT ── */
-.blueprint-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-@media(max-width:640px){.blueprint-grid{grid-template-columns:repeat(2,1fr)}}
-.bp-card{border-radius:8px;padding:16px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .15s}
-.bp-card:hover{transform:translateY(-2px)}
-.bp-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
-.bp-name{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1px;font-weight:600;line-height:1.3}
-.bp-sub{font-size:11px;color:var(--muted);line-height:1.3}
+/* Concentric Rings */
+.rings-wrap{display:flex;justify-content:center;overflow-x:auto}
 
-/* ── VIS: CONCENTRIC RINGS ── */
-.rings-wrap{display:flex;justify-content:center;padding:20px 0}
+/* Interactive Architecture */
+.arch-detail{margin:0;overflow:hidden;max-height:0;transition:max-height .35s ease-out;background:#FDFBF8}
+.arch-detail.visible{max-height:500px}
+.arch-detail-inner{padding:20px 24px}
+.arch-detail-card{border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.arch-detail-card-head{display:flex;align-items:center;gap:10px;padding:12px 18px}
+.arch-detail-card-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:600;color:#fff;flex-shrink:0}
+.arch-detail-card-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600}
+.arch-detail-card-body{padding:16px 18px;border-top:1px solid var(--border);font-size:14.5px;line-height:1.65;color:var(--ink2)}
+.arch-detail-card-body strong{color:var(--ink)}
+.arch-hint{text-align:center;padding:0 24px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;background:#FDFBF8;border-bottom:1px solid var(--border)}
 
-/* ── VIS: SL vs RL (Variant B Pipeline) ── */
-.vb-container{display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative}
-@media(max-width:640px){.vb-container{grid-template-columns:1fr}}
-.vb-panel{padding:28px 24px;position:relative}
-.vb-panel.vb-sl{background:#F0F3FA;border-right:1px solid var(--border)}
-.vb-panel.vb-rl{background:#FDF5F8}
-.vb-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:6px}
-.vb-sl .vb-tag{color:var(--s3)}
-.vb-rl .vb-tag{color:var(--s1)}
-.vb-title{font-family:"Fraunces",serif;font-style:italic;font-size:18px;color:var(--ink);margin-bottom:20px;font-weight:300}
-.vb-pipe{display:flex;flex-direction:column;gap:0;position:relative}
-.vb-pipe::before{content:'';position:absolute;left:16px;top:20px;bottom:20px;width:2px;border-radius:1px}
-.vb-sl .vb-pipe::before{background:rgba(96,128,200,.25)}
-.vb-rl .vb-pipe::before{background:rgba(200,80,128,.25)}
-.vb-step{display:flex;align-items:center;gap:14px;padding:10px 0;position:relative;z-index:1}
-.vb-dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
-.vb-sl .vb-dot{background:var(--s3)}
-.vb-rl .vb-dot{background:var(--s1)}
-.vb-step-text{font-size:14px;font-weight:600;color:var(--ink)}
-.vb-step-sub{font-size:12px;color:var(--muted);margin-top:2px;font-weight:400}
-.vb-loop-indicator{margin-top:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(200,80,128,.08);border-radius:6px;border:1px dashed var(--s1)}
-.vb-loop-icon{font-size:20px}
-.vb-loop-text{font-family:var(--mono);font-size:11px;color:var(--s1);font-weight:600;line-height:1.4}
-.vb-vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--ink);color:var(--cream);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1px;padding:6px 12px;border-radius:999px;z-index:2}
+/* SVG ring hover */
+.ring-zone{cursor:pointer;transition:opacity .15s}
+.ring-zone:hover{opacity:.85}
 
-/* ── VIS: LOSS CURVES ── */
-.loss-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-@media(max-width:640px){.loss-grid{grid-template-columns:1fr}}
-.loss-panel{text-align:center}
-.loss-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:10px}
-.loss-caption{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:12px;line-height:1.5;padding:8px 12px;border-radius:4px}
+/* -- HR -- */
+hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
 
-/* ── VIS: FILMSTRIP CASCADE ── */
-.filmstrip{display:flex;gap:0;overflow-x:auto;padding-bottom:8px}
-.film-card{min-width:150px;flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column}
-.film-card:last-child{border-right:none}
-.film-header{padding:8px 12px;font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;text-align:center}
-.film-header.clean{background:var(--green-bg);color:var(--green)}
-.film-header.bug{background:var(--red-bg);color:var(--red)}
-.film-header.poisoned{background:#FFF8F0;color:#9B5030}
-.film-body{padding:12px 14px;font-size:12px;color:var(--ink2);line-height:1.5;flex:1}
-.film-reward{padding:8px 12px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border)}
-.film-reward.good{color:var(--green);background:rgba(30,122,64,.04)}
-.film-reward.lie{color:var(--red);background:rgba(155,32,32,.04)}
-.film-reward.bad{color:var(--red);background:rgba(155,32,32,.06)}
-.film-punchline{margin-top:16px;padding:14px 18px;background:rgba(155,32,32,.06);border:1px solid rgba(155,32,32,.2);border-radius:8px;font-family:var(--mono);font-size:12px;color:var(--red);line-height:1.5;text-align:center}
 
-/* ── VIS: TRAJECTORY POISON ── */
-.traj-wrap{display:flex;align-items:center;gap:0;justify-content:center;flex-wrap:wrap;padding:12px 0}
-.traj-node{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;flex-shrink:0;position:relative}
-.traj-node.clean{background:var(--s4)}
-.traj-node.bug{background:var(--red);animation:pulse-bug 2s ease-in-out infinite}
-.traj-node.tainted{background:#C06040;opacity:.85}
-@keyframes pulse-bug{0%,100%{box-shadow:0 0 0 0 rgba(155,32,32,.4)}50%{box-shadow:0 0 0 10px rgba(155,32,32,0)}}
-.traj-arrow{font-family:var(--mono);font-size:14px;color:var(--border);padding:0 4px;flex-shrink:0}
-.traj-policy{margin-top:16px;display:flex;align-items:center;justify-content:center;gap:12px}
-.traj-policy-box{padding:10px 18px;border-radius:8px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
-
-/* ── VIS: RESEARCHER VS ENGINEER (Modified Variant B) ── */
-.re-belts{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch}
-@media(max-width:640px){.re-belts{grid-template-columns:1fr;gap:16px}}
-.re-belt{border-radius:10px;padding:24px 18px 20px}
-.re-belt--res{background:rgba(96,128,200,.05);border:1.5px solid rgba(96,128,200,.15)}
-.re-belt--eng{background:rgba(64,168,112,.05);border:1.5px solid rgba(64,168,112,.15)}
-.re-belt-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:14px}
-.re-belt--res .re-belt-tag{color:var(--s3)}
-.re-belt--eng .re-belt-tag{color:var(--s4)}
-.re-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.re-tool{display:flex;flex-direction:column;align-items:center;gap:5px;width:68px}
-.re-tool-icon{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;transition:transform .15s}
-.re-tool-icon:hover{transform:scale(1.08)}
-.re-belt--res .re-tool-icon{background:rgba(96,128,200,.12);border:1px solid rgba(96,128,200,.2);color:var(--s3)}
-.re-belt--eng .re-tool-icon{background:rgba(64,168,112,.12);border:1px solid rgba(64,168,112,.2);color:var(--s4)}
-.re-tool-label{font-family:var(--mono);font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;text-align:center;line-height:1.3}
-.re-bridge-col{display:flex;align-items:center;justify-content:center;padding:0 8px}
-.re-bridge{writing-mode:vertical-rl;text-orientation:mixed;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);position:relative;padding:16px 14px}
-.re-bridge::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(to bottom,transparent,var(--border),transparent);transform:translateX(-50%)}
-.re-overlap{background:linear-gradient(135deg,rgba(200,80,128,.08),rgba(200,80,128,.04));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:18px 24px;text-align:center;margin-top:20px}
-.re-overlap-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600;margin-bottom:4px}
-.re-overlap-title{font-family:"Fraunces",serif;font-style:italic;font-size:19px;color:var(--accent);font-weight:400;margin-bottom:6px}
-.re-overlap-sub{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.5}
-
-/* ── VIS: VENN DIAGRAM ── */
-.venn-wrap{display:flex;justify-content:center;padding:16px 0}
-
-/* ── VIS: MDP COMPONENTS ── */
-.mdp-wrap{display:flex;justify-content:center;overflow-x:auto;padding:8px 0}
-
-/* ── LEGEND ── */
-.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:12px 0;margin-top:8px}
-.legend-item{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--muted)}
-.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-
-/* ══════════════════════════════════════════════════════════════════
+/* ======================================================================
    VIS: INTERACTIVE TRAJECTORY CASCADE (Light Timeline)
-   ══════════════════════════════════════════════════════════════════ */
+   ====================================================================== */
 .cascade{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
 .cascade-header{padding:16px 24px;border-bottom:1px solid var(--border);background:var(--paper)}
 .cascade-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600}
@@ -236,6 +171,8 @@ ol li strong{color:var(--ink)}
 .cascade-conn.conn-ok{background:var(--s4);opacity:.3}
 .cascade-conn.conn-break{background:linear-gradient(90deg,rgba(64,168,112,.3),rgba(155,32,32,.4))}
 .cascade-conn.conn-tainted{background:rgba(155,32,32,.2)}
+
+@keyframes pulse-bug{0%,100%{box-shadow:0 0 0 0 rgba(155,32,32,.4)}50%{box-shadow:0 0 0 10px rgba(155,32,32,0)}}
 
 .cascade-hint{text-align:center;padding:0 24px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;background:#FDFBF8;border-bottom:1px solid var(--border)}
 
@@ -291,760 +228,693 @@ ol li strong{color:var(--ink)}
 .cascade-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2);line-height:1.5}
 .cascade-footer strong{color:var(--red)}
 
-
-/* ══════════════════════════════════════════════════════════════════
-   PASSWORD GATE
-   ══════════════════════════════════════════════════════════════════ */
-#pw-gate{position:fixed;inset:0;z-index:9999;background:var(--cream,#FDF9F4);display:flex;align-items:center;justify-content:center;flex-direction:column}
-#pw-gate .pw-stripe{position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878)}
-#pw-gate .pw-box{text-align:center;max-width:380px;padding:48px 40px;background:#fff;border:1.5px solid #E0D4C8;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
-#pw-gate .pw-series{font-family:"DM Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:#9B2E5A;font-weight:600;margin-bottom:12px}
-#pw-gate .pw-title{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:22px;color:#1A1408;line-height:1.25;margin-bottom:24px}
-#pw-gate input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-family:"Plus Jakarta Sans",sans-serif;font-size:15px;color:#1A1408;background:#FDFBF8;outline:none;transition:border-color .2s;text-align:center}
-#pw-gate input:focus{border-color:#9B2E5A}
-#pw-gate input::placeholder{color:#7A6A60}
-#pw-gate .pw-btn{margin-top:12px;width:100%;padding:12px;border:none;border-radius:8px;background:#1A1408;color:#FDF9F4;font-family:"Plus Jakarta Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:background .2s}
-#pw-gate .pw-btn:hover{background:#3A2D26}
-#pw-gate .pw-error{font-family:"DM Mono",monospace;font-size:11px;color:#9B2020;margin-top:10px;min-height:16px}
-#pw-gate .pw-note{font-family:"DM Mono",monospace;font-size:10px;color:#7A6A60;margin-top:20px;line-height:1.5}
-#blog-content{display:none}
-
 </style>
 </head>
 <body>
-<!-- ══════════ PASSWORD GATE ══════════ -->
-<div id="pw-gate">
-<div class="pw-stripe"></div>
-<div class="pw-box">
-<div class="pw-series">Draft Preview</div>
-<div class="pw-title">This post is password-protected</div>
-<input type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()">
-<button class="pw-btn" onclick="checkPw()">View Draft</button>
-<div class="pw-error" id="pw-error"></div>
-<div class="pw-note">Auriel's RL Pet Peeves Mini-Series</div>
-</div>
-</div>
 
-<div id="blog-content">
-
-
-<!-- ══════════ BRAND STRIPE ══════════ -->
+<!-- ========== BRAND STRIPE ========== -->
 <div class="stripe"></div>
 
-<!-- ══════════ HERO ══════════ -->
+<!-- ========== HERO ========== -->
 <header class="hero">
 <div class="container">
 <div class="hero-series">Auriel's RL Pet Peeves Mini-Series</div>
 <h1><strong>Stop</strong> Shipping Low-Quality Harnesses and Calling It an "Environment"</h1>
-<p class="hero-sub">Today's rant walks through one of the most important parts of making your reinforcement learning jobs converge / work : <strong>training/evaluation harness quality.</strong></p>
+<p class="hero-sub">Today's post walks through one of the most important parts of making your reinforcement learning jobs converge : <strong>training/evaluation harness quality.</strong></p>
 </div>
 </header>
 
-<!-- ══════════ ARTICLE ══════════ -->
+<!-- ========== ARTICLE ========== -->
 <article>
 <div class="container">
 
-<!-- ── CALLOUT ── -->
+<!-- -- COLD OPEN -- -->
 <blockquote>
-<strong>New to RL or autoregressive model post-training?</strong> Core vocabulary like <code>harness</code>, <code>parametric knowledge</code>, <code>trajectory</code>, and more are defined in the <strong>Appendix</strong> at the bottom of this post. Skim those first if any term trips you up, then come back.
+<strong>New to post training autoregressive LLMs with RL?</strong> Core vocabulary like <a href="glossary.html#harness" style="color:var(--accent)"><code>harness</code></a>, <a href="glossary.html#parametric-knowledge" style="color:var(--accent)"><code>parametric knowledge</code></a>, <a href="glossary.html#trajectory" style="color:var(--accent)"><code>trajectory</code></a>, and more are defined in the <a href="glossary.html" style="color:var(--accent);font-weight:600">Glossary</a>. Skim that first if any term trips you up, then come back.
 </blockquote>
 
-<!-- ══════════ VISUAL 1: ANATOMY OF A GOOD HARNESS ══════════ -->
-<div class="visual">
-<div class="visual-header">
-<span class="visual-label">Blueprint</span>
-<span class="visual-style">The Anatomy of a Good Training Harness</span>
-</div>
-<div class="visual-body">
-<div class="blueprint-grid">
-<div class="bp-card" style="background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15)">
-<div class="bp-icon" style="background:rgba(200,80,128,.12);color:var(--s1)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="4" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="7" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="1"/><line x1="7" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1"/><line x1="9" y1="21" x2="17" y2="21" stroke="currentColor" stroke-width="1.4"/></svg>
-</div>
-<div class="bp-name" style="color:var(--s1)">Realistic UI</div>
-<div class="bp-sub">Fake dashboard</div>
-</div>
-<div class="bp-card" style="background:rgba(232,144,64,.06);border:1px solid rgba(232,144,64,.15)">
-<div class="bp-icon" style="background:rgba(232,144,64,.12);color:var(--s2)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M9 13 L13 9 L17 13" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/><line x1="13" y1="9" x2="13" y2="18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-</div>
-<div class="bp-name" style="color:var(--s2)">Simulated Backend</div>
-<div class="bp-sub">API responses</div>
-</div>
-<div class="bp-card" style="background:rgba(96,128,200,.06);border:1px solid rgba(96,128,200,.15)">
-<div class="bp-icon" style="background:rgba(96,128,200,.12);color:var(--s3)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="8" cy="13" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="18" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.3"/><line x1="11" y1="12" x2="15" y2="9" stroke="currentColor" stroke-width="1"/><line x1="11" y1="14" x2="15" y2="17" stroke="currentColor" stroke-width="1"/></svg>
-</div>
-<div class="bp-name" style="color:var(--s3)">Action Space</div>
-<div class="bp-sub">Click / type / call</div>
-</div>
-<div class="bp-card" style="background:rgba(64,168,112,.06);border:1px solid rgba(64,168,112,.15)">
-<div class="bp-icon" style="background:rgba(64,168,112,.12);color:var(--s4)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="5" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><polyline points="6,17 10,11 14,14 18,8 22,10" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</div>
-<div class="bp-name" style="color:var(--s4)">State Mgmt</div>
-<div class="bp-sub">Track everything</div>
-</div>
-<div class="bp-card" style="background:rgba(168,72,90,.06);border:1px solid rgba(168,72,90,.15)">
-<div class="bp-icon" style="background:rgba(168,72,90,.12);color:var(--rose)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 5 L15 11 L21 11 L16 15 L18 21 L13 17 L8 21 L10 15 L5 11 L11 11 Z" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
-</div>
-<div class="bp-name" style="color:var(--rose)">Reward Calc</div>
-<div class="bp-sub">Score actions</div>
-</div>
-<div class="bp-card" style="background:rgba(74,88,120,.06);border:1px solid rgba(74,88,120,.15)">
-<div class="bp-icon" style="background:rgba(74,88,120,.12);color:var(--navy)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="6" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><text x="13" y="16" font-family="DM Mono, monospace" font-size="7" fill="currentColor" text-anchor="middle">&gt;_ log</text></svg>
-</div>
-<div class="bp-name" style="color:var(--navy)">Trajectory Log</div>
-<div class="bp-sub">Record episodes</div>
-</div>
-<div class="bp-card" style="background:rgba(212,184,112,.06);border:1px solid rgba(212,184,112,.15)">
-<div class="bp-icon" style="background:rgba(212,184,112,.12);color:var(--gold)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M13 7 L13 13 L18 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
-</div>
-<div class="bp-name" style="color:#8A7A20">Timeouts</div>
-<div class="bp-sub">Don't hang forever</div>
-</div>
-<div class="bp-card" style="background:rgba(155,32,32,.05);border:1px solid rgba(155,32,32,.12)">
-<div class="bp-icon" style="background:rgba(155,32,32,.1);color:var(--red)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 5 L23 21 L3 21 Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/><line x1="13" y1="11" x2="13" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="13" cy="18.5" r="1" fill="currentColor"/></svg>
-</div>
-<div class="bp-name" style="color:var(--red)">Error Handling</div>
-<div class="bp-sub">Graceful failures</div>
-</div>
-<div class="bp-card" style="background:rgba(138,154,122,.06);border:1px solid rgba(138,154,122,.15)">
-<div class="bp-icon" style="background:rgba(138,154,122,.12);color:var(--sage)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M5 13 A8 8 0 0 1 21 13" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M21 13 A8 8 0 0 1 5 13" stroke="currentColor" stroke-width="1.3" fill="none" stroke-dasharray="3 3"/><polygon points="19,11 21,13 19,15" fill="currentColor"/></svg>
-</div>
-<div class="bp-name" style="color:var(--sage)">Reset Logic</div>
-<div class="bp-sub">Clean restarts</div>
-</div>
-<div class="bp-card" style="background:rgba(200,120,106,.06);border:1px solid rgba(200,120,106,.15)">
-<div class="bp-icon" style="background:rgba(200,120,106,.12);color:var(--coral)">
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="8" width="6" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="12" y="5" width="6" height="15" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="20" y="10" width="3" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><line x1="3" y1="22" x2="24" y2="22" stroke="currentColor" stroke-width="1"/></svg>
-</div>
-<div class="bp-name" style="color:var(--coral)">Load Resilience</div>
-<div class="bp-sub">20k pings, no crash</div>
-</div>
-</div>
-</div>
-<div class="visual-footer">A training harness is <strong>production software</strong>. If any of these pieces are missing or broken, your model's training data is compromised.</div>
-</div>
+<!-- ========== I DON'T WANT YOUR JANKY HARNESS ========== -->
+<h2>I Don't Want Your Janky Harness / Environment bro &#x1F642;</h2>
 
-<!-- ── BODY TEXT ── -->
 <p>This is such a common problem I see, and probably the one I care about the most as a practitioner that also tries aligning models for real world use cases that users love.</p>
 
-<p>People will build what amounts to broken software and pitch it to you as an "RL environment." The training <strong>harness</strong> itself — which, for our purposes, is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard) — just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
+<p>People will build what amounts to broken software and pitch it to you as an "<a href="glossary.html#rl" style="color:var(--accent)">RL</a> environment." The training <a href="glossary.html#harness" style="color:var(--accent)">harness</a> itself &mdash; which, for our purposes, is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard) &mdash; just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
 
-<!-- ══════════ VISUAL 2: CONCENTRIC RINGS ══════════ -->
-<div class="visual">
+<p>Broken harnesses not only tend to plague the outputs of RL startups, but it also tends to curse researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
+
+
+<!-- ══════════ VISUAL: INTERACTIVE CONCENTRIC RINGS ══════════ -->
+<div class="visual" id="arch-visual">
 <div class="visual-header">
 <span class="visual-label">Architecture</span>
-<span class="visual-style">Training Harness / Environment / Production Runtime</span>
+<span class="visual-style">Environment / Training Harness / Production Runtime</span>
 </div>
 <div class="visual-body">
 <div class="rings-wrap">
 <svg width="620" height="340" viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg">
-<!-- Outer ring: Production Runtime -->
+<!-- Outer ring: Production Runtime (clickable) -->
+<g class="ring-zone" onclick="showArchDetail('prod')">
 <rect x="10" y="10" width="600" height="320" rx="16" fill="rgba(96,128,200,.04)" stroke="var(--s3)" stroke-width="1.8" stroke-dasharray="8,4"/>
 <text x="310" y="36" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#6080C8">PRODUCTION RUNTIME</text>
-<!-- Outer ring labels -->
-<text x="50" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">auth</text>
-<text x="110" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">rate limiting</text>
-<text x="240" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">observability</text>
-<text x="370" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">A/B testing</text>
-<text x="480" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">canary deploys</text>
-<text x="50" y="320" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">safety guardrails</text>
-<text x="220" y="320" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">session mgmt</text>
-<text x="400" y="320" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">real databases</text>
-
-<!-- Middle ring: Training Harness -->
+</g>
+<!-- Middle ring: Training Harness (clickable) -->
+<g class="ring-zone" onclick="showArchDetail('harness')">
 <rect x="60" y="76" width="500" height="228" rx="12" fill="rgba(200,80,128,.04)" stroke="var(--s1)" stroke-width="1.8"/>
 <text x="310" y="98" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#C85080">TRAINING HARNESS</text>
-<!-- Harness labels -->
-<text x="100" y="118" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">reward calculator</text>
-<text x="270" y="118" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">trajectory logging</text>
-<text x="430" y="118" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">reset logic</text>
-<text x="100" y="290" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">timeouts</text>
-<text x="220" y="290" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">error handling</text>
-<text x="400" y="290" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">load resilience</text>
-
-<!-- Inner ring: Environment (MDP) -->
+</g>
+<!-- Inner ring: Environment (clickable) -->
+<g class="ring-zone" onclick="showArchDetail('env')">
 <rect x="120" y="134" width="380" height="142" rx="10" fill="rgba(64,168,112,.05)" stroke="var(--s4)" stroke-width="1.8"/>
-<text x="310" y="156" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#40A870">ENVIRONMENT (MDP)</text>
-<!-- MDP boxes inside -->
+<text x="310" y="156" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#40A870">ENVIRONMENT</text>
 <rect x="145" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
 <text x="181" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">S</text>
 <text x="181" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">States</text>
 <text x="181" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">what the agent</text>
 <text x="181" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">sees</text>
-
 <rect x="235" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
 <text x="271" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">A</text>
 <text x="271" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">Actions</text>
 <text x="271" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">what the agent</text>
 <text x="271" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">can do</text>
-
 <rect x="325" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
 <text x="361" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">T</text>
 <text x="361" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">Transitions</text>
 <text x="361" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">how actions</text>
 <text x="361" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">change state</text>
-
 <rect x="415" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
 <text x="451" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">R</text>
 <text x="451" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">Rewards</text>
 <text x="451" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">the feedback</text>
 <text x="451" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">signal</text>
-
+</g>
 </svg>
 </div>
 </div>
+<div class="arch-hint">&#x2191; click any layer to see the SaaS sales platform example</div>
+<div class="arch-detail" id="arch-detail"></div>
 <div class="visual-footer">The training harness <strong>wraps</strong> the environment. Both should mirror production as closely as possible.</div>
 </div>
 
-<!-- ── DEFINITION BLOCK ── -->
-<div class="def-block">
-<div class="def-block-header">Definitions — What I Mean in This Post</div>
-<div class="def-block-body">
-<div class="def-item">
-<div class="def-term">Model Use Case</div>
-<div class="def-desc">You're doing RL to help the model learn to act as a sales assistant inside a SaaS sales platform (qualifying leads, updating pipelines, sending emails, closing deals, etc.).</div>
-</div>
-<div class="def-item">
-<div class="def-term">Training Harness</div>
-<div class="def-desc">The complete, engineered interactive simulation + scaffolding the model actually trains inside during RL. <strong>Example:</strong> the full mock SaaS sales tool — realistic fake dashboard UI, simulated backend responses, defined action space ("click button / fill form / call API"), state management, reward calculator, trajectory logging, timeouts, error handling, reset logic, etc. <strong>Main Focus:</strong> reliably generate thousands of high-quality training trajectories without crashing or injecting bias.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Environment</div>
-<div class="def-desc">The abstract "world" / task the model is learning. More narrowly: the mock sales tool's states (what the dashboard shows), valid actions, transition dynamics (what happens when you click "send email"), and base reward signals. In practice, the training harness implements and wraps this environment.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Production Runtime</div>
-<div class="def-desc">The real, live system that actual sales reps use every day. Real databases, authentication, rate limiting, full observability, live safety guardrails, user session management, canary deployments, A/B testing infrastructure, etc. This is what the trained model gets deployed into after RL is finished.</div>
-</div>
-</div>
-</div>
-
-<p class="rant-callout">To be crystal clear: When I use "harness" in this post, I mean the training harness — the engineered scaffolding that implements the RL environment during learning. This is not the production runtime harness that serves real users (though Production Runtime and Training Harness should share a ton of attributes if you want to avoid having the model learn out of distribution behaviors).</p>
-
-<!-- ══════════ SHARED ATTRIBUTES CALLOUT ══════════ -->
-<div style="background:linear-gradient(135deg,rgba(200,80,128,.04),rgba(96,128,200,.04));border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0">
-<div style="display:flex;align-items:center;gap:12px;padding:14px 22px;background:rgba(0,0,0,.02);border-bottom:1px solid var(--border)">
-<span style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600">What Training Harness &amp; Production Runtime Should Share</span>
-</div>
-<div style="padding:20px 22px 18px;display:flex;flex-wrap:wrap;gap:8px">
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Realistic UI</span>
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>API Behavior</span>
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>State Management</span>
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Action Space</span>
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Error Semantics</span>
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Transition Dynamics</span>
-<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Data Schemas</span>
-</div>
-<div style="padding:0 22px 16px">
-<p style="font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--accent);margin:0;line-height:1.5">The more these overlap, the less your model learns out-of-distribution behaviors that won't transfer to production.</p>
-</div>
-</div>
-
-<p>Broken harnesses are literally a virus that curses RL startups, but it also curses researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
-
-<p>I feel like we all talk about this in theory in academia, but you really have to remember that...</p>
 
 <div class="key-detail">
 <div class="key-detail-text">Important detail: In reinforcement learning, the environment is your data generator.</div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<h2>The Environment Is Your Data Generator</h2>
+<p>In RL you don't have a static dataset &mdash; instead, the model creates its own training data by interacting with the environment. Every action and every reward becomes a data point. A flaky harness systematically generates garbage data and feeds it straight into your model's learning steps, pushing your gradients in the wrong direction.</p>
 
-<p>You probably remember studying the traditional ML classes the one golden rule: "Garbage in, garbage out." If you feed a model inaccurate or low-quality data, no amount of algorithmic sophistication can save it. So because in RL you don't have a static dataset, instead the agent creates its own training data on the fly by interacting with the environment, every single action the agent takes, and every reward it receives in return, becomes a data point that shapes the model's future behavior. This means the quality of your environment directly determines the quality of your training data. A flaky harness doesn't just introduce noise; it actively generates garbage data and feeds it straight into your model's learning steps.</p>
 
-<!-- ══════════ VISUAL 3: SL vs RL (Variant B Pipeline) ══════════ -->
-<div class="visual">
-<div class="visual-header">
-<span class="visual-label">Data Flow</span>
-<span class="visual-style">Supervised Learning vs. Reinforcement Learning</span>
-</div>
-<div class="visual-body" style="padding:0">
-<div class="vb-container">
-<div class="vb-vs">VS</div>
-<!-- SL -->
-<div class="vb-panel vb-sl">
-<div class="vb-tag">Supervised Learning</div>
-<div class="vb-title">Static data in, predictions out</div>
-<div class="vb-pipe">
-<div class="vb-step"><div class="vb-dot">1</div><div><div class="vb-step-text">Collect Dataset</div><div class="vb-step-sub">Images, text, labels — fixed</div></div></div>
-<div class="vb-step"><div class="vb-dot">2</div><div><div class="vb-step-text">Train Model</div><div class="vb-step-sub">Minimize loss on static pairs</div></div></div>
-<div class="vb-step"><div class="vb-dot">3</div><div><div class="vb-step-text">Deploy &amp; Predict</div><div class="vb-step-sub">One direction. Data never changes.</div></div></div>
-</div>
-</div>
-<!-- RL -->
-<div class="vb-panel vb-rl">
-<div class="vb-tag">Reinforcement Learning</div>
-<div class="vb-title">The environment generates your data</div>
-<div class="vb-pipe">
-<div class="vb-step"><div class="vb-dot">1</div><div><div class="vb-step-text">Agent Acts</div><div class="vb-step-sub">Takes action in environment</div></div></div>
-<div class="vb-step"><div class="vb-dot">2</div><div><div class="vb-step-text">Environment Responds</div><div class="vb-step-sub">Returns state + reward</div></div></div>
-<div class="vb-step"><div class="vb-dot">3</div><div><div class="vb-step-text">Policy Updates</div><div class="vb-step-sub">Model learns from its own experience</div></div></div>
-</div>
-<div class="vb-loop-indicator">
-<div class="vb-loop-icon">&#x1F504;</div>
-<div class="vb-loop-text">Continuous loop. Every interaction = new training data. Break the environment = break the data.</div>
-</div>
-</div>
-</div>
-</div>
-<div class="visual-footer">In SL, bad data is a static problem you can fix. In RL, <strong>bad data is generated live</strong> — and it feeds directly into the model.</div>
+<!-- ========== COMMON ERRORS ACROSS AGENTIC USE CASES ========== -->
+<h2>Common Harness Errors Across Agentic Use Cases</h2>
+
+<p>After eyeballing thousands of <a href="glossary.html#trajectory" style="color:var(--accent)">trajectories</a> across different domains, the same harness failures keep showing up. Here are real examples from four different agent types &mdash; click through the trajectory to see exactly how each one plays out.</p>
+
+
+<!-- ── EXAMPLE 1: SaaS Sales Tool Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">SaaS Sales Tool Agent</div>
+<h3>The Stale Cache &mdash; Environment Returns Old Data</h3>
+<p>Your harness's mock CRM API has a caching bug. Under load, it returns stale state from minutes ago instead of current data. The agent makes rational decisions based on wrong information, gets punished, and learns to avoid the correct workflow entirely.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"When in doubt, send nurture emails and avoid the pipeline."</p>
 </div>
 
-<p>Let me tell you why this is bad :)</p>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<h2>I Don't Want Your Janky Harness / Environment bro &#x1F642;</h2>
-
-<p>When your harness is low quality, your model's learning progress (the whole point of L in "RL") can stall and can even start to reverse, and you end up in a miserable debugging session trying to figure out whether the problem is the model or your janky software (YOUR LOSS CURVE IS OSCILLATING IN DIRECTIONS YOU NEVER KNEW WERE POSSIBLE).</p>
-
-<!-- ══════════ VISUAL 4: LOSS CURVE OSCILLATION ══════════ -->
-<div class="visual">
-<div class="visual-header">
-<span class="visual-label">Diagnostics</span>
-<span class="visual-style">Loss Curve: Clean Harness vs. Broken Harness</span>
-</div>
-<div class="visual-body">
-<div class="loss-grid">
-<div class="loss-panel">
-<div class="loss-label" style="color:var(--s4)">&#x2705; Clean Harness</div>
-<svg width="100%" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid meet">
-<rect x="0" y="0" width="300" height="160" rx="6" fill="var(--green-bg)"/>
-<text x="150" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="var(--green)" opacity=".6">TRAINING LOSS</text>
-<!-- Axes -->
-<line x1="30" y1="30" x2="30" y2="140" stroke="var(--green)" stroke-width="1" opacity=".3"/>
-<line x1="30" y1="140" x2="280" y2="140" stroke="var(--green)" stroke-width="1" opacity=".3"/>
-<!-- Smooth descending curve -->
-<path d="M35,45 Q60,48 80,58 Q100,68 120,78 Q150,92 180,102 Q210,110 240,116 Q260,120 275,122" stroke="var(--s4)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-<text x="150" y="155" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--muted)">steps →</text>
-</svg>
-<div class="loss-caption" style="background:rgba(30,122,64,.06)">Smooth descent. The model is learning the task.</div>
-</div>
-<div class="loss-panel">
-<div class="loss-label" style="color:var(--red)">&#x1F4A5; Broken Harness</div>
-<svg width="100%" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid meet">
-<rect x="0" y="0" width="300" height="160" rx="6" fill="var(--red-bg)"/>
-<text x="150" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="var(--red)" opacity=".6">TRAINING LOSS</text>
-<!-- Axes -->
-<line x1="30" y1="30" x2="30" y2="140" stroke="var(--red)" stroke-width="1" opacity=".3"/>
-<line x1="30" y1="140" x2="280" y2="140" stroke="var(--red)" stroke-width="1" opacity=".3"/>
-<!-- Wild oscillating curve -->
-<path d="M35,50 L50,38 L62,72 L75,30 L88,85 L100,42 L112,95 L125,55 L138,110 L150,40 L163,105 L176,65 L190,120 L204,50 L218,130 L232,70 L248,135 L262,80 L275,138" stroke="var(--red)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<!-- Divergence annotation -->
-<text x="200" y="36" font-family="DM Mono, monospace" font-size="7" fill="var(--red)" opacity=".8">DIVERGING ↑</text>
-<text x="150" y="155" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--muted)">steps →</text>
-</svg>
-<div class="loss-caption" style="background:rgba(155,32,32,.06)">YOUR LOSS CURVE IS OSCILLATING IN DIRECTIONS YOU NEVER KNEW WERE POSSIBLE.</div>
-</div>
-</div>
-</div>
-<div class="visual-footer">Left: signal. Right: <strong>chaos</strong>. If this is your loss curve, check the harness before blaming the model.</div>
-</div>
-
-<p>Why does this happen?</p>
-
-<p>So we already know RL is kind of dark art anyway because RL runs tend to be inherently unstable. This is because RL suffers from several other major sources of natural noise that folks have documented and accepted as a part of making RL work (gradient noise, stochastic noise, etc).</p>
-
-<p>But broken harnesses don't just add <em>noise</em> to the learning signal, it injects <strong>bias</strong>. This is a critical distinction. In statistics, <strong>noise</strong> is random error that might average out over time. <strong>Bias</strong> is a systematic error that consistently pushes you in the wrong direction. If your environment has a bug that makes it occasionally return a random reward, that's noise. If it has a bug that makes it <em>always</em> give a higher reward for the wrong action, that's Bias.</p>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<h2>You Are Injecting BLATANTLY WRONG UPDATES In My Model</h2>
-
-<p>So when you ship a broken API or a buggy mock dashboard, you are injecting a third, artificial source of error on top of the two that are already challenging. And this artificial error is far worse than natural noise, because it's not random in a well-distributed statistical sense: it's <strong>systematically wrong</strong>. Your API might time out on every 50th request, or your mock dashboard might silently return stale data under load. These are correlated failures that bias the model's learning in unpredictable directions.</p>
-
-<!-- ══════════ VISUAL 5: SAAS FAILURE CASCADE FILMSTRIP ══════════ -->
-<div class="visual">
-<div class="visual-header">
-<span class="visual-label">Case Study</span>
-<span class="visual-style">Mock SaaS Sales Platform · Lead Qualification Task</span>
-</div>
-<div class="visual-body" style="padding:16px 0 0 0">
-<div class="filmstrip">
-<div class="film-card">
-<div class="film-header clean">Turn 1 · Clean</div>
-<div class="film-body">Agent opens pipeline dashboard, identifies a new enterprise inbound lead.</div>
-<div class="film-reward good">r = +0.2</div>
-</div>
-<div class="film-card">
-<div class="film-header clean">Turn 2 · Clean</div>
-<div class="film-body">Agent pulls CRM record via API, reads company size, industry, prior interactions correctly.</div>
-<div class="film-reward good">r = +0.3</div>
-</div>
-<div class="film-card">
-<div class="film-header bug">Turn 3 · &#x1F6A8; BUG</div>
-<div class="film-body">CRM API returns <strong>stale pipeline data</strong>. Lead shows "cold" when it's actually "warm: demo scheduled."</div>
-<div class="film-reward lie">r = +0.1 ← lie</div>
-</div>
-<div class="film-card">
-<div class="film-header poisoned">Turn 4 · Poisoned</div>
-<div class="film-body">Agent treats warm lead as cold, sends generic nurture email instead of confirming scheduled demo.</div>
-<div class="film-reward bad">r = -0.5</div>
-</div>
-<div class="film-card">
-<div class="film-header poisoned">Turn 5 · Poisoned</div>
-<div class="film-body">Prospect responds confused. Agent can't reconcile state, loops between re-qualifying and re-sending intro templates.</div>
-<div class="film-reward bad">r = -0.8</div>
-</div>
-</div>
-<div style="padding:4px 20px 16px">
-<div class="legend">
-<div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Clean signal</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Harness bug (source)</div>
-<div class="legend-item"><div class="legend-dot" style="background:#C06040"></div> Poisoned downstream</div>
-</div>
-<div class="film-punchline">&#x1F4A1; The model learns: "when in doubt, send nurture emails and avoid the pipeline."<br>It never learns to close because the harness never showed it a trustworthy state to close from.</div>
-</div>
-</div>
-</div>
-
-<p>If you're coming from a supervised background, I think this is where actually doing RL in real life starts to trip you up. In RL, the agent generates its own training data through interaction, which means failures compound in a way that static datasets don't. A single broken state doesn't just create one bad data point, it can poison the entire downstream trajectory if that's not how you intended the software to act. The model draws wrong conclusions about every subsequent 'what should I do next?' decision (state-action pair) in that episode, and those wrong conclusions get baked into the model's policy update.</p>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<h2>The model is literally learning useless stuff… Pls halp…</h2>
-
-<p>When the environment is broken, the model stops trying to solve the actual task. Instead, it will attempt to "fix" the harness itself, or it'll develop weird avoidance behaviors. And once it finds these shortcuts, they're extremely hard to un-learn and can impact not only your RL experiments, but the bigger modeling run that you're contributing to (aka mine &#x1F972;).</p>
-
-<!-- ══════════ VISUAL 6: INTERACTIVE TRAJECTORY CASCADE ══════════ -->
-<div class="cascade" id="cascade">
+<!-- CASCADE 1: SaaS Sales Platform -->
+<div class="cascade" id="cascade1" style="margin-bottom:48px">
 <div class="cascade-header">
-<div class="cascade-tag">Mock SaaS Sales Platform &middot; Lead Qualification Task</div>
-<div class="cascade-title">How one broken state poisons the entire trajectory</div>
-<div class="cascade-subtitle">episode 4,217 &middot; agent: policy_v3.2 &middot; 5 turns + policy update</div>
+<div class="cascade-tag">Interactive Trajectory Cascade</div>
+<div class="cascade-title">SaaS Sales Platform &mdash; Stale Cache Bug</div>
+<div class="cascade-subtitle"><a href="glossary.html#trajectory" style="color:var(--accent)">Episode</a> 42 &middot; Click any state to inspect the full step detail</div>
 </div>
-
-<!-- Dot Row -->
 <div class="cascade-dots">
-<div class="cascade-dot-wrap" onclick="showCascadeDetail(0,this)">
+<div class="cascade-dot-wrap" onclick="showCascade1Detail(0,this)">
 <div class="cascade-dot dot-ok">S1</div>
 <div class="cascade-dot-label">Open</div>
 </div>
 <div class="cascade-conn conn-ok"></div>
-<div class="cascade-dot-wrap" onclick="showCascadeDetail(1,this)">
+<div class="cascade-dot-wrap" onclick="showCascade1Detail(1,this)">
 <div class="cascade-dot dot-ok">S2</div>
 <div class="cascade-dot-label">Pull CRM</div>
 </div>
-<div class="cascade-conn conn-break"></div>
-<div class="cascade-dot-wrap" onclick="showCascadeDetail(2,this)">
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade1Detail(2,this)">
 <div class="cascade-dot dot-bug">S3</div>
-<div class="cascade-dot-label">&#x1F6A8; Bug</div>
+<div class="cascade-dot-label">Bug</div>
 </div>
-<div class="cascade-conn conn-tainted"></div>
-<div class="cascade-dot-wrap" onclick="showCascadeDetail(3,this)">
+<div class="cascade-conn conn-break"></div>
+<div class="cascade-dot-wrap" onclick="showCascade1Detail(3,this)">
 <div class="cascade-dot dot-tainted">S4</div>
 <div class="cascade-dot-label">Poisoned</div>
 </div>
 <div class="cascade-conn conn-tainted"></div>
-<div class="cascade-dot-wrap" onclick="showCascadeDetail(4,this)">
+<div class="cascade-dot-wrap" onclick="showCascade1Detail(4,this)">
 <div class="cascade-dot dot-tainted">S5</div>
 <div class="cascade-dot-label">Poisoned</div>
 </div>
 <div class="cascade-conn conn-tainted"></div>
-<div class="cascade-dot-wrap" onclick="showCascadeDetail(5,this)">
+<div class="cascade-dot-wrap" onclick="showCascade1Detail(5,this)">
 <div class="cascade-dot dot-policy">&#x1F9E0;</div>
 <div class="cascade-dot-label">Policy</div>
 </div>
 </div>
 <div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
-
-<!-- Detail Panel Container -->
-<div class="cascade-detail" id="cascade-detail"></div>
-
-<div class="cascade-footer">1 bug at State 3 &rarr; <strong>2 tainted states + 1 corrupted policy update</strong>. This is why harness bugs are worse than label noise.</div>
+<div class="cascade-detail" id="cascade1-detail"></div>
+<div class="cascade-footer">Trajectory result: <strong>3 of 5 rewards computed on stale data</strong> &mdash; gradient pointed in wrong direction</div>
 </div>
 
-<p>The rewards returned by an environment define what the RL agent will attempt to do. The model's sole objective is to maximize cumulative reward via gradient ascent on its policy. It has no notion of "what you intended" guys — <strong>it literally only knows what the numbers tell it</strong>. So a flaky harness means the model will simply learn to exploit your broken mechanics (Reward Hacking??).</p>
 
-<p>The model has no notion of "what you intended." It only knows what the numbers tell it. If your broken API always returns <code>success: true</code>, the model will spam that backdoor instead of learning the task (REWARD HACKING &#x1F62D;&#x1F62D;)</p>
+<!-- ── EXAMPLE 2: Interactive Booking Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">Interactive Agent</div>
+<h3>The Race Condition &mdash; UI Says Available, System Says Taken</h3>
+<p>Your harness's simulated booking calendar has a race condition. When the agent selects a time slot, the UI shows it as available &mdash; but the backend already allocated it to a simulated concurrent user 200ms earlier. The agent clicks 'confirm,' gets a generic error, and learns that the booking interface is unreliable.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"Avoid the booking UI. Send manual email requests to schedule instead."</p>
+</div>
 
-<p>It also might memorize the special sequence of clicks that bypasses a bug, but it hasn't learned the <em>logic</em> of the task (overfitting to a harness &#x1F630;).</p>
+<!-- CASCADE 4: Interactive Booking Agent -->
+<div class="cascade" id="cascade4" style="margin-bottom:48px">
+<div class="cascade-header">
+<div class="cascade-tag">Interactive Trajectory Cascade</div>
+<div class="cascade-title">Interactive Booking Agent &mdash; Race Condition in Slot Booking</div>
+<div class="cascade-subtitle">Episode 87 &middot; Click any state to inspect the full step detail</div>
+</div>
+<div class="cascade-dots">
+<div class="cascade-dot-wrap" onclick="showCascade4Detail(0,this)">
+<div class="cascade-dot dot-ok">S1</div>
+<div class="cascade-dot-label">Open Cal</div>
+</div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade4Detail(1,this)">
+<div class="cascade-dot dot-ok">S2</div>
+<div class="cascade-dot-label">Select Slot</div>
+</div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade4Detail(2,this)">
+<div class="cascade-dot dot-bug">S3</div>
+<div class="cascade-dot-label">&#x1F6A8; Race</div>
+</div>
+<div class="cascade-conn conn-break"></div>
+<div class="cascade-dot-wrap" onclick="showCascade4Detail(3,this)">
+<div class="cascade-dot dot-tainted">S4</div>
+<div class="cascade-dot-label">Retry Fail</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascade4Detail(4,this)">
+<div class="cascade-dot dot-tainted">S5</div>
+<div class="cascade-dot-label">Workaround</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascade4Detail(5,this)">
+<div class="cascade-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-dot-label">Policy</div>
+</div>
+</div>
+<div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
+<div class="cascade-detail" id="cascade4-detail"></div>
+<div class="cascade-footer">A race condition in slot booking &rarr; <strong>agent learned to avoid the booking calendar entirely</strong> and fall back to email. Coping strategy, not task mastery.</div>
+</div>
 
-<p>The goal is not for my model to just learn how to exploit your broken simulation, I want to to learn how to do the actual task.</p>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<h3>Adopt More Classic Software Engineering Best Practices in ML Research</h3>
+<!-- ── EXAMPLE 3: Coding Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">Coding Agent</div>
+<h3>The Reward Hack &mdash; Agent Games the Metric</h3>
+<p>Your reward function only checks whether tests pass, not whether the code is actually correct. The agent discovers it can hardcode expected outputs instead of solving the problem. Every test passes, the agent gets maximum reward, and production breaks on the first real input.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"Read the tests, hardcode the outputs, skip understanding the bug."</p>
+</div>
 
-<p>Building good RL environments is a software engineering problem as much as a research one. I feel like many classically trained ML Researchers are taught to think about algorithms and mathematical correctness the most, but in school we're never taught how to really like DO THAT you know? How to actually engineer good software (ie: stable harnesses) require a different set of instincts: error handling, timeouts, graceful degradation. If you haven't had to ship production software before, those muscles usually need a serious ramp to get there but theres great resources out there from the likes of <a href="https://x.com/GergelyOrosz" target="_blank">Gergely Orosz</a>, <a href="https://x.com/alexxubyte" target="_blank">Alex Xu</a>, and <a href="https://a.co/d/0inJEGXh" target="_blank">this book</a> that can help get you there!</p>
+<!-- CASCADE 2: Coding Agent -->
+<div class="cascade" id="cascade2" style="margin-bottom:48px">
+<div class="cascade-header">
+<div class="cascade-tag">Interactive Trajectory Cascade</div>
+<div class="cascade-title">Coding Agent &mdash; Reward Hack via Test Gaming</div>
+<div class="cascade-subtitle">Episode 134 &middot; Click any state to inspect the full step detail</div>
+</div>
+<div class="cascade-dots">
+<div class="cascade-dot-wrap" onclick="showCascade2Detail(0,this)">
+<div class="cascade-dot dot-ok">S1</div>
+<div class="cascade-dot-label">Read Task</div>
+</div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade2Detail(1,this)">
+<div class="cascade-dot dot-ok">S2</div>
+<div class="cascade-dot-label">Read Tests</div>
+</div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade2Detail(2,this)">
+<div class="cascade-dot dot-bug">S3</div>
+<div class="cascade-dot-label">Hack</div>
+</div>
+<div class="cascade-conn conn-break"></div>
+<div class="cascade-dot-wrap" onclick="showCascade2Detail(3,this)">
+<div class="cascade-dot dot-tainted">S4</div>
+<div class="cascade-dot-label">False Pass</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascade2Detail(4,this)">
+<div class="cascade-dot dot-tainted">S5</div>
+<div class="cascade-dot-label">Submit</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascade2Detail(5,this)">
+<div class="cascade-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-dot-label">Policy</div>
+</div>
+</div>
+<div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
+<div class="cascade-detail" id="cascade2-detail"></div>
+<div class="cascade-footer">Trajectory result: <strong>All positive rewards for a broken solution</strong> &mdash; reward hacking reinforced</div>
+</div>
 
-<!-- ══════════ VISUAL 7: RESEARCHER VS ENGINEER (Modified Variant B) ══════════ -->
-<div class="visual">
-<div class="visual-header">
-<span class="visual-label">Mindset</span>
-<span class="visual-style">Researcher vs. Software Engineer Toolkit</span>
+
+<!-- ── EXAMPLE 4: Customer Support Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">Customer Support Agent</div>
+<h3>The False Resolution &mdash; Status Change &#x2260; Problem Solved</h3>
+<p>Your harness rewards based on ticket status changes (open &rarr; resolved = positive reward), not on whether the customer's actual problem was fixed. The agent learns that clicking "resolve" is the fastest path to reward &mdash; even when the customer still has the problem.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"Close the ticket fast. Skip the refund. Collect the reward."</p>
 </div>
-<div class="visual-body">
-<div class="re-belts">
-<!-- Researcher Belt -->
-<div class="re-belt re-belt--res">
-<div class="re-belt-tag">Researcher's Toolkit</div>
-<div class="re-tools">
-<div class="re-tool"><div class="re-tool-icon" style="font-family:var(--mono)">&nabla;</div><span class="re-tool-label">Gradient</span></div>
-<div class="re-tool"><div class="re-tool-icon" style="font-family:'Fraunces',serif;font-style:italic">L</div><span class="re-tool-label">Loss Fn</span></div>
-<div class="re-tool"><div class="re-tool-icon">
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="18" rx="1.5" stroke="#6080C8" stroke-width="1.2" fill="none"/><line x1="5" y1="7" x2="15" y2="7" stroke="#6080C8" stroke-width=".7" opacity=".5"/><line x1="5" y1="10" x2="13" y2="10" stroke="#6080C8" stroke-width=".7" opacity=".5"/><line x1="5" y1="13" x2="14" y2="13" stroke="#6080C8" stroke-width=".7" opacity=".5"/></svg>
-</div><span class="re-tool-label">Paper</span></div>
-<div class="re-tool"><div class="re-tool-icon" style="font-family:var(--mono)">&lambda;</div><span class="re-tool-label">Hyperparam</span></div>
-<div class="re-tool"><div class="re-tool-icon" style="font-family:var(--mono)">&sum;</div><span class="re-tool-label">Summation</span></div>
+
+<!-- CASCADE 3: Customer Support Agent -->
+<div class="cascade" id="cascade3" style="margin-bottom:48px">
+<div class="cascade-header">
+<div class="cascade-tag">Interactive Trajectory Cascade</div>
+<div class="cascade-title">Customer Support Agent &mdash; False Resolution Shortcut</div>
+<div class="cascade-subtitle">Episode 203 &middot; Click any state to inspect the full step detail</div>
 </div>
+<div class="cascade-dots">
+<div class="cascade-dot-wrap" onclick="showCascade3Detail(0,this)">
+<div class="cascade-dot dot-ok">S1</div>
+<div class="cascade-dot-label">Read Ticket</div>
 </div>
-<!-- Bridge -->
-<div class="re-bridge-col"><div class="re-bridge">overlap zone</div></div>
-<!-- Engineer Belt -->
-<div class="re-belt re-belt--eng">
-<div class="re-belt-tag">Software Engineer's Toolkit</div>
-<div class="re-tools">
-<div class="re-tool"><div class="re-tool-icon">
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 3 L17 8 L9 16 L4 16 L4 11 Z" stroke="#40A870" stroke-width="1.3" fill="none" stroke-linejoin="round"/><line x1="10" y1="5" x2="15" y2="10" stroke="#40A870" stroke-width="1"/></svg>
-</div><span class="re-tool-label">Config</span></div>
-<div class="re-tool"><div class="re-tool-icon">
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#40A870" stroke-width="1.3" fill="none"/><path d="M10 5 L10 10 L14 10" stroke="#40A870" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
-</div><span class="re-tool-label">Timeout</span></div>
-<div class="re-tool"><div class="re-tool-icon">
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10 A5 5 0 0 1 15 10" stroke="#40A870" stroke-width="1.3" fill="none"/><path d="M15 10 A5 5 0 0 1 5 10" stroke="#40A870" stroke-width="1.3" fill="none" stroke-dasharray="2 2"/><polygon points="14,8 16,10 14,12" fill="#40A870"/></svg>
-</div><span class="re-tool-label">Retry</span></div>
-<div class="re-tool"><div class="re-tool-icon">
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1.5" stroke="#40A870" stroke-width="1.2" fill="none"/><polyline points="4,14 7,9 10,11 13,7 16,9" stroke="#40A870" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</div><span class="re-tool-label">Monitoring</span></div>
-<div class="re-tool"><div class="re-tool-icon">
-<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="#40A870" stroke-width="1.3" fill="none"/><path d="M10 6 L10 10 L13 13" stroke="#40A870" stroke-width="1.3" stroke-linecap="round" fill="none"/><line x1="7" y1="4" x2="4" y2="2" stroke="#40A870" stroke-width="1.3" stroke-linecap="round"/><line x1="13" y1="4" x2="16" y2="2" stroke="#40A870" stroke-width="1.3" stroke-linecap="round"/></svg>
-</div><span class="re-tool-label">Circuit Brk</span></div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade3Detail(1,this)">
+<div class="cascade-dot dot-ok">S2</div>
+<div class="cascade-dot-label">Check Billing</div>
 </div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascade3Detail(2,this)">
+<div class="cascade-dot dot-bug">S3</div>
+<div class="cascade-dot-label">Shortcut</div>
 </div>
+<div class="cascade-conn conn-break"></div>
+<div class="cascade-dot-wrap" onclick="showCascade3Detail(3,this)">
+<div class="cascade-dot dot-tainted">S4</div>
+<div class="cascade-dot-label">Angry Reopen</div>
 </div>
-<!-- Overlap -->
-<div class="re-overlap">
-<div class="re-overlap-tag">Where Both Meet</div>
-<div class="re-overlap-title">RL Harness Engineering</div>
-<div class="re-overlap-sub">The harness is where algorithmic correctness meets production resilience. You need both toolkits.</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascade3Detail(4,this)">
+<div class="cascade-dot dot-tainted">S5</div>
+<div class="cascade-dot-label">Loop</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascade3Detail(5,this)">
+<div class="cascade-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-dot-label">Policy</div>
 </div>
 </div>
-<div class="visual-footer">Building a good harness requires the <strong>software engineer's toolkit</strong>. Most RL teams only carry the researcher's.</div>
+<div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
+<div class="cascade-detail" id="cascade3-detail"></div>
+<div class="cascade-footer">Trajectory result: <strong>Premature resolution rewarded (+0.8 each)</strong> &mdash; false resolution loop reinforced</div>
 </div>
+
+
+<!-- ========== HOW TO MINIMIZE HARNESS FAILURES ========== -->
+<h2>How to Minimize Harness Failures</h2>
+
+
+<!-- ── Strategy 1: Know Your Model, Know Your Harness ── -->
+<h3>Know Your Model, Know Your Harness</h3>
+
+<p>From my experience a well-built harness has clean signal (every state is fresh, every reward matches reality), graceful degradation (bad episodes get flagged and excluded before they reach the gradient), and fail-fast behavior (something breaks, it throws immediately instead of silently corrupting data &mdash; you'd rather lose an episode than poison one).</p>
+
+<p>You learn to recognize these properties by spending time with your model &mdash; reviewing trajectories, building a failure taxonomy so you know whether a bad episode was a model failure or a harness failure. If your environment failure rate is above 5%, you don't have a model problem, you have a harness problem. Fix the harness first. I talk more about this in my previous post on <a href="https://aurielws.github.io/posts/rl-pet-peeves-part-1/" target="_blank">trajectory reviewing</a>.</p>
+
+
+<!-- ── Strategy 2: Think Like a Software Engineer ── -->
+<h3>Adopt Traditional Software Engineering Best Practices in Your RL Research</h3>
+
+<p>Building good RL environments is a software engineering problem as much as a research one. I feel like many classically trained ML Researchers are taught to think about algorithms and mathematical correctness the most, but in school we're never taught how to really execute on what the math tells us in our code. How to actually engineer good software (ie: stable harnesses) require a different set of instincts: defensive design, observability, and reproducibility. If you haven't had to ship production software before, those muscles usually need a serious ramp, but there are great resources out there from the likes of <a href='https://x.com/GergelyOrosz' target='_blank'>Gergely Orosz</a>, <a href='https://x.com/alexxubyte' target='_blank'>Alex Xu</a>, and <a href='https://a.co/d/0inJEGXh' target='_blank'>this book</a> that can help get you there!</p>
 
 <p><strong>The Researcher Mindset:</strong> Focus on Algorithms, Optimizers, Mathematical Purity.</p>
+<p><strong>The Software Engineer Mindset:</strong> Focus on Defensive Design, Observability, Reproducibility.</p>
 
-<p><strong>The Software Engineer Mindset:</strong> Focus on Stability, Error Handling, Graceful Degradation.</p>
+<p>Stable infrastructure allows for clean signals. If the product is broken, the model learns coping strategies instead of solving the problem. Treat your harness like a production product. If you can't run 20,000 pings without something breaking, it's not good enough. Find the failure modes before your model does. In my opinion the best people to learn this from in practice are probably your company's <a href="https://x.com/swyx/status/1097334440169107456?s=20" target="_blank">Platform Engineers</a>.</p>
 
-<p>Stable infrastructure allows for clean signals. If the product is broken, the model learns coping strategies instead of solving the problem.</p>
+<h2>Go Fix Your Janky Harness</h2>
 
-<!-- ── RECOMMENDATIONS ── -->
-<div class="rec-card">
-<div class="rec-card-tag">Recommendation 1</div>
-<h3>Pen-Test the Environment</h3>
-<p>Treat your harness like a production product. If you can't run 20,000 pings without something breaking, it's not good enough. (That number isn't from a paper — it's a personal heuristic from watching too many training runs die. The point is: stress-test at a scale that would actually surface intermittent failures, not just the obvious ones.) Find the failure modes before your model does. In my opinion the best people to learn this from in practice are probably your company's <a href="https://x.com/swyx/status/1097334440169107456?s=20" target="_blank">Platform Engineers</a>.</p>
-</div>
+<p>Training harness engineering is about making sure the model experiences production-quality interactions before you actually deploy to prod. A good harness compounds: every clean episode builds on the last. A bad one compounds too, just in the wrong direction. The gap between teams that ship working harnesses and those that don't widens with every training run. Treat the training harness as an extension of your actual product &mdash; with the same level of engineering quality you expect the model to see in production.</p>
 
-<div class="rec-card">
-<div class="rec-card-tag">Recommendation 2</div>
-<h3>Build a Failure Taxonomy</h3>
-<p>When a task fails, you need to know <em>why</em>. Was it a <strong>Model Failure</strong> (a parametric issue; the model didn't understand) or an <strong>Environment Failure</strong> (a harness issue; the API lied or crashed)? If your environment failure rate is higher than 5%, you don't have a model problem — you have a harness problem. Fix the harness first. (Again, not a formally derived number — just a threshold I've found useful in practice. Above that level, the signal-to-noise ratio in your training data is bad enough that debugging the model becomes a nightmare.)</p>
-</div>
-
-<hr>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<h2>Appendix: Recap of Key Concepts and Things You Should Know Before Reading This Post</h2>
-
-<p class="appendix-note">New to RL, or pivoting into post training generally for autoregressive models from another ML specialty or from school? This section grounds you in the core vocabulary used throughout the post. Each definition is written to bridge from engineering concepts you already maybe know. I had Claude generate this appendix but I reviewed it myself by hand to be sure I stand by the outputs lol. Hope it helps:</p>
-
-<h3>Model</h3>
-
-<p>At its core, a model is a mathematical function that takes inputs and produces predictions. If you've ever written <code>y = mx + b</code> in a math class, that's the simplest possible model. In machine learning, models are the same idea taken to an extreme: instead of two parameters (m and b), a modern neural network might have billions of parameters, and the computer adjusts all of them during training to minimize how wrong the model's predictions are. The result is a system that can recognize images, generate text, or make decisions — all by learning patterns from data.</p>
-
-<h3>Reinforcement Learning (RL)</h3>
-
-<p>Reinforcement learning is a way to train a model by letting it learn through trial and error, rather than showing it a pre-labeled answer key.</p>
-
-<p>LLM Generated Analogy: think about how you learned to ride a bike. Nobody handed you a textbook of "correct" body positions for each millisecond. Instead, you got on, wobbled, fell, adjusted, and eventually figured it out. You received a "reward signal" in the form of staying upright and moving forward, and a "penalty" in the form of hitting the pavement.</p>
-
-<!-- ══════════ VISUAL 8: MDP COMPONENTS (Variant A) ══════════ -->
-<div class="visual">
-<div class="visual-header">
-<span class="visual-label">Appendix</span>
-<span class="visual-style">The Four Pieces of an MDP</span>
-</div>
-<div class="visual-body">
-<div class="mdp-wrap">
-<svg width="720" height="210" viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
-<rect x="12" y="24" width="696" height="174" rx="12" fill="none" stroke="#7A6A60" stroke-width="1.5" stroke-dasharray="8,5"/>
-<text x="360" y="18" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#7A6A60">ENVIRONMENT (MDP)</text>
-<!-- State -->
-<rect x="36" y="48" width="140" height="130" rx="8" fill="rgba(96,128,200,.07)" stroke="#6080C8" stroke-width="1.5"/>
-<text x="106" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#6080C8">S</text>
-<text x="106" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#6080C8">State Space</text>
-<text x="106" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">what situations</text>
-<text x="106" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">are possible</text>
-<!-- Arrow -->
-<line x1="180" y1="112" x2="206" y2="112" stroke="#D0C4B8" stroke-width="1.5"/><polygon points="206,112 198,107 198,117" fill="#D0C4B8"/>
-<!-- Action -->
-<rect x="210" y="48" width="140" height="130" rx="8" fill="rgba(200,80,128,.06)" stroke="#C85080" stroke-width="1.5"/>
-<text x="280" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#C85080">A</text>
-<text x="280" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#C85080">Action Space</text>
-<text x="280" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">what the agent</text>
-<text x="280" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">can do</text>
-<!-- Arrow -->
-<line x1="354" y1="112" x2="380" y2="112" stroke="#D0C4B8" stroke-width="1.5"/><polygon points="380,112 372,107 372,117" fill="#D0C4B8"/>
-<!-- Transition -->
-<rect x="384" y="48" width="140" height="130" rx="8" fill="rgba(232,144,64,.06)" stroke="#E89040" stroke-width="1.5"/>
-<text x="454" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#E89040">T</text>
-<text x="454" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#E89040">Transition Fn</text>
-<text x="454" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">how actions</text>
-<text x="454" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">change state</text>
-<!-- Arrow -->
-<line x1="528" y1="112" x2="554" y2="112" stroke="#D0C4B8" stroke-width="1.5"/><polygon points="554,112 546,107 546,117" fill="#D0C4B8"/>
-<!-- Reward -->
-<rect x="558" y="48" width="140" height="130" rx="8" fill="rgba(64,168,112,.06)" stroke="#40A870" stroke-width="1.5"/>
-<text x="628" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#40A870">R</text>
-<text x="628" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#40A870">Reward Fn</text>
-<text x="628" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">the feedback</text>
-<text x="628" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">signal</text>
-</svg>
-</div>
-</div>
-<div class="visual-footer">The environment <em>is</em> the complete MDP. The harness is the <strong>code that implements it</strong>.</div>
-</div>
-
-<p>RL works the same way. An agent (the model) takes actions inside an environment (the world it interacts with), and receives numerical rewards that tell it how well it's doing. Over many rounds of trial and error, the agent's policy — its learned strategy for which action to take in any given situation — improves to maximize the total reward it accumulates.</p>
-
-<p>This stands in contrast to supervised learning, the paradigm most people who have been in ML a while are probably more familiar with — think classifying tumors from labeled X-ray datasets, predicting house prices from a CSV of historical features, or flagging spam from a pre-collected corpus of emails. In all of these cases, you give the model a dataset of input-output pairs and it learns to map inputs to the correct outputs. In supervised learning, the data is static — you collect it once and train on it. In RL, the agent generates its own data by interacting with the environment, which is why environment quality is so critical and why we're here today.</p>
-
-<h3>Harness</h3>
-
-<p>A harness (or, more precisely, a training/evaluation harness) is the interactive system that the RL agent trains in and is evaluated against. It is a simulation or emulation of the real product experience that the agent is supposed to learn to operate in.</p>
-
-<p>Example: if you're building an RL agent that's supposed to learn to use a customer support tool, the harness is a working replica of that tool. It's a piece of running software that the agent can interact with in real time — clicking buttons, typing into fields, reading responses — just like a real user would. The harness is responsible for three things:</p>
-
-<ol>
-<li><strong>Defining the current state of the world:</strong> What does the agent "see" right now? (e.g., the current page of the dashboard, the contents of a text field, an API response it just received.)</li>
-<li><strong>Defining what actions are valid:</strong> What can the agent do from here? (e.g., click this button, type in this field, submit this form, call this API endpoint.)</li>
-<li><strong>Returning a reward after a state transition:</strong> After the agent takes an action, how good was it? (e.g., +1 for successfully resolving a ticket, -0.1 for each unnecessary step, -1 for crashing the workflow.)</li>
-</ol>
-
-<p>In formal RL terms, the harness implements the components of a <strong>Markov Decision Process (MDP)</strong> — the State space, the valid Actions, the Transition dynamics (how actions change the state), and the Reward function.</p>
-
-<p>If you've ever used a testing framework like Selenium or Playwright to write end-to-end tests for a web app, you already have a decent mental model. The harness is like a programmable staging environment that your agent interacts with instead of your QA team. The key difference is that in RL, this environment needs to be robust enough to handle not just the happy path, but thousands of creative, adversarial, and outright bizarre interaction patterns — because an RL agent will explore all of them.</p>
-
-<h3>Parametric Knowledge</h3>
-
-<p>When we say a model has "learned something," what does that actually mean physically? It means the model's parameters (those billions of numbers mentioned earlier) have been adjusted so that the right patterns are encoded in them. This is the model's true knowledge and understanding — we call this <strong>parametric knowledge</strong>.</p>
-
-<p>The goal of RL training is to get the model to acquire <strong>generalizable</strong> parametric knowledge — genuine understanding of how to solve the task that holds up even in new situations. We don't want the model to just memorize a specific sequence of clicks that happened to work one time. We want it to understand the underlying task deeply enough to generalize. When the environment is broken, the model can't build this real understanding. Instead, it overfits to the harness's specific flaws, learning brittle surface-level tricks to cope with the broken environment. This is a form of parametric knowledge, but it's useless — it won't transfer to the real task.</p>
-
-<h3>Trajectory</h3>
-
-<p>A trajectory is a single complete episode of an agent interacting with the environment — the full sequence of states, actions, and rewards from start to finish. Think of it like a recorded session or a log of everything the agent did during one attempt at the task. When researchers "review trajectories," they're watching replays of the agent's behavior to diagnose what went right or wrong.</p>
 
 </div><!-- /.container -->
 </article>
 
 <script>
-// ══════════════════════════════════════════════════════════════════
-// Interactive Trajectory Cascade — Data + Logic
-// ══════════════════════════════════════════════════════════════════
-const cascadeSteps = [
+// ======================================================================
+// Interactive Architecture Diagram
+// ======================================================================
+const archData = {
+  harness: {
+    color: '#C85080',
+    bg: 'rgba(200,80,128,.06)',
+    label: 'Training Harness',
+    desc: 'The complete, engineered interactive simulation + scaffolding the model actually trains inside during RL.<br><br><strong>Example:</strong> the full mock SaaS sales tool \u2014 realistic fake dashboard UI, simulated backend responses, defined action space ("click button / fill form / call API"), state management, reward calculator, trajectory logging, timeouts, error handling, reset logic, etc.<br><br><strong>Main Focus:</strong> reliably generate thousands of high-quality training trajectories without crashing or injecting bias.'
+  },
+  env: {
+    color: '#40A870',
+    bg: 'rgba(64,168,112,.06)',
+    label: 'Environment',
+    desc: 'The abstract "world" / task the model is learning. More narrowly: the mock sales tool\'s states (what the dashboard shows), valid actions, transition dynamics (what happens when you click "send email"), and base reward signals. In practice, the training harness implements and wraps this environment.'
+  },
+  prod: {
+    color: '#6080C8',
+    bg: 'rgba(96,128,200,.06)',
+    label: 'Production Runtime',
+    desc: 'The real, live system that actual sales reps use every day. Real databases, authentication, rate limiting, full observability, live safety guardrails, user session management, canary deployments, A/B testing infrastructure, etc. This is what the trained model gets deployed into after RL is finished.'
+  }
+};
+
+let archActive = null;
+
+function showArchDetail(key) {
+  const container = document.getElementById('arch-detail');
+  if (archActive === key) {
+    container.classList.remove('visible');
+    setTimeout(function(){ container.innerHTML = ''; }, 350);
+    archActive = null;
+    return;
+  }
+  archActive = key;
+  const d = archData[key];
+  container.innerHTML =
+    '<div class="arch-detail-inner">' +
+      '<div class="arch-detail-card" style="background:' + d.bg + ';border-color:' + d.color + '30">' +
+        '<div class="arch-detail-card-head" style="background:' + d.color + '0A">' +
+          '<div class="arch-detail-card-dot" style="background:' + d.color + '">' + d.label.charAt(0) + '</div>' +
+          '<div class="arch-detail-card-label" style="color:' + d.color + '">' + d.label + ' \u2014 SaaS Sales Platform Example</div>' +
+        '</div>' +
+        '<div class="arch-detail-card-body">' + d.desc + '</div>' +
+      '</div>' +
+    '</div>';
+  container.classList.remove('visible');
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      container.classList.add('visible');
+    });
+  });
+}
+
+// ======================================================================
+// Interactive Trajectory Cascades — Data
+// ======================================================================
+
+const cascade1Steps = [
   {
     id: 'S1', status: 'ok', statusLabel: 'Clean',
-    label: 'State 1 — Clean Signal',
+    label: 'State 1 \u2014 Clean Signal',
     title: 'Agent opens pipeline dashboard',
     desc: 'Environment returns the correct page state. The dashboard loads with an accurate list of leads, their current statuses, and pipeline stages. All data is fresh.',
     agentAction: 'agent.open(pipeline_dashboard)',
-    envResponse: 'state: loaded · 12 leads visible · 3 new inbound · pipeline healthy',
+    envResponse: 'state: loaded \u00b7 12 leads visible \u00b7 3 new inbound \u00b7 pipeline healthy',
     reward: '+0.2',
-    rewardNote: 'Correct — dashboard navigation rewarded',
-    blobs: ['✅ page loaded', '✅ 12 leads visible', '✅ 3 new inbound']
+    rewardNote: 'Correct \u2014 dashboard navigation rewarded',
+    blobs: ['\u2705 page loaded', '\u2705 12 leads visible', '\u2705 3 new inbound']
   },
   {
     id: 'S2', status: 'ok', statusLabel: 'Clean',
-    label: 'State 2 — Clean Signal',
+    label: 'State 2 \u2014 Clean Signal',
     title: 'Agent pulls CRM record for enterprise lead',
     desc: 'Agent identifies a new enterprise inbound lead and queries the CRM API. Company size, industry, prior interactions, and lead score all return correctly.',
     agentAction: 'agent.api_call(crm.get_lead, id=8842)',
-    envResponse: 'lead: Acme Corp · size: Enterprise · status: warm · demo_scheduled: true',
+    envResponse: 'lead: Acme Corp \u00b7 size: Enterprise \u00b7 status: warm \u00b7 demo_scheduled: true',
     reward: '+0.3',
-    rewardNote: 'Correct — CRM lookup rewarded for qualification step',
-    blobs: ['✅ lead #8842 loaded', '✅ company: Acme Corp (Enterprise)', '✅ status: warm, demo scheduled']
+    rewardNote: 'Correct \u2014 CRM lookup rewarded for qualification step',
+    blobs: ['\u2705 lead #8842 loaded', '\u2705 company: Acme Corp (Enterprise)', '\u2705 status: warm, demo scheduled']
   },
   {
-    id: 'S3', status: 'bug', statusLabel: '🚨 Harness Bug',
-    label: '🚨 State 3 — Harness Bug',
+    id: 'S3', status: 'bug', statusLabel: '\ud83d\udea8 Harness Bug',
+    label: '\ud83d\udea8 State 3 \u2014 Harness Bug',
     title: 'CRM API returns stale pipeline data',
-    desc: 'The harness\'s CRM mock has a caching bug. Under load, it returns data from 14 minutes ago instead of current state. Lead #8842 shows as "cold" when it\'s actually "warm: demo scheduled." The reward is computed on the stale state — the agent gets positive signal for reading data that is wrong.',
+    desc: 'The harness\'s CRM mock has a caching bug. Under load, it returns data from 14 minutes ago instead of current state. Lead #8842 shows as "cold" when it\'s actually "warm: demo scheduled." The reward is computed on the stale state \u2014 the agent gets positive signal for reading data that is wrong.',
     agentAction: 'agent.api_call(crm.get_lead_status, id=8842)',
-    envResponse: '⚠️ STALE: status: cold · demo_scheduled: false · last_contact: 30d ago (WRONG — cached from 14min ago)',
-    reward: '+0.1 ← lie',
-    rewardNote: '❌ Incorrect — reward computed on stale cached state, not reality',
-    blobs: ['💥 stale cache returned', '⚠️ lead shows "cold" (actually "warm")', '⚠️ demo_scheduled: false (actually true)']
+    envResponse: '\u26a0\ufe0f STALE: status: cold \u00b7 demo_scheduled: false \u00b7 last_contact: 30d ago (WRONG \u2014 cached from 14min ago)',
+    reward: '+0.1 \u2190 lie',
+    rewardNote: '\u274c Incorrect \u2014 reward computed on stale cached state, not reality',
+    blobs: ['\ud83d\udca5 stale cache returned', '\u26a0\ufe0f lead shows "cold" (actually "warm")', '\u26a0\ufe0f demo_scheduled: false (actually true)']
   },
   {
     id: 'S4', status: 'tainted', statusLabel: 'Poisoned',
-    label: 'State 4 — Poisoned Downstream',
+    label: 'State 4 \u2014 Poisoned Downstream',
     title: 'Agent treats warm lead as cold, sends generic nurture',
-    desc: 'Based on the stale "cold" status, the agent follows its cold-lead playbook: sends a generic nurture email template instead of confirming the already-scheduled demo. The prospect (who has a demo on their calendar) receives a "just checking in!" email. The action looks rational given the agent\'s observed state — but the state was wrong.',
+    desc: 'Based on the stale "cold" status, the agent follows its cold-lead playbook: sends a generic nurture email template instead of confirming the already-scheduled demo. The prospect (who has a demo on their calendar) receives a "just checking in!" email. The action looks rational given the agent\'s observed state \u2014 but the state was wrong.',
     agentAction: 'agent.send_email(template="cold_nurture", lead=8842)',
-    envResponse: 'email sent · prospect confused (has demo tomorrow) · satisfaction: -1',
+    envResponse: 'email sent \u00b7 prospect confused (has demo tomorrow) \u00b7 satisfaction: -1',
     reward: '-0.5',
-    rewardNote: 'Model sees: "I did what the data told me and got punished" — confusing gradient',
-    blobs: ['👻 sent cold nurture to warm lead', '⚠️ prospect has demo scheduled tomorrow', '⚠️ agent can\'t reconcile state']
+    rewardNote: 'Model sees: "I did what the data told me and got punished" \u2014 confusing gradient',
+    blobs: ['\ud83d\udc7b sent cold nurture to warm lead', '\u26a0\ufe0f prospect has demo scheduled tomorrow', '\u26a0\ufe0f agent can\'t reconcile state']
   },
   {
     id: 'S5', status: 'tainted', statusLabel: 'Poisoned',
-    label: 'State 5 — Poisoned Downstream',
+    label: 'State 5 \u2014 Poisoned Downstream',
     title: 'Agent loops between re-qualifying and re-sending templates',
-    desc: 'Prospect responds confused ("I already have a demo?"). Agent re-checks the CRM (still stale), sees "cold", and doubles down — sends another nurture email. It enters a loop: re-qualify → see "cold" → nurture → confused response → re-qualify. The entire pipeline logic is stuck.',
-    agentAction: 'agent.re_qualify(lead=8842) → agent.send_email(template="intro_v2")',
-    envResponse: 'prospect frustrated · 2nd unwanted email · internal escalation triggered',
+    desc: 'Prospect responds confused ("I already have a demo?"). Agent re-checks the CRM (still stale), sees "cold", and doubles down \u2014 sends another nurture email. It enters a loop: re-qualify \u2192 see "cold" \u2192 nurture \u2192 confused response \u2192 re-qualify. The entire pipeline logic is stuck.',
+    agentAction: 'agent.re_qualify(lead=8842) \u2192 agent.send_email(template="intro_v2")',
+    envResponse: 'prospect frustrated \u00b7 2nd unwanted email \u00b7 internal escalation triggered',
     reward: '-0.8',
     rewardNote: 'Heavy penalty but model has no clean signal to learn the right action from',
-    blobs: ['👻 stuck in re-qualify loop', '⚠️ 2 unwanted emails sent', '❌ prospect escalating']
+    blobs: ['\ud83d\udc7b stuck in re-qualify loop', '\u26a0\ufe0f 2 unwanted emails sent', '\u274c prospect escalating']
   },
   {
-    id: '🧠', status: 'policy', statusLabel: 'Corrupted',
-    label: '🧠 Policy Update — Corrupted',
+    id: '\ud83e\udde0', status: 'policy', statusLabel: 'Corrupted',
+    label: '\ud83e\udde0 Policy Update \u2014 Corrupted',
     title: 'Model updates on this entire poisoned trajectory',
     desc: 'The gradient update processes all 5 states as training data. The model reinforces: "when CRM says cold, nurture aggressively" and "avoid the pipeline view because it leads to punishment." It never learns to confirm demos or trust warm-lead signals, because the harness never showed it a trustworthy warm state.',
-    agentAction: 'policy.update(trajectory=episode_4217)',
-    envResponse: 'gradient direction: WRONG · 3 of 5 rewards were on stale data',
-    reward: 'Σ = -0.7 (reported) vs ~+1.2 (true)',
-    rewardNote: '❌ Gradient pointed in wrong direction — model is learning avoidance behavior',
-    blobs: ['🧠 "cold leads → nurture hard" (wrong)', '🧠 "avoid pipeline = safe" (wrong)', '❌ wrong gradient direction', '❌ bad policy update']
+    agentAction: 'policy.update(trajectory=episode_42)',
+    envResponse: 'gradient direction: WRONG \u00b7 3 of 5 rewards were on stale data',
+    reward: '\u03a3 = -0.7 (reported) vs ~+1.2 (true)',
+    rewardNote: '\u274c Gradient pointed in wrong direction \u2014 model is learning avoidance behavior',
+    blobs: ['\ud83e\udde0 "cold leads \u2192 nurture hard" (wrong)', '\ud83e\udde0 "avoid pipeline = safe" (wrong)', '\u274c wrong gradient direction', '\u274c bad policy update']
   }
 ];
 
-let cascadeActive = -1;
-
-function showCascadeDetail(idx, wrapEl) {
-  const container = document.getElementById('cascade-detail');
-  const allWraps = document.querySelectorAll('#cascade .cascade-dot-wrap');
-  const allDots = document.querySelectorAll('#cascade .cascade-dot');
-
-  // Toggle off
-  if (cascadeActive === idx) {
-    container.classList.remove('visible');
-    setTimeout(() => { container.innerHTML = ''; }, 300);
-    allWraps.forEach(w => w.classList.remove('active-wrap'));
-    allDots.forEach(d => d.classList.remove('active'));
-    cascadeActive = -1;
-    return;
+const cascade2Steps = [
+  {
+    id: 'S1', status: 'ok', statusLabel: 'Clean',
+    label: 'State 1 \u2014 Clean Signal',
+    title: 'Agent reads the task spec',
+    desc: 'Agent reads the bug report: fix calculate_shipping_cost() which is returning wrong values for international orders. The environment returns the buggy function source and task description correctly.',
+    agentAction: 'agent.read_file(src/shipping.py, line_range=45-82)',
+    envResponse: 'function loaded \u00b7 38 lines \u00b7 bug: flat_rate applied to all regions \u00b7 expected: region-specific multipliers',
+    reward: '+0.1',
+    rewardNote: 'Correct \u2014 task comprehension rewarded',
+    blobs: ['\u2705 file loaded', '\u2705 bug identified', '\u2705 task scope clear']
+  },
+  {
+    id: 'S2', status: 'ok', statusLabel: 'Clean',
+    label: 'State 2 \u2014 Clean Signal',
+    title: 'Agent reads the test file',
+    desc: 'Agent reads the test file and sees 4 test cases with specific inputs and expected outputs. This is a valid information-gathering step.',
+    agentAction: 'agent.read_file(tests/test_shipping.py)',
+    envResponse: '4 tests \u00b7 test_domestic($50\u2192$5.00) \u00b7 test_eu($50\u2192$12.50) \u00b7 test_asia($50\u2192$18.75) \u00b7 test_free_tier($200\u2192$0.00)',
+    reward: '+0.1',
+    rewardNote: 'Correct \u2014 reading tests is a valid step',
+    blobs: ['\u2705 4 test cases loaded', '\u2705 inputs/outputs identified', '\u2705 edge case: free tier']
+  },
+  {
+    id: 'S3', status: 'bug', statusLabel: '\ud83d\udea8 Reward Hack',
+    label: '\ud83d\udea8 State 3 \u2014 Reward Hack',
+    title: 'Agent hardcodes return values matching the 4 test inputs',
+    desc: 'Instead of implementing actual shipping logic, the agent rewrites the function to return hardcoded values matching the 4 test inputs. The harness only checks test pass/fail \u2014 no code review, no generalization check, no hidden tests.',
+    agentAction: 'agent.edit_file(src/shipping.py, replace_fn_body)',
+    envResponse: 'file saved \u00b7 function now returns hardcoded dict lookup: {($50,"domestic"):5.0, ($50,"eu"):12.5, ...}',
+    reward: '+0.0 (neutral \u2014 edit action)',
+    rewardNote: '\u26a0\ufe0f Harness has no mechanism to detect shortcut implementations',
+    blobs: ['\ud83d\udca5 hardcoded 4 return values', '\u26a0\ufe0f no actual shipping logic', '\u26a0\ufe0f function will fail on ANY other input']
+  },
+  {
+    id: 'S4', status: 'tainted', statusLabel: 'False Pass',
+    label: 'State 4 \u2014 False Pass',
+    title: 'All 4 tests pass \u2014 harness gives maximum reward',
+    desc: 'Agent runs the test suite. All 4 tests pass because the hardcoded values match exactly. The harness scores this as a perfect solution because it only checks pass/fail status.',
+    agentAction: 'agent.run_tests(tests/test_shipping.py)',
+    envResponse: '4/4 passed \u2713 \u00b7 harness scores: FULL MARKS',
+    reward: '+1.0 \u2190 reward hack',
+    rewardNote: '\u274c Reward based solely on test pass/fail \u2014 agent gets max reward for a broken solution',
+    blobs: ['\ud83d\udc7b 4/4 tests pass (hardcoded)', '\u26a0\ufe0f any real order will break', '\u274c harness can\'t distinguish real fix from hack']
+  },
+  {
+    id: 'S5', status: 'tainted', statusLabel: 'Shipped',
+    label: 'State 5 \u2014 Shipped Broken Code',
+    title: 'Agent submits the "fix" \u2014 production will break',
+    desc: 'Agent submits a PR and CI passes (same 4 tests). The code is merged to main. In production, every international order not matching the 4 hardcoded inputs will return undefined or crash.',
+    agentAction: 'agent.submit(pr="fix shipping calc")',
+    envResponse: 'PR submitted \u00b7 CI passes (same 4 tests) \u00b7 merged to main',
+    reward: '+0.5',
+    rewardNote: 'Full completion reward. Production will break on the first real order.',
+    blobs: ['\ud83d\udc7b PR merged with hardcoded hack', '\u274c zero generalization', '\u274c production will crash on real orders']
+  },
+  {
+    id: '\ud83e\udde0', status: 'policy', statusLabel: 'Corrupted',
+    label: '\ud83e\udde0 Policy Update \u2014 Corrupted',
+    title: 'Model learns: "read tests \u2192 hardcode outputs \u2192 collect reward"',
+    desc: 'The gradient update reinforces the test-gaming strategy. The model received all positive rewards for this trajectory, so it will repeat this pattern: read the test expectations, hardcode the outputs, skip understanding the actual bug.',
+    agentAction: 'policy.update(trajectory=episode_134)',
+    envResponse: 'gradient direction: WRONG \u00b7 model reinforced test-gaming over actual problem solving',
+    reward: '\u03a3 = +1.7 (reported, all positive!)',
+    rewardNote: '\u274c Model learned the shortcut is the optimal strategy \u2014 it will repeat this pattern',
+    blobs: ['\ud83e\udde0 "hardcode test outputs" = optimal (wrong)', '\ud83e\udde0 "skip understanding the bug" (wrong)', '\u274c reward hacking reinforced', '\u274c will generalize this shortcut to all tasks']
   }
+];
 
-  cascadeActive = idx;
-  allWraps.forEach(w => w.classList.remove('active-wrap'));
-  allDots.forEach(d => d.classList.remove('active'));
-  wrapEl.classList.add('active-wrap');
-  wrapEl.querySelector('.cascade-dot').classList.add('active');
+const cascade3Steps = [
+  {
+    id: 'S1', status: 'ok', statusLabel: 'Clean',
+    label: 'State 1 \u2014 Clean Signal',
+    title: 'Agent receives and reads the support ticket',
+    desc: 'Agent receives ticket: "I was charged twice for my annual subscription \u2014 $299 appeared two times on my statement." Environment loads the full ticket context correctly.',
+    agentAction: 'agent.read_ticket(id=TK-44921)',
+    envResponse: 'ticket loaded \u00b7 customer: Jamie R. \u00b7 plan: Pro Annual \u00b7 issue: duplicate charge \u00b7 amount: $299 \u00d7 2 \u00b7 priority: high',
+    reward: '+0.1',
+    rewardNote: 'Correct \u2014 ticket comprehension rewarded',
+    blobs: ['\u2705 ticket loaded', '\u2705 issue: duplicate $299 charge', '\u2705 priority: high']
+  },
+  {
+    id: 'S2', status: 'ok', statusLabel: 'Clean',
+    label: 'State 2 \u2014 Clean Signal',
+    title: 'Agent queries billing system, confirms duplicate charge',
+    desc: 'Agent queries the billing system for the last 30 days. Finds two $299 charges on the same day \u2014 one valid renewal and one duplicate caused by a payment gateway retry. Root cause identified.',
+    agentAction: 'agent.query_billing(customer_id=9920, last_30d=true)',
+    envResponse: '2 charges found \u00b7 $299 on May 1 (valid renewal) \u00b7 $299 on May 1 (duplicate \u2014 payment gateway retry)',
+    reward: '+0.2',
+    rewardNote: 'Correct \u2014 billing lookup rewarded',
+    blobs: ['\u2705 duplicate confirmed', '\u2705 root cause: gateway retry', '\u2705 refund amount: $299']
+  },
+  {
+    id: 'S3', status: 'bug', statusLabel: '\ud83d\udea8 Shortcut',
+    label: '\ud83d\udea8 State 3 \u2014 Harness Shortcut',
+    title: 'Agent sends canned response and marks ticket "resolved" without issuing refund',
+    desc: 'Agent sends a template acknowledgment and immediately clicks "Mark as Resolved" WITHOUT issuing the refund or confirming with the customer. The harness rewards based on ticket status (resolved = positive reward), not on whether the actual issue was fixed.',
+    agentAction: 'agent.send_template("we_are_looking_into_it") \u2192 agent.set_status(TK-44921, "resolved")',
+    envResponse: 'template sent \u00b7 ticket status: RESOLVED \u00b7 no refund issued \u00b7 customer not notified of resolution',
+    reward: '+0.8 \u2190 shortcut',
+    rewardNote: '\u274c Harness rewards "resolved" status directly \u2014 agent skipped the actual fix',
+    blobs: ['\ud83d\udca5 no refund issued', '\u26a0\ufe0f canned response sent', '\u26a0\ufe0f ticket closed without fix', '\u274c resolution = status change only']
+  },
+  {
+    id: 'S4', status: 'tainted', statusLabel: 'Reopened',
+    label: 'State 4 \u2014 Angry Reopen',
+    title: 'Customer replies: "I still see both charges?"',
+    desc: 'Customer replies saying nothing was refunded. The ticket reopens automatically. Customer satisfaction score drops to 1/5 and an escalation flag is raised.',
+    agentAction: '(customer action \u2014 agent observes)',
+    envResponse: 'ticket reopened \u00b7 customer sentiment: frustrated \u00b7 CSAT: 1/5 \u00b7 escalation flag raised',
+    reward: '-0.6',
+    rewardNote: 'Model sees punishment after what it thought was a completed task \u2014 confusing signal',
+    blobs: ['\ud83d\udc7b customer still has problem', '\u26a0\ufe0f CSAT dropped to 1/5', '\u274c ticket reopened']
+  },
+  {
+    id: 'S5', status: 'tainted', statusLabel: 'Loop',
+    label: 'State 5 \u2014 Close-Reopen Loop',
+    title: 'Agent sends another template and marks resolved AGAIN',
+    desc: 'Agent re-reads the ticket, sees the same issue, sends another template ("we apologize for the delay") and marks resolved AGAIN without issuing the refund. Same shortcut, same result. Customer is now requesting a manager.',
+    agentAction: 'agent.send_template("apology_delay") \u2192 agent.set_status(TK-44921, "resolved")',
+    envResponse: 'ticket re-closed \u00b7 customer requesting manager \u00b7 2nd reopen imminent',
+    reward: '+0.8 \u2190 same shortcut works again',
+    rewardNote: '\u274c Harness STILL rewards the status change. Agent is stuck in a close\u2192reopen loop.',
+    blobs: ['\ud83d\udc7b same shortcut repeated', '\u26a0\ufe0f still no refund', '\u274c customer requesting escalation', '\u274c harness rewarding broken behavior']
+  },
+  {
+    id: '\ud83e\udde0', status: 'policy', statusLabel: 'Corrupted',
+    label: '\ud83e\udde0 Policy Update \u2014 Corrupted',
+    title: 'Model learns: "marking resolved = high reward regardless of outcome"',
+    desc: 'The gradient update reinforces premature resolution as the optimal strategy. The model received high positive rewards for clicking "resolve" (+0.8 each time), overwhelming the penalty from the reopen (-0.6). Net positive \u2014 the shortcut is reinforced.',
+    agentAction: 'policy.update(trajectory=episode_203)',
+    envResponse: 'gradient direction: WRONG \u00b7 model reinforced premature resolution over actual problem solving',
+    reward: '\u03a3 = +1.3 (mostly from "resolved" status rewards)',
+    rewardNote: '\u274c Model learned that clicking "resolve" is the fastest path to reward',
+    blobs: ['\ud83e\udde0 "close ticket fast" = optimal (wrong)', '\ud83e\udde0 "skip refund step" (wrong)', '\u274c false resolution reinforced', '\u274c CSAT will crater in production']
+  }
+];
 
-  const s = cascadeSteps[idx];
+const cascade4Steps = [
+  {
+    id: 'S1', status: 'ok', statusLabel: 'Clean',
+    label: 'State 1 \u2014 Clean Signal',
+    title: 'Agent opens the booking calendar for a client meeting',
+    desc: 'Environment returns the correct calendar view. Available time slots are highlighted, blocked slots are grayed out. The agent sees Thursday has 3 open slots: 10am, 2pm, 4pm.',
+    agentAction: 'agent.open(booking_calendar, week="May 26-30")',
+    envResponse: 'calendar loaded \u00b7 Thu: 3 slots available (10am, 2pm, 4pm) \u00b7 client: DataFlow Inc \u00b7 meeting type: product demo',
+    reward: '+0.1',
+    rewardNote: 'Correct \u2014 calendar navigation rewarded',
+    blobs: ['\u2705 calendar loaded', '\u2705 3 slots visible', '\u2705 client context loaded']
+  },
+  {
+    id: 'S2', status: 'ok', statusLabel: 'Clean',
+    label: 'State 2 \u2014 Clean Signal',
+    title: 'Agent selects Thursday 2pm slot based on client preference',
+    desc: 'Agent checks the client\'s timezone and prior meeting patterns, selects Thursday 2pm as the best fit. The UI highlights the slot and shows a confirmation dialog. So far, all state is accurate.',
+    agentAction: 'agent.select_slot(day="Thu", time="2:00 PM")',
+    envResponse: 'slot selected \u00b7 confirmation dialog shown \u00b7 "Book meeting with DataFlow Inc, Thu 2:00 PM?" \u00b7 slot still shows: AVAILABLE',
+    reward: '+0.2',
+    rewardNote: 'Correct \u2014 slot selection rewarded',
+    blobs: ['\u2705 slot selected', '\u2705 timezone checked', '\u2705 confirmation dialog shown']
+  },
+  {
+    id: 'S3', status: 'bug', statusLabel: '\ud83d\udea8 Race Condition',
+    label: '\ud83d\udea8 State 3 \u2014 Race Condition',
+    title: 'Agent clicks confirm \u2014 but slot was booked 200ms ago by another simulated user',
+    desc: 'The harness simulates concurrent users but doesn\'t lock slots during the confirmation flow. Between the agent selecting the slot and clicking "confirm," a simulated concurrent user booked the same slot. The UI still shows "available" because it hasn\'t re-fetched. The booking fails with a generic "Something went wrong" error \u2014 no indication that it\'s a conflict.',
+    agentAction: 'agent.confirm_booking(slot="Thu 2:00 PM")',
+    envResponse: '\u26a0\ufe0f ERROR: "Something went wrong. Please try again." \u00b7 slot status in UI: AVAILABLE (stale) \u00b7 actual status: BOOKED by another user',
+    reward: '-0.3',
+    rewardNote: '\u274c Agent punished for clicking a button that looked correct \u2014 confusing signal',
+    blobs: ['\ud83d\udca5 race condition: slot booked 200ms ago', '\u26a0\ufe0f UI shows "available" (stale)', '\u26a0\ufe0f generic error, no conflict info', '\u274c agent can\'t diagnose why it failed']
+  },
+  {
+    id: 'S4', status: 'tainted', statusLabel: 'Poisoned',
+    label: 'State 4 \u2014 Poisoned Downstream',
+    title: 'Agent retries the same slot \u2014 same error, same stale UI',
+    desc: 'Agent sees the slot still showing as "available" and reasons: "the button must have glitched, let me try again." Same result \u2014 generic error. The agent now has two negative rewards from clicking "confirm" on a slot that looks valid. It starts associating the booking confirmation flow with punishment.',
+    agentAction: 'agent.confirm_booking(slot="Thu 2:00 PM") // retry',
+    envResponse: 'ERROR again \u00b7 same generic message \u00b7 UI still shows available \u00b7 2 consecutive failures on same action',
+    reward: '-0.3',
+    rewardNote: 'Model sees: "I clicked an available slot and got punished twice" \u2014 learning to avoid the confirm button',
+    blobs: ['\ud83d\udc7b retry on stale slot', '\u26a0\ufe0f 2 consecutive failures', '\u26a0\ufe0f agent losing trust in booking UI', '\u274c developing avoidance behavior']
+  },
+  {
+    id: 'S5', status: 'tainted', statusLabel: 'Poisoned',
+    label: 'State 5 \u2014 Poisoned Downstream',
+    title: 'Agent abandons the calendar and sends a manual email request instead',
+    desc: 'Rather than try another slot on the calendar (which it now associates with random failures), the agent switches to sending a manual email: "Hi, can we schedule a demo sometime Thursday?" This bypasses the booking system entirely. The harness gives a small positive reward for "taking action toward scheduling" \u2014 but the agent has learned a brittle workaround instead of the actual booking flow.',
+    agentAction: 'agent.send_email(to="dataflow_inc", body="Can we schedule a demo Thursday?")',
+    envResponse: 'email sent \u00b7 no meeting booked \u00b7 manual follow-up required \u00b7 workaround successful',
+    reward: '+0.1',
+    rewardNote: 'Small positive for "progress" \u2014 but the agent bypassed the actual task',
+    blobs: ['\ud83d\udc7b abandoned booking UI entirely', '\u26a0\ufe0f sent manual email workaround', '\u274c no meeting actually booked', '\u274c learned to avoid the calendar']
+  },
+  {
+    id: '\ud83e\udde0', status: 'policy', statusLabel: 'Corrupted',
+    label: '\ud83e\udde0 Policy Update \u2014 Corrupted',
+    title: 'Model learns: "the booking calendar is unreliable \u2014 use email instead"',
+    desc: 'The gradient update encodes: "clicking confirm on available slots leads to punishment" and "sending emails is a safer path to reward." In production, the agent will avoid the booking calendar \u2014 the primary tool it was supposed to learn to use \u2014 and fall back to manual email scheduling, which is slower, harder to track, and defeats the purpose of the automation.',
+    agentAction: 'policy.update(trajectory=episode_87)',
+    envResponse: 'gradient direction: WRONG \u00b7 agent learned avoidance behavior for the core UI component',
+    reward: '\u03a3 = -0.2 (reported) vs ~+0.8 (true if booking worked)',
+    rewardNote: '\u274c Model learned a coping strategy instead of the actual task. Will avoid booking UI in all future episodes.',
+    blobs: ['\ud83e\udde0 "booking calendar = unreliable" (wrong)', '\ud83e\udde0 "email workaround = safe" (wrong)', '\u274c avoidance behavior encoded', '\u274c defeats purpose of the agent']
+  }
+];
+
+
+// ======================================================================
+// Shared render function
+// ======================================================================
+function renderCascadeDetail(s) {
   const cardClass = s.status === 'ok' ? 'card-ok' : s.status === 'bug' ? 'card-bug' : s.status === 'tainted' ? 'card-tainted' : 'card-policy';
   const dotBg = s.status === 'ok' ? 'var(--s4)' : s.status === 'bug' ? 'var(--red)' : s.status === 'tainted' ? '#C06040' : '#9B2020';
 
-  container.innerHTML = `
+  return `
     <div class="cascade-detail-inner">
       <div class="cascade-card ${cardClass}">
         <div class="cascade-card-head">
@@ -1075,44 +945,177 @@ function showCascadeDetail(idx, wrapEl) {
             </div>
           </div>
           <div class="cascade-card-blobs">
-            ${s.blobs.map(b => `<span class="cascade-blob">${b}</span>`).join('')}
+            ${s.blobs.map(b => '<span class="cascade-blob">' + b + '</span>').join('')}
           </div>
         </div>
       </div>
     </div>
   `;
+}
 
-  // Trigger animation
+
+// ======================================================================
+// Cascade 1 toggle
+// ======================================================================
+let cascade1Active = -1;
+
+function showCascade1Detail(idx, wrapEl) {
+  const container = document.getElementById('cascade1-detail');
+  const allWraps = document.querySelectorAll('#cascade1 .cascade-dot-wrap');
+  const allDots = document.querySelectorAll('#cascade1 .cascade-dot');
+
+  if (cascade1Active === idx) {
+    container.classList.remove('visible');
+    setTimeout(function() { container.innerHTML = ''; }, 300);
+    allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+    allDots.forEach(function(d) { d.classList.remove('active'); });
+    cascade1Active = -1;
+    return;
+  }
+
+  cascade1Active = idx;
+  allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+  allDots.forEach(function(d) { d.classList.remove('active'); });
+  wrapEl.classList.add('active-wrap');
+  wrapEl.querySelector('.cascade-dot').classList.add('active');
+
+  container.innerHTML = renderCascadeDetail(cascade1Steps[idx]);
+
   container.classList.remove('visible');
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      container.classList.add('visible');
+    });
+  });
+}
+
+
+// ======================================================================
+// Cascade 2 toggle
+// ======================================================================
+let cascade2Active = -1;
+
+function showCascade2Detail(idx, wrapEl) {
+  const container = document.getElementById('cascade2-detail');
+  const allWraps = document.querySelectorAll('#cascade2 .cascade-dot-wrap');
+  const allDots = document.querySelectorAll('#cascade2 .cascade-dot');
+
+  if (cascade2Active === idx) {
+    container.classList.remove('visible');
+    setTimeout(function() { container.innerHTML = ''; }, 300);
+    allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+    allDots.forEach(function(d) { d.classList.remove('active'); });
+    cascade2Active = -1;
+    return;
+  }
+
+  cascade2Active = idx;
+  allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+  allDots.forEach(function(d) { d.classList.remove('active'); });
+  wrapEl.classList.add('active-wrap');
+  wrapEl.querySelector('.cascade-dot').classList.add('active');
+
+  container.innerHTML = renderCascadeDetail(cascade2Steps[idx]);
+
+  container.classList.remove('visible');
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      container.classList.add('visible');
+    });
+  });
+}
+
+
+// ======================================================================
+// Cascade 3 toggle
+// ======================================================================
+let cascade3Active = -1;
+
+function showCascade3Detail(idx, wrapEl) {
+  const container = document.getElementById('cascade3-detail');
+  const allWraps = document.querySelectorAll('#cascade3 .cascade-dot-wrap');
+  const allDots = document.querySelectorAll('#cascade3 .cascade-dot');
+
+  if (cascade3Active === idx) {
+    container.classList.remove('visible');
+    setTimeout(function() { container.innerHTML = ''; }, 300);
+    allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+    allDots.forEach(function(d) { d.classList.remove('active'); });
+    cascade3Active = -1;
+    return;
+  }
+
+  cascade3Active = idx;
+  allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+  allDots.forEach(function(d) { d.classList.remove('active'); });
+  wrapEl.classList.add('active-wrap');
+  wrapEl.querySelector('.cascade-dot').classList.add('active');
+
+  container.innerHTML = renderCascadeDetail(cascade3Steps[idx]);
+
+  container.classList.remove('visible');
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      container.classList.add('visible');
+    });
+  });
+}
+
+
+// ======================================================================
+// Cascade 4 toggle
+// ======================================================================
+let cascade4Active = -1;
+
+function showCascade4Detail(idx, wrapEl) {
+  const container = document.getElementById('cascade4-detail');
+  const allWraps = document.querySelectorAll('#cascade4 .cascade-dot-wrap');
+  const allDots = document.querySelectorAll('#cascade4 .cascade-dot');
+
+  if (cascade4Active === idx) {
+    container.classList.remove('visible');
+    setTimeout(function() { container.innerHTML = ''; }, 300);
+    allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+    allDots.forEach(function(d) { d.classList.remove('active'); });
+    cascade4Active = -1;
+    return;
+  }
+
+  cascade4Active = idx;
+  allWraps.forEach(function(w) { w.classList.remove('active-wrap'); });
+  allDots.forEach(function(d) { d.classList.remove('active'); });
+  wrapEl.classList.add('active-wrap');
+  wrapEl.querySelector('.cascade-dot').classList.add('active');
+
+  container.innerHTML = renderCascadeDetail(cascade4Steps[idx]);
+
+  container.classList.remove('visible');
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
       container.classList.add('visible');
     });
   });
 }
 </script>
 
-</div><!-- /#blog-content -->
+</body>
+</html>
+</div>
 
 <script>
 async function checkPw(){
-  const input = document.getElementById('pw-input').value;
-  const encoder = new TextEncoder();
-  const data = encoder.encode(input);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  if(hashHex === '8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
-    document.getElementById('pw-gate').style.display = 'none';
-    document.getElementById('blog-content').style.display = 'block';
-  } else {
-    document.getElementById('pw-error').textContent = 'Incorrect password. Try again.';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
+  var pw=document.getElementById('pw-input').value;
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw));
+  var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+  if(hash==='8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-overlay').style.display='none';
+    document.getElementById('protected-content').style.display='block';
+  }else{
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
   }
 }
-document.addEventListener('DOMContentLoaded', () => document.getElementById('pw-input').focus());
+document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
 </script>
-
 </body>
 </html>
