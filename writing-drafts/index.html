@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Shipping Low-Quality Harnesses and Calling It an "Environment" — Auriel's RL Pet Peeves</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   BRAND SYSTEM — Auriel · Heirloom Palette
+   ══════════════════════════════════════════════════════════════════ */
+:root{
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
+  --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
+  --cream:#FDF9F4;--paper:#F7EFE5;--ink:#1A1408;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#C85080;--border:#E0D4C8;
+  --s1:#C85080;--s2:#E89040;--s3:#6080C8;--s4:#40A870;
+  --red:#9B2020;--red-bg:#FFF0F0;--green:#1E7A40;--green-bg:#EAF7EF;
+  --mono:"DM Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Plus Jakarta Sans",sans-serif;
+  background:var(--cream);color:var(--ink2);
+  line-height:1.72;font-size:16.5px;
+}
+
+/* ── STRIPE ── */
+.stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
+
+/* ── LAYOUT ── */
+.container{max-width:760px;margin:0 auto;padding:0 28px}
+article{padding-bottom:100px}
+
+/* ── HERO ── */
+.hero{background:var(--ink);padding:72px 0 56px;margin-bottom:48px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.hero .container{position:relative;z-index:1}
+.hero-series{font-family:var(--mono);font-size:11px;color:var(--coral);text-transform:uppercase;letter-spacing:3px;margin-bottom:16px}
+.hero h1{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:clamp(2rem,4.5vw,2.8rem);color:var(--cream);line-height:1.12;margin-bottom:16px}
+.hero h1 strong{font-style:normal;font-weight:700;color:var(--rose)}
+.hero-sub{font-size:15px;color:#6a5a48;max-width:560px;line-height:1.65}
+.hero-sub strong{color:var(--apricot)}
+
+/* ── TYPOGRAPHY ── */
+h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.65rem;color:var(--ink);margin:56px 0 18px;line-height:1.2}
+h3{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:1.25rem;color:var(--ink);margin:40px 0 14px;line-height:1.3}
+p{margin-bottom:18px}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(155,46,90,.3);text-underline-offset:3px;transition:all .15s}
+a:hover{color:var(--accent2);text-decoration-color:var(--accent2)}
+
+/* ── CALLOUT / BLOCKQUOTE ── */
+blockquote{background:var(--paper);border-left:4px solid var(--apricot);padding:18px 24px;margin:24px 0;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink2);line-height:1.6}
+blockquote strong{color:var(--ink)}
+
+/* ── KEY DETAIL BOX ── */
+.key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
+.key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
+
+/* ── CODE / MONO ── */
+code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
+
+/* ── SECTION RULE ── */
+hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
+
+/* ── DEFINITION BLOCK ── */
+.def-block{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:32px 0}
+.def-block-header{background:var(--paper);padding:14px 22px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600}
+.def-block-body{padding:24px 22px}
+.def-item{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(0,0,0,.04)}
+.def-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.def-term{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.def-desc{font-size:14.5px;color:var(--ink2);line-height:1.6}
+
+/* ── APPENDIX ── */
+.appendix-note{font-size:14px;color:var(--muted);font-style:italic;line-height:1.6;margin-bottom:32px}
+
+/* ── ORDERED LIST ── */
+ol{margin:16px 0 24px 24px}
+ol li{margin-bottom:12px;padding-left:4px}
+ol li strong{color:var(--ink)}
+
+/* ── EMOJI CALLOUT ── */
+.rant-callout{font-size:15px;color:var(--muted);margin:20px 0;padding:14px 20px;background:rgba(0,0,0,.02);border-radius:8px;border-left:3px solid var(--apricot)}
+
+/* ── RECOMMENDATION CARDS ── */
+.rec-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0}
+.rec-card-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.rec-card h3{margin-top:0;margin-bottom:12px}
+.rec-card p{font-size:15px;margin-bottom:0}
+
+/* ══════════════════════════════════════════════════════════════════
+   VISUAL COMPONENT STYLES
+   ══════════════════════════════════════════════════════════════════ */
+.visual{margin:36px 0;border:2px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
+.visual-header{background:var(--ink);color:var(--cream);padding:12px 22px;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;display:flex;justify-content:space-between;align-items:center}
+.visual-label{text-transform:uppercase;letter-spacing:2px;font-weight:600;font-size:10px}
+.visual-style{color:var(--s2);font-size:10px}
+.visual-body{padding:28px 24px}
+.visual-footer{border-top:1px solid var(--border);padding:14px 22px;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;line-height:1.5;background:var(--paper)}
+.visual-footer strong{color:var(--accent)}
+
+/* ── VIS: ANATOMY / BLUEPRINT ── */
+.blueprint-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:640px){.blueprint-grid{grid-template-columns:repeat(2,1fr)}}
+.bp-card{border-radius:8px;padding:16px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .15s}
+.bp-card:hover{transform:translateY(-2px)}
+.bp-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.bp-name{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1px;font-weight:600;line-height:1.3}
+.bp-sub{font-size:11px;color:var(--muted);line-height:1.3}
+
+/* ── VIS: CONCENTRIC RINGS ── */
+.rings-wrap{display:flex;justify-content:center;padding:20px 0}
+
+/* ── VIS: SL vs RL (Variant B Pipeline) ── */
+.vb-container{display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative}
+@media(max-width:640px){.vb-container{grid-template-columns:1fr}}
+.vb-panel{padding:28px 24px;position:relative}
+.vb-panel.vb-sl{background:#F0F3FA;border-right:1px solid var(--border)}
+.vb-panel.vb-rl{background:#FDF5F8}
+.vb-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:6px}
+.vb-sl .vb-tag{color:var(--s3)}
+.vb-rl .vb-tag{color:var(--s1)}
+.vb-title{font-family:"Fraunces",serif;font-style:italic;font-size:18px;color:var(--ink);margin-bottom:20px;font-weight:300}
+.vb-pipe{display:flex;flex-direction:column;gap:0;position:relative}
+.vb-pipe::before{content:'';position:absolute;left:16px;top:20px;bottom:20px;width:2px;border-radius:1px}
+.vb-sl .vb-pipe::before{background:rgba(96,128,200,.25)}
+.vb-rl .vb-pipe::before{background:rgba(200,80,128,.25)}
+.vb-step{display:flex;align-items:center;gap:14px;padding:10px 0;position:relative;z-index:1}
+.vb-dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+.vb-sl .vb-dot{background:var(--s3)}
+.vb-rl .vb-dot{background:var(--s1)}
+.vb-step-text{font-size:14px;font-weight:600;color:var(--ink)}
+.vb-step-sub{font-size:12px;color:var(--muted);margin-top:2px;font-weight:400}
+.vb-loop-indicator{margin-top:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(200,80,128,.08);border-radius:6px;border:1px dashed var(--s1)}
+.vb-loop-icon{font-size:20px}
+.vb-loop-text{font-family:var(--mono);font-size:11px;color:var(--s1);font-weight:600;line-height:1.4}
+.vb-vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--ink);color:var(--cream);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1px;padding:6px 12px;border-radius:999px;z-index:2}
+
+/* ── VIS: LOSS CURVES ── */
+.loss-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:640px){.loss-grid{grid-template-columns:1fr}}
+.loss-panel{text-align:center}
+.loss-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:10px}
+.loss-caption{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:12px;line-height:1.5;padding:8px 12px;border-radius:4px}
+
+/* ── VIS: FILMSTRIP CASCADE ── */
+.filmstrip{display:flex;gap:0;overflow-x:auto;padding-bottom:8px}
+.film-card{min-width:150px;flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column}
+.film-card:last-child{border-right:none}
+.film-header{padding:8px 12px;font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;text-align:center}
+.film-header.clean{background:var(--green-bg);color:var(--green)}
+.film-header.bug{background:var(--red-bg);color:var(--red)}
+.film-header.poisoned{background:#FFF8F0;color:#9B5030}
+.film-body{padding:12px 14px;font-size:12px;color:var(--ink2);line-height:1.5;flex:1}
+.film-reward{padding:8px 12px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border)}
+.film-reward.good{color:var(--green);background:rgba(30,122,64,.04)}
+.film-reward.lie{color:var(--red);background:rgba(155,32,32,.04)}
+.film-reward.bad{color:var(--red);background:rgba(155,32,32,.06)}
+.film-punchline{margin-top:16px;padding:14px 18px;background:rgba(155,32,32,.06);border:1px solid rgba(155,32,32,.2);border-radius:8px;font-family:var(--mono);font-size:12px;color:var(--red);line-height:1.5;text-align:center}
+
+/* ── VIS: TRAJECTORY POISON ── */
+.traj-wrap{display:flex;align-items:center;gap:0;justify-content:center;flex-wrap:wrap;padding:12px 0}
+.traj-node{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;flex-shrink:0;position:relative}
+.traj-node.clean{background:var(--s4)}
+.traj-node.bug{background:var(--red);animation:pulse-bug 2s ease-in-out infinite}
+.traj-node.tainted{background:#C06040;opacity:.85}
+@keyframes pulse-bug{0%,100%{box-shadow:0 0 0 0 rgba(155,32,32,.4)}50%{box-shadow:0 0 0 10px rgba(155,32,32,0)}}
+.traj-arrow{font-family:var(--mono);font-size:14px;color:var(--border);padding:0 4px;flex-shrink:0}
+.traj-policy{margin-top:16px;display:flex;align-items:center;justify-content:center;gap:12px}
+.traj-policy-box{padding:10px 18px;border-radius:8px;font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+
+/* ── VIS: RESEARCHER VS ENGINEER (Modified Variant B) ── */
+.re-belts{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch}
+@media(max-width:640px){.re-belts{grid-template-columns:1fr;gap:16px}}
+.re-belt{border-radius:10px;padding:24px 18px 20px}
+.re-belt--res{background:rgba(96,128,200,.05);border:1.5px solid rgba(96,128,200,.15)}
+.re-belt--eng{background:rgba(64,168,112,.05);border:1.5px solid rgba(64,168,112,.15)}
+.re-belt-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:14px}
+.re-belt--res .re-belt-tag{color:var(--s3)}
+.re-belt--eng .re-belt-tag{color:var(--s4)}
+.re-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.re-tool{display:flex;flex-direction:column;align-items:center;gap:5px;width:68px}
+.re-tool-icon{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;transition:transform .15s}
+.re-tool-icon:hover{transform:scale(1.08)}
+.re-belt--res .re-tool-icon{background:rgba(96,128,200,.12);border:1px solid rgba(96,128,200,.2);color:var(--s3)}
+.re-belt--eng .re-tool-icon{background:rgba(64,168,112,.12);border:1px solid rgba(64,168,112,.2);color:var(--s4)}
+.re-tool-label{font-family:var(--mono);font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;text-align:center;line-height:1.3}
+.re-bridge-col{display:flex;align-items:center;justify-content:center;padding:0 8px}
+.re-bridge{writing-mode:vertical-rl;text-orientation:mixed;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);position:relative;padding:16px 14px}
+.re-bridge::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(to bottom,transparent,var(--border),transparent);transform:translateX(-50%)}
+.re-overlap{background:linear-gradient(135deg,rgba(200,80,128,.08),rgba(200,80,128,.04));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:18px 24px;text-align:center;margin-top:20px}
+.re-overlap-tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600;margin-bottom:4px}
+.re-overlap-title{font-family:"Fraunces",serif;font-style:italic;font-size:19px;color:var(--accent);font-weight:400;margin-bottom:6px}
+.re-overlap-sub{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.5}
+
+/* ── VIS: VENN DIAGRAM ── */
+.venn-wrap{display:flex;justify-content:center;padding:16px 0}
+
+/* ── VIS: MDP COMPONENTS ── */
+.mdp-wrap{display:flex;justify-content:center;overflow-x:auto;padding:8px 0}
+
+/* ── LEGEND ── */
+.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:12px 0;margin-top:8px}
+.legend-item{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ══════════════════════════════════════════════════════════════════
+   VIS: INTERACTIVE TRAJECTORY CASCADE (Light Timeline)
+   ══════════════════════════════════════════════════════════════════ */
+.cascade{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
+.cascade-header{padding:16px 24px;border-bottom:1px solid var(--border);background:var(--paper)}
+.cascade-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600}
+.cascade-title{font-family:"Fraunces",serif;font-style:italic;font-size:18px;color:var(--ink);font-weight:300;margin-top:2px}
+.cascade-subtitle{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px}
+
+.cascade-dots{display:flex;align-items:center;justify-content:center;gap:0;padding:28px 24px 16px;background:#FDFBF8}
+.cascade-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;z-index:2}
+.cascade-dot{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;transition:transform .2s,box-shadow .2s;border:3px solid #fff}
+.cascade-dot:hover{transform:scale(1.1)}
+.cascade-dot.active{transform:scale(1.15)}
+.cascade-dot.dot-ok{background:var(--s4)}
+.cascade-dot.dot-ok.active{box-shadow:0 0 0 3px rgba(64,168,112,.35)}
+.cascade-dot.dot-bug{background:var(--red);animation:pulse-bug 2s ease-in-out infinite}
+.cascade-dot.dot-bug.active{box-shadow:0 0 0 3px rgba(155,32,32,.35);animation:none}
+.cascade-dot.dot-tainted{background:#C06040}
+.cascade-dot.dot-tainted.active{box-shadow:0 0 0 3px rgba(192,96,64,.35)}
+.cascade-dot.dot-policy{background:var(--red);border-color:var(--red-bg)}
+.cascade-dot.dot-policy.active{box-shadow:0 0 0 3px rgba(155,32,32,.35)}
+.cascade-dot-label{font-family:var(--mono);font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;transition:color .2s}
+.cascade-dot-wrap.active-wrap .cascade-dot-label{color:var(--accent);font-weight:600}
+.cascade-conn{width:24px;height:3px;flex-shrink:0;border-radius:2px;z-index:1}
+.cascade-conn.conn-ok{background:var(--s4);opacity:.3}
+.cascade-conn.conn-break{background:linear-gradient(90deg,rgba(64,168,112,.3),rgba(155,32,32,.4))}
+.cascade-conn.conn-tainted{background:rgba(155,32,32,.2)}
+
+.cascade-hint{text-align:center;padding:0 24px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;background:#FDFBF8;border-bottom:1px solid var(--border)}
+
+.cascade-detail{margin:0;overflow:hidden;max-height:0;transition:max-height .3s ease-out;background:#FDFBF8}
+.cascade-detail.visible{max-height:600px}
+.cascade-detail-inner{padding:20px 24px}
+
+.cascade-card{border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.cascade-card-head{display:flex;align-items:center;gap:10px;padding:12px 18px}
+.cascade-card-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+.cascade-card-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:600}
+.cascade-card-body{padding:16px 18px;border-top:1px solid var(--border)}
+.cascade-card-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.cascade-card-desc{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:12px}
+.cascade-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.cascade-card-cell{padding:10px 14px;border-radius:6px;font-size:12px;line-height:1.5}
+.cascade-card-cell-label{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:4px;display:block}
+.cascade-card-blobs{display:flex;flex-wrap:wrap;gap:5px}
+.cascade-blob{font-family:var(--mono);font-size:9.5px;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
+
+.cascade-card.card-ok{background:var(--green-bg);border-color:rgba(30,122,64,.15)}
+.cascade-card.card-ok .cascade-card-head{background:rgba(30,122,64,.06)}
+.cascade-card.card-ok .cascade-card-dot{background:var(--s4)}
+.cascade-card.card-ok .cascade-card-label{color:var(--green)}
+.cascade-card.card-ok .cascade-card-cell{background:rgba(64,168,112,.06);border:1px solid rgba(64,168,112,.12);color:var(--ink2)}
+.cascade-card.card-ok .cascade-card-cell-label{color:var(--green)}
+.cascade-card.card-ok .cascade-blob{background:rgba(64,168,112,.1);color:var(--green);border:1px solid rgba(64,168,112,.2)}
+
+.cascade-card.card-bug{background:var(--red-bg);border-color:rgba(155,32,32,.2);border-left:4px solid var(--red)}
+.cascade-card.card-bug .cascade-card-head{background:rgba(155,32,32,.04)}
+.cascade-card.card-bug .cascade-card-dot{background:var(--red)}
+.cascade-card.card-bug .cascade-card-label{color:var(--red)}
+.cascade-card.card-bug .cascade-card-cell{background:rgba(155,32,32,.04);border:1px solid rgba(155,32,32,.1);color:var(--ink2)}
+.cascade-card.card-bug .cascade-card-cell-label{color:var(--red)}
+.cascade-card.card-bug .cascade-blob{background:rgba(155,32,32,.08);color:var(--red);border:1px solid rgba(155,32,32,.15)}
+
+.cascade-card.card-tainted{background:#FFF8F0;border-color:rgba(192,96,64,.15);border-left:3px dashed rgba(192,96,64,.4)}
+.cascade-card.card-tainted .cascade-card-head{background:rgba(192,96,64,.04)}
+.cascade-card.card-tainted .cascade-card-dot{background:#C06040}
+.cascade-card.card-tainted .cascade-card-label{color:#9B5030}
+.cascade-card.card-tainted .cascade-card-cell{background:rgba(192,96,64,.04);border:1px solid rgba(192,96,64,.1);color:var(--ink2)}
+.cascade-card.card-tainted .cascade-card-cell-label{color:#9B5030}
+.cascade-card.card-tainted .cascade-blob{background:rgba(192,96,64,.08);color:#9B5030;border:1px solid rgba(192,96,64,.15)}
+
+.cascade-card.card-policy{background:var(--red-bg);border-color:rgba(155,32,32,.2);border-left:4px solid var(--red)}
+.cascade-card.card-policy .cascade-card-head{background:rgba(155,32,32,.04)}
+.cascade-card.card-policy .cascade-card-dot{background:var(--red);border:2px solid #D04040}
+.cascade-card.card-policy .cascade-card-label{color:var(--red)}
+.cascade-card.card-policy .cascade-card-cell{background:rgba(155,32,32,.04);border:1px solid rgba(155,32,32,.1);color:var(--ink2)}
+.cascade-card.card-policy .cascade-card-cell-label{color:var(--red)}
+.cascade-card.card-policy .cascade-blob{background:rgba(155,32,32,.08);color:var(--red);border:1px solid rgba(155,32,32,.15)}
+
+.cascade-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2);line-height:1.5}
+.cascade-footer strong{color:var(--red)}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   PASSWORD GATE
+   ══════════════════════════════════════════════════════════════════ */
+#pw-gate{position:fixed;inset:0;z-index:9999;background:var(--cream,#FDF9F4);display:flex;align-items:center;justify-content:center;flex-direction:column}
+#pw-gate .pw-stripe{position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878)}
+#pw-gate .pw-box{text-align:center;max-width:380px;padding:48px 40px;background:#fff;border:1.5px solid #E0D4C8;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+#pw-gate .pw-series{font-family:"DM Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:#9B2E5A;font-weight:600;margin-bottom:12px}
+#pw-gate .pw-title{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:22px;color:#1A1408;line-height:1.25;margin-bottom:24px}
+#pw-gate input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-family:"Plus Jakarta Sans",sans-serif;font-size:15px;color:#1A1408;background:#FDFBF8;outline:none;transition:border-color .2s;text-align:center}
+#pw-gate input:focus{border-color:#9B2E5A}
+#pw-gate input::placeholder{color:#7A6A60}
+#pw-gate .pw-btn{margin-top:12px;width:100%;padding:12px;border:none;border-radius:8px;background:#1A1408;color:#FDF9F4;font-family:"Plus Jakarta Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:background .2s}
+#pw-gate .pw-btn:hover{background:#3A2D26}
+#pw-gate .pw-error{font-family:"DM Mono",monospace;font-size:11px;color:#9B2020;margin-top:10px;min-height:16px}
+#pw-gate .pw-note{font-family:"DM Mono",monospace;font-size:10px;color:#7A6A60;margin-top:20px;line-height:1.5}
+#blog-content{display:none}
+
+</style>
+</head>
+<body>
+<!-- ══════════ PASSWORD GATE ══════════ -->
+<div id="pw-gate">
+<div class="pw-stripe"></div>
+<div class="pw-box">
+<div class="pw-series">Draft Preview</div>
+<div class="pw-title">This post is password-protected</div>
+<input type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()">
+<button class="pw-btn" onclick="checkPw()">View Draft</button>
+<div class="pw-error" id="pw-error"></div>
+<div class="pw-note">Auriel's RL Pet Peeves Mini-Series</div>
+</div>
+</div>
+
+<div id="blog-content">
+
+
+<!-- ══════════ BRAND STRIPE ══════════ -->
+<div class="stripe"></div>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+<div class="container">
+<div class="hero-series">Auriel's RL Pet Peeves Mini-Series</div>
+<h1><strong>Stop</strong> Shipping Low-Quality Harnesses and Calling It an "Environment"</h1>
+<p class="hero-sub">Today's rant walks through one of the most important parts of making your reinforcement learning jobs converge / work : <strong>training/evaluation harness quality.</strong></p>
+</div>
+</header>
+
+<!-- ══════════ ARTICLE ══════════ -->
+<article>
+<div class="container">
+
+<!-- ── CALLOUT ── -->
+<blockquote>
+<strong>New to RL or autoregressive model post-training?</strong> Core vocabulary like <code>harness</code>, <code>parametric knowledge</code>, <code>trajectory</code>, and more are defined in the <strong>Appendix</strong> at the bottom of this post. Skim those first if any term trips you up, then come back.
+</blockquote>
+
+<!-- ══════════ VISUAL 1: ANATOMY OF A GOOD HARNESS ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Blueprint</span>
+<span class="visual-style">The Anatomy of a Good Harness</span>
+</div>
+<div class="visual-body">
+<div class="blueprint-grid">
+<div class="bp-card" style="background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15)">
+<div class="bp-icon" style="background:rgba(200,80,128,.12);color:var(--s1)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="4" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="7" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="1"/><line x1="7" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1"/><line x1="9" y1="21" x2="17" y2="21" stroke="currentColor" stroke-width="1.4"/></svg>
+</div>
+<div class="bp-name" style="color:var(--s1)">Realistic UI</div>
+<div class="bp-sub">Fake dashboard</div>
+</div>
+<div class="bp-card" style="background:rgba(232,144,64,.06);border:1px solid rgba(232,144,64,.15)">
+<div class="bp-icon" style="background:rgba(232,144,64,.12);color:var(--s2)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M9 13 L13 9 L17 13" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/><line x1="13" y1="9" x2="13" y2="18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+</div>
+<div class="bp-name" style="color:var(--s2)">Simulated Backend</div>
+<div class="bp-sub">API responses</div>
+</div>
+<div class="bp-card" style="background:rgba(96,128,200,.06);border:1px solid rgba(96,128,200,.15)">
+<div class="bp-icon" style="background:rgba(96,128,200,.12);color:var(--s3)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="8" cy="13" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="18" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.3"/><line x1="11" y1="12" x2="15" y2="9" stroke="currentColor" stroke-width="1"/><line x1="11" y1="14" x2="15" y2="17" stroke="currentColor" stroke-width="1"/></svg>
+</div>
+<div class="bp-name" style="color:var(--s3)">Action Space</div>
+<div class="bp-sub">Click / type / call</div>
+</div>
+<div class="bp-card" style="background:rgba(64,168,112,.06);border:1px solid rgba(64,168,112,.15)">
+<div class="bp-icon" style="background:rgba(64,168,112,.12);color:var(--s4)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="5" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><polyline points="6,17 10,11 14,14 18,8 22,10" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<div class="bp-name" style="color:var(--s4)">State Mgmt</div>
+<div class="bp-sub">Track everything</div>
+</div>
+<div class="bp-card" style="background:rgba(168,72,90,.06);border:1px solid rgba(168,72,90,.15)">
+<div class="bp-icon" style="background:rgba(168,72,90,.12);color:var(--rose)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 5 L15 11 L21 11 L16 15 L18 21 L13 17 L8 21 L10 15 L5 11 L11 11 Z" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+</div>
+<div class="bp-name" style="color:var(--rose)">Reward Calc</div>
+<div class="bp-sub">Score actions</div>
+</div>
+<div class="bp-card" style="background:rgba(74,88,120,.06);border:1px solid rgba(74,88,120,.15)">
+<div class="bp-icon" style="background:rgba(74,88,120,.12);color:var(--navy)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="6" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><text x="13" y="16" font-family="DM Mono, monospace" font-size="7" fill="currentColor" text-anchor="middle">&gt;_ log</text></svg>
+</div>
+<div class="bp-name" style="color:var(--navy)">Trajectory Log</div>
+<div class="bp-sub">Record episodes</div>
+</div>
+<div class="bp-card" style="background:rgba(212,184,112,.06);border:1px solid rgba(212,184,112,.15)">
+<div class="bp-icon" style="background:rgba(212,184,112,.12);color:var(--gold)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M13 7 L13 13 L18 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+</div>
+<div class="bp-name" style="color:#8A7A20">Timeouts</div>
+<div class="bp-sub">Don't hang forever</div>
+</div>
+<div class="bp-card" style="background:rgba(155,32,32,.05);border:1px solid rgba(155,32,32,.12)">
+<div class="bp-icon" style="background:rgba(155,32,32,.1);color:var(--red)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 5 L23 21 L3 21 Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/><line x1="13" y1="11" x2="13" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="13" cy="18.5" r="1" fill="currentColor"/></svg>
+</div>
+<div class="bp-name" style="color:var(--red)">Error Handling</div>
+<div class="bp-sub">Graceful failures</div>
+</div>
+<div class="bp-card" style="background:rgba(138,154,122,.06);border:1px solid rgba(138,154,122,.15)">
+<div class="bp-icon" style="background:rgba(138,154,122,.12);color:var(--sage)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M5 13 A8 8 0 0 1 21 13" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M21 13 A8 8 0 0 1 5 13" stroke="currentColor" stroke-width="1.3" fill="none" stroke-dasharray="3 3"/><polygon points="19,11 21,13 19,15" fill="currentColor"/></svg>
+</div>
+<div class="bp-name" style="color:var(--sage)">Reset Logic</div>
+<div class="bp-sub">Clean restarts</div>
+</div>
+<div class="bp-card" style="background:rgba(200,120,106,.06);border:1px solid rgba(200,120,106,.15)">
+<div class="bp-icon" style="background:rgba(200,120,106,.12);color:var(--coral)">
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="8" width="6" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="12" y="5" width="6" height="15" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="20" y="10" width="3" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><line x1="3" y1="22" x2="24" y2="22" stroke="currentColor" stroke-width="1"/></svg>
+</div>
+<div class="bp-name" style="color:var(--coral)">Load Resilience</div>
+<div class="bp-sub">20k pings, no crash</div>
+</div>
+</div>
+</div>
+<div class="visual-footer">A training harness is <strong>production software</strong>. If any of these pieces are missing or broken, your model's training data is compromised.</div>
+</div>
+
+<!-- ── BODY TEXT ── -->
+<p>This is such a common problem I see, and probably the one I care about the most as a practitioner that also tries aligning models for real world use cases that users love.</p>
+
+<p>People will build what amounts to broken software and pitch it to you as an "RL environment." The training <strong>harness</strong> itself — which, for our purposes, is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard) — just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
+
+<!-- ══════════ VISUAL 2: CONCENTRIC RINGS ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Architecture</span>
+<span class="visual-style">Training Harness / Environment / Production Runtime</span>
+</div>
+<div class="visual-body">
+<div class="rings-wrap">
+<svg width="620" height="340" viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer ring: Production Runtime -->
+<rect x="10" y="10" width="600" height="320" rx="16" fill="rgba(96,128,200,.04)" stroke="var(--s3)" stroke-width="1.8" stroke-dasharray="8,4"/>
+<text x="310" y="36" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#6080C8">PRODUCTION RUNTIME</text>
+<!-- Outer ring labels -->
+<text x="50" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">auth</text>
+<text x="110" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">rate limiting</text>
+<text x="240" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">observability</text>
+<text x="370" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">A/B testing</text>
+<text x="480" y="60" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">canary deploys</text>
+<text x="50" y="320" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">safety guardrails</text>
+<text x="220" y="320" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">session mgmt</text>
+<text x="400" y="320" font-family="DM Mono, monospace" font-size="9" fill="#6080C8" opacity=".7">real databases</text>
+
+<!-- Middle ring: Training Harness -->
+<rect x="60" y="76" width="500" height="228" rx="12" fill="rgba(200,80,128,.04)" stroke="var(--s1)" stroke-width="1.8"/>
+<text x="310" y="98" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#C85080">TRAINING HARNESS</text>
+<!-- Harness labels -->
+<text x="100" y="118" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">reward calculator</text>
+<text x="270" y="118" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">trajectory logging</text>
+<text x="430" y="118" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">reset logic</text>
+<text x="100" y="290" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">timeouts</text>
+<text x="220" y="290" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">error handling</text>
+<text x="400" y="290" font-family="DM Mono, monospace" font-size="9" fill="#C85080" opacity=".7">load resilience</text>
+
+<!-- Inner ring: Environment (MDP) -->
+<rect x="120" y="134" width="380" height="142" rx="10" fill="rgba(64,168,112,.05)" stroke="var(--s4)" stroke-width="1.8"/>
+<text x="310" y="156" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#40A870">ENVIRONMENT (MDP)</text>
+<!-- MDP boxes inside -->
+<rect x="145" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
+<text x="181" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">S</text>
+<text x="181" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">States</text>
+<text x="181" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">what the agent</text>
+<text x="181" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">sees</text>
+
+<rect x="235" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
+<text x="271" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">A</text>
+<text x="271" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">Actions</text>
+<text x="271" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">what the agent</text>
+<text x="271" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">can do</text>
+
+<rect x="325" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
+<text x="361" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">T</text>
+<text x="361" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">Transitions</text>
+<text x="361" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">how actions</text>
+<text x="361" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">change state</text>
+
+<rect x="415" y="172" width="72" height="84" rx="6" fill="rgba(64,168,112,.08)" stroke="#40A870" stroke-width="1"/>
+<text x="451" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#40A870">R</text>
+<text x="451" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#40A870">Rewards</text>
+<text x="451" y="244" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">the feedback</text>
+<text x="451" y="254" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="9" fill="#7A6A60">signal</text>
+
+</svg>
+</div>
+</div>
+<div class="visual-footer">The training harness <strong>wraps</strong> the environment. Both should mirror production as closely as possible.</div>
+</div>
+
+<!-- ══════════ SHARED ATTRIBUTES CALLOUT ══════════ -->
+<div style="background:linear-gradient(135deg,rgba(200,80,128,.04),rgba(96,128,200,.04));border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0">
+<div style="display:flex;align-items:center;gap:12px;padding:14px 22px;background:rgba(0,0,0,.02);border-bottom:1px solid var(--border)">
+<span style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600">What Training Harness &amp; Production Runtime Should Share</span>
+</div>
+<div style="padding:20px 22px 18px;display:flex;flex-wrap:wrap;gap:8px">
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Realistic UI</span>
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>API Behavior</span>
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>State Management</span>
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Action Space</span>
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Error Semantics</span>
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Transition Dynamics</span>
+<span style="font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:999px;background:rgba(200,80,128,.06);border:1px solid rgba(200,80,128,.15);color:var(--ink2);display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--s1);flex-shrink:0"></span>Data Schemas</span>
+</div>
+<div style="padding:0 22px 16px">
+<p style="font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--accent);margin:0;line-height:1.5">The more these overlap, the less your model learns out-of-distribution behaviors that won't transfer to production.</p>
+</div>
+</div>
+
+<!-- ── DEFINITION BLOCK ── -->
+<div class="def-block">
+<div class="def-block-header">Definitions — What I Mean in This Post</div>
+<div class="def-block-body">
+<div class="def-item">
+<div class="def-term">Training Harness</div>
+<div class="def-desc">The complete, engineered interactive simulation + scaffolding the model actually trains inside during RL. <strong>Example:</strong> the full mock SaaS sales tool — realistic fake dashboard UI, simulated backend responses, defined action space ("click button / fill form / call API"), state management, reward calculator, trajectory logging, timeouts, error handling, reset logic, etc. <strong>Main Focus:</strong> reliably generate thousands of high-quality training trajectories without crashing or injecting bias.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Environment</div>
+<div class="def-desc">The abstract "world" / task the model is learning. More narrowly: the mock sales tool's states (what the dashboard shows), valid actions, transition dynamics (what happens when you click "send email"), and base reward signals. In practice, the training harness implements and wraps this environment.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Production Runtime</div>
+<div class="def-desc">The real, live system that actual sales reps use every day. Real databases, authentication, rate limiting, full observability, live safety guardrails, user session management, canary deployments, A/B testing infrastructure, etc. This is what the trained model gets deployed into after RL is finished.</div>
+</div>
+</div>
+</div>
+
+<p class="rant-callout">To be crystal clear: When I use "harness" in this post, I mean the training harness — the engineered scaffolding that implements the RL environment during learning. This is not the production runtime harness that serves real users (though Production Runtime and Training Harness should share a ton of attributes if you want to avoid having the model learn out of distribution behaviors).</p>
+
+<p>Broken harnesses are literally a virus that curses RL startups, but it also curses researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
+
+<p>I feel like we all talk about this in theory in academia, but you really have to remember that...</p>
+
+<div class="key-detail">
+<div class="key-detail-text">Important detail: In reinforcement learning, the environment is your data generator.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2>The Environment Is Your Data Generator</h2>
+
+<p>You probably remember studying the traditional ML classes the one golden rule: "Garbage in, garbage out." If you feed a model inaccurate or low-quality data, no amount of algorithmic sophistication can save it. So because in RL you don't have a static dataset, instead the agent creates its own training data on the fly by interacting with the environment, every single action the agent takes, and every reward it receives in return, becomes a data point that shapes the model's future behavior. This means the quality of your environment directly determines the quality of your training data. A flaky harness doesn't just introduce noise; it actively generates garbage data and feeds it straight into your model's learning steps.</p>
+
+<!-- ══════════ VISUAL 3: SL vs RL (Variant B Pipeline) ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Data Flow</span>
+<span class="visual-style">Supervised Learning vs. Reinforcement Learning</span>
+</div>
+<div class="visual-body" style="padding:0">
+<div class="vb-container">
+<div class="vb-vs">VS</div>
+<!-- SL -->
+<div class="vb-panel vb-sl">
+<div class="vb-tag">Supervised Learning</div>
+<div class="vb-title">Static data in, predictions out</div>
+<div class="vb-pipe">
+<div class="vb-step"><div class="vb-dot">1</div><div><div class="vb-step-text">Collect Dataset</div><div class="vb-step-sub">Images, text, labels — fixed</div></div></div>
+<div class="vb-step"><div class="vb-dot">2</div><div><div class="vb-step-text">Train Model</div><div class="vb-step-sub">Minimize loss on static pairs</div></div></div>
+<div class="vb-step"><div class="vb-dot">3</div><div><div class="vb-step-text">Deploy &amp; Predict</div><div class="vb-step-sub">One direction. Data never changes.</div></div></div>
+</div>
+</div>
+<!-- RL -->
+<div class="vb-panel vb-rl">
+<div class="vb-tag">Reinforcement Learning</div>
+<div class="vb-title">The environment generates your data</div>
+<div class="vb-pipe">
+<div class="vb-step"><div class="vb-dot">1</div><div><div class="vb-step-text">Agent Acts</div><div class="vb-step-sub">Takes action in environment</div></div></div>
+<div class="vb-step"><div class="vb-dot">2</div><div><div class="vb-step-text">Environment Responds</div><div class="vb-step-sub">Returns state + reward</div></div></div>
+<div class="vb-step"><div class="vb-dot">3</div><div><div class="vb-step-text">Policy Updates</div><div class="vb-step-sub">Model learns from its own experience</div></div></div>
+</div>
+<div class="vb-loop-indicator">
+<div class="vb-loop-icon">&#x1F504;</div>
+<div class="vb-loop-text">Continuous loop. Every interaction = new training data. Break the environment = break the data.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="visual-footer">In SL, bad data is a static problem you can fix. In RL, <strong>bad data is generated live</strong> — and it feeds directly into the model.</div>
+</div>
+
+<p>Let me tell you why this is bad :)</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2>I Don't Want Your Janky Harness / Environment bro &#x1F642;</h2>
+
+<p>When your harness is low quality, your model's learning progress (the whole point of L in "RL") can stall and can even start to reverse, and you end up in a miserable debugging session trying to figure out whether the problem is the model or your janky software (YOUR LOSS CURVE IS OSCILLATING IN DIRECTIONS YOU NEVER KNEW WERE POSSIBLE).</p>
+
+<!-- ══════════ VISUAL 4: LOSS CURVE OSCILLATION ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Diagnostics</span>
+<span class="visual-style">Loss Curve: Clean Harness vs. Broken Harness</span>
+</div>
+<div class="visual-body">
+<div class="loss-grid">
+<div class="loss-panel">
+<div class="loss-label" style="color:var(--s4)">&#x2705; Clean Harness</div>
+<svg width="100%" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid meet">
+<rect x="0" y="0" width="300" height="160" rx="6" fill="var(--green-bg)"/>
+<text x="150" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="var(--green)" opacity=".6">TRAINING LOSS</text>
+<!-- Axes -->
+<line x1="30" y1="30" x2="30" y2="140" stroke="var(--green)" stroke-width="1" opacity=".3"/>
+<line x1="30" y1="140" x2="280" y2="140" stroke="var(--green)" stroke-width="1" opacity=".3"/>
+<!-- Smooth descending curve -->
+<path d="M35,45 Q60,48 80,58 Q100,68 120,78 Q150,92 180,102 Q210,110 240,116 Q260,120 275,122" stroke="var(--s4)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<text x="150" y="155" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--muted)">steps →</text>
+</svg>
+<div class="loss-caption" style="background:rgba(30,122,64,.06)">Smooth descent. The model is learning the task.</div>
+</div>
+<div class="loss-panel">
+<div class="loss-label" style="color:var(--red)">&#x1F4A5; Broken Harness</div>
+<svg width="100%" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid meet">
+<rect x="0" y="0" width="300" height="160" rx="6" fill="var(--red-bg)"/>
+<text x="150" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="var(--red)" opacity=".6">TRAINING LOSS</text>
+<!-- Axes -->
+<line x1="30" y1="30" x2="30" y2="140" stroke="var(--red)" stroke-width="1" opacity=".3"/>
+<line x1="30" y1="140" x2="280" y2="140" stroke="var(--red)" stroke-width="1" opacity=".3"/>
+<!-- Wild oscillating curve -->
+<path d="M35,50 L50,38 L62,72 L75,30 L88,85 L100,42 L112,95 L125,55 L138,110 L150,40 L163,105 L176,65 L190,120 L204,50 L218,130 L232,70 L248,135 L262,80 L275,138" stroke="var(--red)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Divergence annotation -->
+<text x="200" y="36" font-family="DM Mono, monospace" font-size="7" fill="var(--red)" opacity=".8">DIVERGING ↑</text>
+<text x="150" y="155" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--muted)">steps →</text>
+</svg>
+<div class="loss-caption" style="background:rgba(155,32,32,.06)">YOUR LOSS CURVE IS OSCILLATING IN DIRECTIONS YOU NEVER KNEW WERE POSSIBLE.</div>
+</div>
+</div>
+</div>
+<div class="visual-footer">Left: signal. Right: <strong>chaos</strong>. If this is your loss curve, check the harness before blaming the model.</div>
+</div>
+
+<p>Why does this happen?</p>
+
+<p>So we already know RL is kind of dark art anyway because RL runs tend to be inherently unstable. This is because RL suffers from several other major sources of natural noise that folks have documented and accepted as a part of making RL work (gradient noise, stochastic noise, etc).</p>
+
+<p>But broken harnesses don't just add <em>noise</em> to the learning signal, it injects <strong>bias</strong>. This is a critical distinction. In statistics, <strong>noise</strong> is random error that might average out over time. <strong>Bias</strong> is a systematic error that consistently pushes you in the wrong direction. If your environment has a bug that makes it occasionally return a random reward, that's noise. If it has a bug that makes it <em>always</em> give a higher reward for the wrong action, that's Bias.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2>You Are Injecting BLATANTLY WRONG UPDATES In My Model</h2>
+
+<p>So when you ship a broken API or a buggy mock dashboard, you are injecting a third, artificial source of error on top of the two that are already challenging. And this artificial error is far worse than natural noise, because it's not random in a well-distributed statistical sense: it's <strong>systematically wrong</strong>. Your API might time out on every 50th request, or your mock dashboard might silently return stale data under load. These are correlated failures that bias the model's learning in unpredictable directions.</p>
+
+<!-- ══════════ VISUAL 5: SAAS FAILURE CASCADE FILMSTRIP ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Case Study</span>
+<span class="visual-style">Mock SaaS Sales Platform · Lead Qualification Task</span>
+</div>
+<div class="visual-body" style="padding:16px 0 0 0">
+<div class="filmstrip">
+<div class="film-card">
+<div class="film-header clean">Turn 1 · Clean</div>
+<div class="film-body">Agent opens pipeline dashboard, identifies a new enterprise inbound lead.</div>
+<div class="film-reward good">r = +0.2</div>
+</div>
+<div class="film-card">
+<div class="film-header clean">Turn 2 · Clean</div>
+<div class="film-body">Agent pulls CRM record via API, reads company size, industry, prior interactions correctly.</div>
+<div class="film-reward good">r = +0.3</div>
+</div>
+<div class="film-card">
+<div class="film-header bug">Turn 3 · &#x1F6A8; BUG</div>
+<div class="film-body">CRM API returns <strong>stale pipeline data</strong>. Lead shows "cold" when it's actually "warm: demo scheduled."</div>
+<div class="film-reward lie">r = +0.1 ← lie</div>
+</div>
+<div class="film-card">
+<div class="film-header poisoned">Turn 4 · Poisoned</div>
+<div class="film-body">Agent treats warm lead as cold, sends generic nurture email instead of confirming scheduled demo.</div>
+<div class="film-reward bad">r = -0.5</div>
+</div>
+<div class="film-card">
+<div class="film-header poisoned">Turn 5 · Poisoned</div>
+<div class="film-body">Prospect responds confused. Agent can't reconcile state, loops between re-qualifying and re-sending intro templates.</div>
+<div class="film-reward bad">r = -0.8</div>
+</div>
+</div>
+<div style="padding:4px 20px 16px">
+<div class="legend">
+<div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Clean signal</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Harness bug (source)</div>
+<div class="legend-item"><div class="legend-dot" style="background:#C06040"></div> Poisoned downstream</div>
+</div>
+<div class="film-punchline">&#x1F4A1; The model learns: "when in doubt, send nurture emails and avoid the pipeline."<br>It never learns to close because the harness never showed it a trustworthy state to close from.</div>
+</div>
+</div>
+</div>
+
+<p>If you're coming from a supervised background, I think this is where actually doing RL in real life starts to trip you up. In RL, the agent generates its own training data through interaction, which means failures compound in a way that static datasets don't. A single broken state doesn't just create one bad data point, it can poison the entire downstream trajectory if that's not how you intended the software to act. The model draws wrong conclusions about every subsequent 'what should I do next?' decision (state-action pair) in that episode, and those wrong conclusions get baked into the model's policy update.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2>The model is literally learning useless stuff… Pls halp…</h2>
+
+<p>When the environment is broken, the model stops trying to solve the actual task. Instead, it will attempt to "fix" the harness itself, or it'll develop weird avoidance behaviors. And once it finds these shortcuts, they're extremely hard to un-learn and can impact not only your RL experiments, but the bigger modeling run that you're contributing to (aka mine &#x1F972;).</p>
+
+<!-- ══════════ VISUAL 6: INTERACTIVE TRAJECTORY CASCADE ══════════ -->
+<div class="cascade" id="cascade">
+<div class="cascade-header">
+<div class="cascade-tag">Mock SaaS Sales Platform &middot; Lead Qualification Task</div>
+<div class="cascade-title">How one broken state poisons the entire trajectory</div>
+<div class="cascade-subtitle">episode 4,217 &middot; agent: policy_v3.2 &middot; 5 turns + policy update</div>
+</div>
+
+<!-- Dot Row -->
+<div class="cascade-dots">
+<div class="cascade-dot-wrap" onclick="showCascadeDetail(0,this)">
+<div class="cascade-dot dot-ok">S1</div>
+<div class="cascade-dot-label">Open</div>
+</div>
+<div class="cascade-conn conn-ok"></div>
+<div class="cascade-dot-wrap" onclick="showCascadeDetail(1,this)">
+<div class="cascade-dot dot-ok">S2</div>
+<div class="cascade-dot-label">Pull CRM</div>
+</div>
+<div class="cascade-conn conn-break"></div>
+<div class="cascade-dot-wrap" onclick="showCascadeDetail(2,this)">
+<div class="cascade-dot dot-bug">S3</div>
+<div class="cascade-dot-label">&#x1F6A8; Bug</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascadeDetail(3,this)">
+<div class="cascade-dot dot-tainted">S4</div>
+<div class="cascade-dot-label">Poisoned</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascadeDetail(4,this)">
+<div class="cascade-dot dot-tainted">S5</div>
+<div class="cascade-dot-label">Poisoned</div>
+</div>
+<div class="cascade-conn conn-tainted"></div>
+<div class="cascade-dot-wrap" onclick="showCascadeDetail(5,this)">
+<div class="cascade-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-dot-label">Policy</div>
+</div>
+</div>
+<div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
+
+<!-- Detail Panel Container -->
+<div class="cascade-detail" id="cascade-detail"></div>
+
+<div class="cascade-footer">1 bug at State 3 &rarr; <strong>2 tainted states + 1 corrupted policy update</strong>. This is why harness bugs are worse than label noise.</div>
+</div>
+
+<p>The rewards returned by an environment define what the RL agent will attempt to do. The model's sole objective is to maximize cumulative reward via gradient ascent on its policy. It has no notion of "what you intended" guys — <strong>it literally only knows what the numbers tell it</strong>. So a flaky harness means the model will simply learn to exploit your broken mechanics (Reward Hacking??).</p>
+
+<p>The model has no notion of "what you intended." It only knows what the numbers tell it. If your broken API always returns <code>success: true</code>, the model will spam that backdoor instead of learning the task (REWARD HACKING &#x1F62D;&#x1F62D;)</p>
+
+<p>It also might memorize the special sequence of clicks that bypasses a bug, but it hasn't learned the <em>logic</em> of the task (overfitting to a harness &#x1F630;).</p>
+
+<p>The goal is not for my model to just learn how to exploit your broken simulation, I want to to learn how to do the actual task.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h3>Adopt More Classic Software Engineering Best Practices in ML Research</h3>
+
+<p>Building good RL environments is a software engineering problem as much as a research one. I feel like many classically trained ML Researchers are taught to think about algorithms and mathematical correctness the most, but in school we're never taught how to really like DO THAT you know? How to actually engineer good software (ie: stable harnesses) require a different set of instincts: error handling, timeouts, graceful degradation. If you haven't had to ship production software before, those muscles usually need a serious ramp to get there but theres great resources out there from the likes of <a href="https://x.com/GergelyOrosz" target="_blank">Gergely Orosz</a>, <a href="https://x.com/alexxubyte" target="_blank">Alex Xu</a>, and <a href="https://a.co/d/0inJEGXh" target="_blank">this book</a> that can help get you there!</p>
+
+<!-- ══════════ VISUAL 7: RESEARCHER VS ENGINEER (Modified Variant B) ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Mindset</span>
+<span class="visual-style">Researcher vs. Software Engineer Toolkit</span>
+</div>
+<div class="visual-body">
+<div class="re-belts">
+<!-- Researcher Belt -->
+<div class="re-belt re-belt--res">
+<div class="re-belt-tag">Researcher's Toolkit</div>
+<div class="re-tools">
+<div class="re-tool"><div class="re-tool-icon" style="font-family:var(--mono)">&nabla;</div><span class="re-tool-label">Gradient</span></div>
+<div class="re-tool"><div class="re-tool-icon" style="font-family:'Fraunces',serif;font-style:italic">L</div><span class="re-tool-label">Loss Fn</span></div>
+<div class="re-tool"><div class="re-tool-icon">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="18" rx="1.5" stroke="#6080C8" stroke-width="1.2" fill="none"/><line x1="5" y1="7" x2="15" y2="7" stroke="#6080C8" stroke-width=".7" opacity=".5"/><line x1="5" y1="10" x2="13" y2="10" stroke="#6080C8" stroke-width=".7" opacity=".5"/><line x1="5" y1="13" x2="14" y2="13" stroke="#6080C8" stroke-width=".7" opacity=".5"/></svg>
+</div><span class="re-tool-label">Paper</span></div>
+<div class="re-tool"><div class="re-tool-icon" style="font-family:var(--mono)">&lambda;</div><span class="re-tool-label">Hyperparam</span></div>
+<div class="re-tool"><div class="re-tool-icon" style="font-family:var(--mono)">&sum;</div><span class="re-tool-label">Summation</span></div>
+</div>
+</div>
+<!-- Bridge -->
+<div class="re-bridge-col"><div class="re-bridge">overlap zone</div></div>
+<!-- Engineer Belt -->
+<div class="re-belt re-belt--eng">
+<div class="re-belt-tag">Software Engineer's Toolkit</div>
+<div class="re-tools">
+<div class="re-tool"><div class="re-tool-icon">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 3 L17 8 L9 16 L4 16 L4 11 Z" stroke="#40A870" stroke-width="1.3" fill="none" stroke-linejoin="round"/><line x1="10" y1="5" x2="15" y2="10" stroke="#40A870" stroke-width="1"/></svg>
+</div><span class="re-tool-label">Config</span></div>
+<div class="re-tool"><div class="re-tool-icon">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#40A870" stroke-width="1.3" fill="none"/><path d="M10 5 L10 10 L14 10" stroke="#40A870" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+</div><span class="re-tool-label">Timeout</span></div>
+<div class="re-tool"><div class="re-tool-icon">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10 A5 5 0 0 1 15 10" stroke="#40A870" stroke-width="1.3" fill="none"/><path d="M15 10 A5 5 0 0 1 5 10" stroke="#40A870" stroke-width="1.3" fill="none" stroke-dasharray="2 2"/><polygon points="14,8 16,10 14,12" fill="#40A870"/></svg>
+</div><span class="re-tool-label">Retry</span></div>
+<div class="re-tool"><div class="re-tool-icon">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1.5" stroke="#40A870" stroke-width="1.2" fill="none"/><polyline points="4,14 7,9 10,11 13,7 16,9" stroke="#40A870" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div><span class="re-tool-label">Monitoring</span></div>
+<div class="re-tool"><div class="re-tool-icon">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="#40A870" stroke-width="1.3" fill="none"/><path d="M10 6 L10 10 L13 13" stroke="#40A870" stroke-width="1.3" stroke-linecap="round" fill="none"/><line x1="7" y1="4" x2="4" y2="2" stroke="#40A870" stroke-width="1.3" stroke-linecap="round"/><line x1="13" y1="4" x2="16" y2="2" stroke="#40A870" stroke-width="1.3" stroke-linecap="round"/></svg>
+</div><span class="re-tool-label">Circuit Brk</span></div>
+</div>
+</div>
+</div>
+<!-- Overlap -->
+<div class="re-overlap">
+<div class="re-overlap-tag">Where Both Meet</div>
+<div class="re-overlap-title">RL Harness Engineering</div>
+<div class="re-overlap-sub">The harness is where algorithmic correctness meets production resilience. You need both toolkits.</div>
+</div>
+</div>
+<div class="visual-footer">Building a good harness requires the <strong>software engineer's toolkit</strong>. Most RL teams only carry the researcher's.</div>
+</div>
+
+<p><strong>The Researcher Mindset:</strong> Focus on Algorithms, Optimizers, Mathematical Purity.</p>
+
+<p><strong>The Software Engineer Mindset:</strong> Focus on Stability, Error Handling, Graceful Degradation.</p>
+
+<p>Stable infrastructure allows for clean signals. If the product is broken, the model learns coping strategies instead of solving the problem.</p>
+
+<!-- ── RECOMMENDATIONS ── -->
+<div class="rec-card">
+<div class="rec-card-tag">Recommendation 1</div>
+<h3>Pen-Test the Environment</h3>
+<p>Treat your harness like a production product. If you can't run 20,000 pings without something breaking, it's not good enough. (That number isn't from a paper — it's a personal heuristic from watching too many training runs die. The point is: stress-test at a scale that would actually surface intermittent failures, not just the obvious ones.) Find the failure modes before your model does. In my opinion the best people to learn this from in practice are probably your company's <a href="https://x.com/swyx/status/1097334440169107456?s=20" target="_blank">Platform Engineers</a>.</p>
+</div>
+
+<div class="rec-card">
+<div class="rec-card-tag">Recommendation 2</div>
+<h3>Build a Failure Taxonomy</h3>
+<p>When a task fails, you need to know <em>why</em>. Was it a <strong>Model Failure</strong> (a parametric issue; the model didn't understand) or an <strong>Environment Failure</strong> (a harness issue; the API lied or crashed)? If your environment failure rate is higher than 5%, you don't have a model problem — you have a harness problem. Fix the harness first. (Again, not a formally derived number — just a threshold I've found useful in practice. Above that level, the signal-to-noise ratio in your training data is bad enough that debugging the model becomes a nightmare.)</p>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2>Appendix: Recap of Key Concepts and Things You Should Know Before Reading This Post</h2>
+
+<p class="appendix-note">New to RL, or pivoting into post training generally for autoregressive models from another ML specialty or from school? This section grounds you in the core vocabulary used throughout the post. Each definition is written to bridge from engineering concepts you already maybe know. I had Claude generate this appendix but I reviewed it myself by hand to be sure I stand by the outputs lol. Hope it helps:</p>
+
+<h3>Model</h3>
+
+<p>At its core, a model is a mathematical function that takes inputs and produces predictions. If you've ever written <code>y = mx + b</code> in a math class, that's the simplest possible model. In machine learning, models are the same idea taken to an extreme: instead of two parameters (m and b), a modern neural network might have billions of parameters, and the computer adjusts all of them during training to minimize how wrong the model's predictions are. The result is a system that can recognize images, generate text, or make decisions — all by learning patterns from data.</p>
+
+<h3>Reinforcement Learning (RL)</h3>
+
+<p>Reinforcement learning is a way to train a model by letting it learn through trial and error, rather than showing it a pre-labeled answer key.</p>
+
+<p>LLM Generated Analogy: think about how you learned to ride a bike. Nobody handed you a textbook of "correct" body positions for each millisecond. Instead, you got on, wobbled, fell, adjusted, and eventually figured it out. You received a "reward signal" in the form of staying upright and moving forward, and a "penalty" in the form of hitting the pavement.</p>
+
+<!-- ══════════ VISUAL 8: MDP COMPONENTS (Variant A) ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Appendix</span>
+<span class="visual-style">The Four Pieces of an MDP</span>
+</div>
+<div class="visual-body">
+<div class="mdp-wrap">
+<svg width="720" height="210" viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
+<rect x="12" y="24" width="696" height="174" rx="12" fill="none" stroke="#7A6A60" stroke-width="1.5" stroke-dasharray="8,5"/>
+<text x="360" y="18" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="600" letter-spacing="2.5" fill="#7A6A60">ENVIRONMENT (MDP)</text>
+<!-- State -->
+<rect x="36" y="48" width="140" height="130" rx="8" fill="rgba(96,128,200,.07)" stroke="#6080C8" stroke-width="1.5"/>
+<text x="106" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#6080C8">S</text>
+<text x="106" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#6080C8">State Space</text>
+<text x="106" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">what situations</text>
+<text x="106" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">are possible</text>
+<!-- Arrow -->
+<line x1="180" y1="112" x2="206" y2="112" stroke="#D0C4B8" stroke-width="1.5"/><polygon points="206,112 198,107 198,117" fill="#D0C4B8"/>
+<!-- Action -->
+<rect x="210" y="48" width="140" height="130" rx="8" fill="rgba(200,80,128,.06)" stroke="#C85080" stroke-width="1.5"/>
+<text x="280" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#C85080">A</text>
+<text x="280" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#C85080">Action Space</text>
+<text x="280" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">what the agent</text>
+<text x="280" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">can do</text>
+<!-- Arrow -->
+<line x1="354" y1="112" x2="380" y2="112" stroke="#D0C4B8" stroke-width="1.5"/><polygon points="380,112 372,107 372,117" fill="#D0C4B8"/>
+<!-- Transition -->
+<rect x="384" y="48" width="140" height="130" rx="8" fill="rgba(232,144,64,.06)" stroke="#E89040" stroke-width="1.5"/>
+<text x="454" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#E89040">T</text>
+<text x="454" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#E89040">Transition Fn</text>
+<text x="454" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">how actions</text>
+<text x="454" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">change state</text>
+<!-- Arrow -->
+<line x1="528" y1="112" x2="554" y2="112" stroke="#D0C4B8" stroke-width="1.5"/><polygon points="554,112 546,107 546,117" fill="#D0C4B8"/>
+<!-- Reward -->
+<rect x="558" y="48" width="140" height="130" rx="8" fill="rgba(64,168,112,.06)" stroke="#40A870" stroke-width="1.5"/>
+<text x="628" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="34" font-weight="600" fill="#40A870">R</text>
+<text x="628" y="116" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" font-weight="500" fill="#40A870">Reward Fn</text>
+<text x="628" y="136" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">the feedback</text>
+<text x="628" y="150" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="10" fill="#7A6A60">signal</text>
+</svg>
+</div>
+</div>
+<div class="visual-footer">The environment <em>is</em> the complete MDP. The harness is the <strong>code that implements it</strong>.</div>
+</div>
+
+<p>RL works the same way. An agent (the model) takes actions inside an environment (the world it interacts with), and receives numerical rewards that tell it how well it's doing. Over many rounds of trial and error, the agent's policy — its learned strategy for which action to take in any given situation — improves to maximize the total reward it accumulates.</p>
+
+<p>This stands in contrast to supervised learning, the paradigm most people who have been in ML a while are probably more familiar with — think classifying tumors from labeled X-ray datasets, predicting house prices from a CSV of historical features, or flagging spam from a pre-collected corpus of emails. In all of these cases, you give the model a dataset of input-output pairs and it learns to map inputs to the correct outputs. In supervised learning, the data is static — you collect it once and train on it. In RL, the agent generates its own data by interacting with the environment, which is why environment quality is so critical and why we're here today.</p>
+
+<h3>Harness</h3>
+
+<p>A harness (or, more precisely, a training/evaluation harness) is the interactive system that the RL agent trains in and is evaluated against. It is a simulation or emulation of the real product experience that the agent is supposed to learn to operate in.</p>
+
+<p>Example: if you're building an RL agent that's supposed to learn to use a customer support tool, the harness is a working replica of that tool. It's a piece of running software that the agent can interact with in real time — clicking buttons, typing into fields, reading responses — just like a real user would. The harness is responsible for three things:</p>
+
+<ol>
+<li><strong>Defining the current state of the world:</strong> What does the agent "see" right now? (e.g., the current page of the dashboard, the contents of a text field, an API response it just received.)</li>
+<li><strong>Defining what actions are valid:</strong> What can the agent do from here? (e.g., click this button, type in this field, submit this form, call this API endpoint.)</li>
+<li><strong>Returning a reward after a state transition:</strong> After the agent takes an action, how good was it? (e.g., +1 for successfully resolving a ticket, -0.1 for each unnecessary step, -1 for crashing the workflow.)</li>
+</ol>
+
+<p>In formal RL terms, the harness implements the components of a <strong>Markov Decision Process (MDP)</strong> — the State space, the valid Actions, the Transition dynamics (how actions change the state), and the Reward function.</p>
+
+<p>If you've ever used a testing framework like Selenium or Playwright to write end-to-end tests for a web app, you already have a decent mental model. The harness is like a programmable staging environment that your agent interacts with instead of your QA team. The key difference is that in RL, this environment needs to be robust enough to handle not just the happy path, but thousands of creative, adversarial, and outright bizarre interaction patterns — because an RL agent will explore all of them.</p>
+
+<h3>Parametric Knowledge</h3>
+
+<p>When we say a model has "learned something," what does that actually mean physically? It means the model's parameters (those billions of numbers mentioned earlier) have been adjusted so that the right patterns are encoded in them. This is the model's true knowledge and understanding — we call this <strong>parametric knowledge</strong>.</p>
+
+<p>The goal of RL training is to get the model to acquire <strong>generalizable</strong> parametric knowledge — genuine understanding of how to solve the task that holds up even in new situations. We don't want the model to just memorize a specific sequence of clicks that happened to work one time. We want it to understand the underlying task deeply enough to generalize. When the environment is broken, the model can't build this real understanding. Instead, it overfits to the harness's specific flaws, learning brittle surface-level tricks to cope with the broken environment. This is a form of parametric knowledge, but it's useless — it won't transfer to the real task.</p>
+
+<h3>Trajectory</h3>
+
+<p>A trajectory is a single complete episode of an agent interacting with the environment — the full sequence of states, actions, and rewards from start to finish. Think of it like a recorded session or a log of everything the agent did during one attempt at the task. When researchers "review trajectories," they're watching replays of the agent's behavior to diagnose what went right or wrong.</p>
+
+</div><!-- /.container -->
+</article>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// Interactive Trajectory Cascade — Data + Logic
+// ══════════════════════════════════════════════════════════════════
+const cascadeSteps = [
+  {
+    id: 'S1', status: 'ok', statusLabel: 'Clean',
+    label: 'State 1 — Clean Signal',
+    title: 'Agent opens pipeline dashboard',
+    desc: 'Environment returns the correct page state. The dashboard loads with an accurate list of leads, their current statuses, and pipeline stages. All data is fresh.',
+    agentAction: 'agent.open(pipeline_dashboard)',
+    envResponse: 'state: loaded · 12 leads visible · 3 new inbound · pipeline healthy',
+    reward: '+0.2',
+    rewardNote: 'Correct — dashboard navigation rewarded',
+    blobs: ['✅ page loaded', '✅ 12 leads visible', '✅ 3 new inbound']
+  },
+  {
+    id: 'S2', status: 'ok', statusLabel: 'Clean',
+    label: 'State 2 — Clean Signal',
+    title: 'Agent pulls CRM record for enterprise lead',
+    desc: 'Agent identifies a new enterprise inbound lead and queries the CRM API. Company size, industry, prior interactions, and lead score all return correctly.',
+    agentAction: 'agent.api_call(crm.get_lead, id=8842)',
+    envResponse: 'lead: Acme Corp · size: Enterprise · status: warm · demo_scheduled: true',
+    reward: '+0.3',
+    rewardNote: 'Correct — CRM lookup rewarded for qualification step',
+    blobs: ['✅ lead #8842 loaded', '✅ company: Acme Corp (Enterprise)', '✅ status: warm, demo scheduled']
+  },
+  {
+    id: 'S3', status: 'bug', statusLabel: '🚨 Harness Bug',
+    label: '🚨 State 3 — Harness Bug',
+    title: 'CRM API returns stale pipeline data',
+    desc: 'The harness\'s CRM mock has a caching bug. Under load, it returns data from 14 minutes ago instead of current state. Lead #8842 shows as "cold" when it\'s actually "warm: demo scheduled." The reward is computed on the stale state — the agent gets positive signal for reading data that is wrong.',
+    agentAction: 'agent.api_call(crm.get_lead_status, id=8842)',
+    envResponse: '⚠️ STALE: status: cold · demo_scheduled: false · last_contact: 30d ago (WRONG — cached from 14min ago)',
+    reward: '+0.1 ← lie',
+    rewardNote: '❌ Incorrect — reward computed on stale cached state, not reality',
+    blobs: ['💥 stale cache returned', '⚠️ lead shows "cold" (actually "warm")', '⚠️ demo_scheduled: false (actually true)']
+  },
+  {
+    id: 'S4', status: 'tainted', statusLabel: 'Poisoned',
+    label: 'State 4 — Poisoned Downstream',
+    title: 'Agent treats warm lead as cold, sends generic nurture',
+    desc: 'Based on the stale "cold" status, the agent follows its cold-lead playbook: sends a generic nurture email template instead of confirming the already-scheduled demo. The prospect (who has a demo on their calendar) receives a "just checking in!" email. The action looks rational given the agent\'s observed state — but the state was wrong.',
+    agentAction: 'agent.send_email(template="cold_nurture", lead=8842)',
+    envResponse: 'email sent · prospect confused (has demo tomorrow) · satisfaction: -1',
+    reward: '-0.5',
+    rewardNote: 'Model sees: "I did what the data told me and got punished" — confusing gradient',
+    blobs: ['👻 sent cold nurture to warm lead', '⚠️ prospect has demo scheduled tomorrow', '⚠️ agent can\'t reconcile state']
+  },
+  {
+    id: 'S5', status: 'tainted', statusLabel: 'Poisoned',
+    label: 'State 5 — Poisoned Downstream',
+    title: 'Agent loops between re-qualifying and re-sending templates',
+    desc: 'Prospect responds confused ("I already have a demo?"). Agent re-checks the CRM (still stale), sees "cold", and doubles down — sends another nurture email. It enters a loop: re-qualify → see "cold" → nurture → confused response → re-qualify. The entire pipeline logic is stuck.',
+    agentAction: 'agent.re_qualify(lead=8842) → agent.send_email(template="intro_v2")',
+    envResponse: 'prospect frustrated · 2nd unwanted email · internal escalation triggered',
+    reward: '-0.8',
+    rewardNote: 'Heavy penalty but model has no clean signal to learn the right action from',
+    blobs: ['👻 stuck in re-qualify loop', '⚠️ 2 unwanted emails sent', '❌ prospect escalating']
+  },
+  {
+    id: '🧠', status: 'policy', statusLabel: 'Corrupted',
+    label: '🧠 Policy Update — Corrupted',
+    title: 'Model updates on this entire poisoned trajectory',
+    desc: 'The gradient update processes all 5 states as training data. The model reinforces: "when CRM says cold, nurture aggressively" and "avoid the pipeline view because it leads to punishment." It never learns to confirm demos or trust warm-lead signals, because the harness never showed it a trustworthy warm state.',
+    agentAction: 'policy.update(trajectory=episode_4217)',
+    envResponse: 'gradient direction: WRONG · 3 of 5 rewards were on stale data',
+    reward: 'Σ = -0.7 (reported) vs ~+1.2 (true)',
+    rewardNote: '❌ Gradient pointed in wrong direction — model is learning avoidance behavior',
+    blobs: ['🧠 "cold leads → nurture hard" (wrong)', '🧠 "avoid pipeline = safe" (wrong)', '❌ wrong gradient direction', '❌ bad policy update']
+  }
+];
+
+let cascadeActive = -1;
+
+function showCascadeDetail(idx, wrapEl) {
+  const container = document.getElementById('cascade-detail');
+  const allWraps = document.querySelectorAll('#cascade .cascade-dot-wrap');
+  const allDots = document.querySelectorAll('#cascade .cascade-dot');
+
+  // Toggle off
+  if (cascadeActive === idx) {
+    container.classList.remove('visible');
+    setTimeout(() => { container.innerHTML = ''; }, 300);
+    allWraps.forEach(w => w.classList.remove('active-wrap'));
+    allDots.forEach(d => d.classList.remove('active'));
+    cascadeActive = -1;
+    return;
+  }
+
+  cascadeActive = idx;
+  allWraps.forEach(w => w.classList.remove('active-wrap'));
+  allDots.forEach(d => d.classList.remove('active'));
+  wrapEl.classList.add('active-wrap');
+  wrapEl.querySelector('.cascade-dot').classList.add('active');
+
+  const s = cascadeSteps[idx];
+  const cardClass = s.status === 'ok' ? 'card-ok' : s.status === 'bug' ? 'card-bug' : s.status === 'tainted' ? 'card-tainted' : 'card-policy';
+  const dotBg = s.status === 'ok' ? 'var(--s4)' : s.status === 'bug' ? 'var(--red)' : s.status === 'tainted' ? '#C06040' : '#9B2020';
+
+  container.innerHTML = `
+    <div class="cascade-detail-inner">
+      <div class="cascade-card ${cardClass}">
+        <div class="cascade-card-head">
+          <div class="cascade-card-dot" style="background:${dotBg}">${s.id}</div>
+          <div class="cascade-card-label">${s.label}</div>
+        </div>
+        <div class="cascade-card-body">
+          <div class="cascade-card-title">${s.title}</div>
+          <div class="cascade-card-desc">${s.desc}</div>
+          <div class="cascade-card-grid">
+            <div class="cascade-card-cell">
+              <span class="cascade-card-cell-label">Agent Action</span>
+              <code style="font-family:var(--mono);font-size:11px;word-break:break-all;background:none;padding:0;color:inherit">${s.agentAction}</code>
+            </div>
+            <div class="cascade-card-cell">
+              <span class="cascade-card-cell-label">Environment Response</span>
+              <span style="font-size:11px">${s.envResponse}</span>
+            </div>
+          </div>
+          <div class="cascade-card-grid">
+            <div class="cascade-card-cell">
+              <span class="cascade-card-cell-label">Reward</span>
+              <span style="font-family:var(--mono);font-size:14px;font-weight:700">${s.reward}</span>
+            </div>
+            <div class="cascade-card-cell">
+              <span class="cascade-card-cell-label">Assessment</span>
+              <span style="font-size:11px">${s.rewardNote}</span>
+            </div>
+          </div>
+          <div class="cascade-card-blobs">
+            ${s.blobs.map(b => `<span class="cascade-blob">${b}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Trigger animation
+  container.classList.remove('visible');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      container.classList.add('visible');
+    });
+  });
+}
+</script>
+
+</div><!-- /#blog-content -->
+
+<script>
+async function checkPw(){
+  const input = document.getElementById('pw-input').value;
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  if(hashHex === '8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-gate').style.display = 'none';
+    document.getElementById('blog-content').style.display = 'block';
+  } else {
+    document.getElementById('pw-error').textContent = 'Incorrect password. Try again.';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+document.addEventListener('DOMContentLoaded', () => document.getElementById('pw-input').focus());
+</script>
+
+</body>
+</html>
