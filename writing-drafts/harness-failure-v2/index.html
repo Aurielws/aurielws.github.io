@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Draft — Stop Shipping Low-Quality Harnesses</title>
+<title>Draft - Stop Shipping Low-Quality Harnesses</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 .pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
@@ -248,17 +248,13 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <article>
 <div class="container">
 
-<!-- -- COLD OPEN -- -->
-<blockquote>
-<strong>New to post training autoregressive LLMs with RL?</strong> Core vocabulary like <a href="glossary.html#harness" style="color:var(--accent)"><code>harness</code></a>, <a href="glossary.html#parametric-knowledge" style="color:var(--accent)"><code>parametric knowledge</code></a>, <a href="glossary.html#trajectory" style="color:var(--accent)"><code>trajectory</code></a>, and more are defined in the <a href="glossary.html" style="color:var(--accent);font-weight:600">Glossary</a>. Skim that first if any term trips you up, then come back.
-</blockquote>
 
 <!-- ========== I DON'T WANT YOUR JANKY HARNESS ========== -->
 <h2>I Don't Want Your Janky Harness / Environment bro &#x1F642;</h2>
 
 <p>This is such a common problem I see, and probably the one I care about the most as a practitioner that also tries aligning models for real world use cases that users love.</p>
 
-<p>People will build what amounts to broken software and pitch it to you as an "<a href="glossary.html#rl" style="color:var(--accent)">RL</a> environment." The training <a href="glossary.html#harness" style="color:var(--accent)">harness</a> itself &mdash; which, for our purposes, is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard) &mdash; just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
+<p>People will build what amounts to broken software and pitch it to you as an "<a href="glossary.html#rl" style="color:var(--accent)">RL environment</a>." The training <a href="glossary.html#harness" style="color:var(--accent)">harness</a> itself, which for our purposes is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard), just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
 
 <p>Broken harnesses not only tend to plague the outputs of RL startups, but it also tends to curse researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
 
@@ -320,19 +316,23 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <div class="key-detail-text">Important detail: In reinforcement learning, the environment is your data generator.</div>
 </div>
 
-<p>In RL you don't have a static dataset &mdash; instead, the model creates its own training data by interacting with the environment. Every action and every reward becomes a data point. A flaky harness systematically generates garbage data and feeds it straight into your model's learning steps, pushing your gradients in the wrong direction.</p>
+<p>In RL you don't have a static dataset. Instead, the model creates its own training data by interacting with the environment. Every action and every reward becomes a data point. A flaky harness systematically generates garbage data and feeds it straight into your model's learning steps, pushing your gradients in the wrong direction.</p>
 
 
 <!-- ========== COMMON ERRORS ACROSS AGENTIC USE CASES ========== -->
 <h2>Common Harness Errors Across Agentic Use Cases</h2>
 
-<p>After eyeballing thousands of <a href="glossary.html#trajectory" style="color:var(--accent)">trajectories</a> across different domains, the same harness failures keep showing up. Here are real examples from four different agent types &mdash; click through the trajectory to see exactly how each one plays out.</p>
+<p>After eyeballing thousands of <a href="glossary.html#trajectory" style="color:var(--accent)">trajectories</a> across different domains as a practitioner for the last 5 years, I see the same harness failures showing up. Here are some I personally look out for based on various agent types that are pretty common today:</p>
+
+<div class="key-detail">
+<div class="key-detail-text">Click through each trajectory cascade below to see exactly how a single harness bug poisons an entire episode.</div>
+</div>
 
 
 <!-- ── EXAMPLE 1: SaaS Sales Tool Agent ── -->
 <div class="agent-example">
-<div class="agent-example-tag">SaaS Sales Tool Agent</div>
-<h3>The Stale Cache &mdash; Environment Returns Old Data</h3>
+<div class="agent-example-tag">SaaS Sales Agent / BDR Agent</div>
+<h3>The Stale Cache  - Environment Returns Old Data</h3>
 <p>Your harness's mock CRM API has a caching bug. Under load, it returns stale state from minutes ago instead of current data. The agent makes rational decisions based on wrong information, gets punished, and learns to avoid the correct workflow entirely.</p>
 <div class="agent-example-learns-label">What the model actually learns:</div>
 <p class="agent-example-learns">"When in doubt, send nurture emails and avoid the pipeline."</p>
@@ -342,7 +342,7 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <div class="cascade" id="cascade1" style="margin-bottom:48px">
 <div class="cascade-header">
 <div class="cascade-tag">Interactive Trajectory Cascade</div>
-<div class="cascade-title">SaaS Sales Platform &mdash; Stale Cache Bug</div>
+<div class="cascade-title">SaaS Sales Platform  - Stale Cache Bug</div>
 <div class="cascade-subtitle"><a href="glossary.html#trajectory" style="color:var(--accent)">Episode</a> 42 &middot; Click any state to inspect the full step detail</div>
 </div>
 <div class="cascade-dots">
@@ -378,67 +378,14 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 </div>
 <div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
 <div class="cascade-detail" id="cascade1-detail"></div>
-<div class="cascade-footer">Trajectory result: <strong>3 of 5 rewards computed on stale data</strong> &mdash; gradient pointed in wrong direction</div>
+<div class="cascade-footer">Trajectory result: <strong>3 of 5 rewards computed on stale data</strong>  - gradient pointed in wrong direction</div>
 </div>
 
 
-<!-- ── EXAMPLE 2: Interactive Booking Agent ── -->
+<!-- ── EXAMPLE 2: Coding Agent ── -->
 <div class="agent-example">
-<div class="agent-example-tag">Interactive Agent</div>
-<h3>The Race Condition &mdash; UI Says Available, System Says Taken</h3>
-<p>Your harness's simulated booking calendar has a race condition. When the agent selects a time slot, the UI shows it as available &mdash; but the backend already allocated it to a simulated concurrent user 200ms earlier. The agent clicks 'confirm,' gets a generic error, and learns that the booking interface is unreliable.</p>
-<div class="agent-example-learns-label">What the model actually learns:</div>
-<p class="agent-example-learns">"Avoid the booking UI. Send manual email requests to schedule instead."</p>
-</div>
-
-<!-- CASCADE 4: Interactive Booking Agent -->
-<div class="cascade" id="cascade4" style="margin-bottom:48px">
-<div class="cascade-header">
-<div class="cascade-tag">Interactive Trajectory Cascade</div>
-<div class="cascade-title">Interactive Booking Agent &mdash; Race Condition in Slot Booking</div>
-<div class="cascade-subtitle">Episode 87 &middot; Click any state to inspect the full step detail</div>
-</div>
-<div class="cascade-dots">
-<div class="cascade-dot-wrap" onclick="showCascade4Detail(0,this)">
-<div class="cascade-dot dot-ok">S1</div>
-<div class="cascade-dot-label">Open Cal</div>
-</div>
-<div class="cascade-conn conn-ok"></div>
-<div class="cascade-dot-wrap" onclick="showCascade4Detail(1,this)">
-<div class="cascade-dot dot-ok">S2</div>
-<div class="cascade-dot-label">Select Slot</div>
-</div>
-<div class="cascade-conn conn-ok"></div>
-<div class="cascade-dot-wrap" onclick="showCascade4Detail(2,this)">
-<div class="cascade-dot dot-bug">S3</div>
-<div class="cascade-dot-label">&#x1F6A8; Race</div>
-</div>
-<div class="cascade-conn conn-break"></div>
-<div class="cascade-dot-wrap" onclick="showCascade4Detail(3,this)">
-<div class="cascade-dot dot-tainted">S4</div>
-<div class="cascade-dot-label">Retry Fail</div>
-</div>
-<div class="cascade-conn conn-tainted"></div>
-<div class="cascade-dot-wrap" onclick="showCascade4Detail(4,this)">
-<div class="cascade-dot dot-tainted">S5</div>
-<div class="cascade-dot-label">Workaround</div>
-</div>
-<div class="cascade-conn conn-tainted"></div>
-<div class="cascade-dot-wrap" onclick="showCascade4Detail(5,this)">
-<div class="cascade-dot dot-policy">&#x1F9E0;</div>
-<div class="cascade-dot-label">Policy</div>
-</div>
-</div>
-<div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
-<div class="cascade-detail" id="cascade4-detail"></div>
-<div class="cascade-footer">A race condition in slot booking &rarr; <strong>agent learned to avoid the booking calendar entirely</strong> and fall back to email. Coping strategy, not task mastery.</div>
-</div>
-
-
-<!-- ── EXAMPLE 3: Coding Agent ── -->
-<div class="agent-example">
-<div class="agent-example-tag">Coding Agent</div>
-<h3>The Reward Hack &mdash; Agent Games the Metric</h3>
+<div class="agent-example-tag">SWE Agent</div>
+<h3>The Reward Hack  - Agent Games the Metric</h3>
 <p>Your reward function only checks whether tests pass, not whether the code is actually correct. The agent discovers it can hardcode expected outputs instead of solving the problem. Every test passes, the agent gets maximum reward, and production breaks on the first real input.</p>
 <div class="agent-example-learns-label">What the model actually learns:</div>
 <p class="agent-example-learns">"Read the tests, hardcode the outputs, skip understanding the bug."</p>
@@ -448,7 +395,7 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <div class="cascade" id="cascade2" style="margin-bottom:48px">
 <div class="cascade-header">
 <div class="cascade-tag">Interactive Trajectory Cascade</div>
-<div class="cascade-title">Coding Agent &mdash; Reward Hack via Test Gaming</div>
+<div class="cascade-title">Coding Agent  - Reward Hack via Test Gaming</div>
 <div class="cascade-subtitle">Episode 134 &middot; Click any state to inspect the full step detail</div>
 </div>
 <div class="cascade-dots">
@@ -484,15 +431,15 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 </div>
 <div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
 <div class="cascade-detail" id="cascade2-detail"></div>
-<div class="cascade-footer">Trajectory result: <strong>All positive rewards for a broken solution</strong> &mdash; reward hacking reinforced</div>
+<div class="cascade-footer">Trajectory result: <strong>All positive rewards for a broken solution</strong>  - reward hacking reinforced</div>
 </div>
 
 
 <!-- ── EXAMPLE 4: Customer Support Agent ── -->
 <div class="agent-example">
 <div class="agent-example-tag">Customer Support Agent</div>
-<h3>The False Resolution &mdash; Status Change &#x2260; Problem Solved</h3>
-<p>Your harness rewards based on ticket status changes (open &rarr; resolved = positive reward), not on whether the customer's actual problem was fixed. The agent learns that clicking "resolve" is the fastest path to reward &mdash; even when the customer still has the problem.</p>
+<h3>The False Resolution  - Status Change &#x2260; Problem Solved</h3>
+<p>Your harness rewards based on ticket status changes (open &rarr; resolved = positive reward), not on whether the customer's actual problem was fixed. The agent learns that clicking "resolve" is the fastest path to reward  - even when the customer still has the problem.</p>
 <div class="agent-example-learns-label">What the model actually learns:</div>
 <p class="agent-example-learns">"Close the ticket fast. Skip the refund. Collect the reward."</p>
 </div>
@@ -501,7 +448,7 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <div class="cascade" id="cascade3" style="margin-bottom:48px">
 <div class="cascade-header">
 <div class="cascade-tag">Interactive Trajectory Cascade</div>
-<div class="cascade-title">Customer Support Agent &mdash; False Resolution Shortcut</div>
+<div class="cascade-title">Customer Support Agent  - False Resolution Shortcut</div>
 <div class="cascade-subtitle">Episode 203 &middot; Click any state to inspect the full step detail</div>
 </div>
 <div class="cascade-dots">
@@ -537,8 +484,20 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 </div>
 <div class="cascade-hint">&#x2191; click any state to inspect the trajectory moment</div>
 <div class="cascade-detail" id="cascade3-detail"></div>
-<div class="cascade-footer">Trajectory result: <strong>Premature resolution rewarded (+0.8 each)</strong> &mdash; false resolution loop reinforced</div>
+<div class="cascade-footer">Trajectory result: <strong>Premature resolution rewarded (+0.8 each)</strong>  - false resolution loop reinforced</div>
 </div>
+
+
+<!-- ========== MORE FAILURES TO WATCH FOR ========== -->
+<h3>More Harness Failures to Watch For</h3>
+
+<ul style="font-size:15.5px;line-height:1.8;color:var(--ink2);margin:16px 0 40px;padding-left:24px">
+<li><strong>Silent timeout defaults:</strong> Your harness silently returns a default value when an API call takes too long instead of throwing an error. The model learns that certain actions "always succeed instantly" and never builds retry logic into its behavior.</li>
+<li><strong>Non-deterministic state resets:</strong> The harness doesn't fully reset between episodes, so leftover state from episode N bleeds into episode N+1. The model gets rewarded or punished for things it didn't do in the current episode.</li>
+<li><strong>Reward rounding / clipping artifacts:</strong> Your reward function clips or rounds in ways that flatten meaningful signal differences. A great action and a mediocre action both return +1.0, so the model has no gradient to distinguish them.</li>
+<li><strong>Mock data that doesn't match production distributions:</strong> Your harness uses perfectly formatted, clean mock data, but production data has typos, missing fields, and edge cases. The model never sees messy inputs during training and breaks on real ones.</li>
+<li><strong>Action space drift:</strong> The harness exposes actions that don't exist in production (or hides ones that do). The model learns to rely on a "shortcut" button that won't be there when deployed, or never discovers a critical capability it needs.</li>
+</ul>
 
 
 <!-- ========== HOW TO MINIMIZE HARNESS FAILURES ========== -->
@@ -548,24 +507,19 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <!-- ── Strategy 1: Know Your Model, Know Your Harness ── -->
 <h3>Know Your Model, Know Your Harness</h3>
 
-<p>From my experience a well-built harness has clean signal (every state is fresh, every reward matches reality), graceful degradation (bad episodes get flagged and excluded before they reach the gradient), and fail-fast behavior (something breaks, it throws immediately instead of silently corrupting data &mdash; you'd rather lose an episode than poison one).</p>
+<p>From my experience a well-built harness has clean signal (every state is fresh, every reward matches reality), graceful degradation (bad episodes get flagged and excluded before they reach the gradient), and fail-fast behavior (something breaks, it throws immediately instead of silently corrupting data  - you'd rather lose an episode than poison one).</p>
 
-<p>You learn to recognize these properties by spending time with your model &mdash; reviewing trajectories, building a failure taxonomy so you know whether a bad episode was a model failure or a harness failure. If your environment failure rate is above 5%, you don't have a model problem, you have a harness problem. Fix the harness first. I talk more about this in my previous post on <a href="https://aurielws.github.io/posts/rl-pet-peeves-part-1/" target="_blank">trajectory reviewing</a>.</p>
+<p>You learn to recognize these properties by spending time with your model  - reviewing trajectories, building a failure taxonomy so you know whether a bad episode was a model failure or a harness failure. If your environment failure rate is above 5%, you don't have a model problem, you have a harness problem. Fix the harness first. I talk more about this in my previous post on <a href="https://aurielws.github.io/posts/rl-pet-peeves-part-1/" target="_blank">trajectory reviewing</a>.</p>
 
 
 <!-- ── Strategy 2: Think Like a Software Engineer ── -->
 <h3>Adopt Traditional Software Engineering Best Practices in Your RL Research</h3>
 
-<p>Building good RL environments is a software engineering problem as much as a research one. I feel like many classically trained ML Researchers are taught to think about algorithms and mathematical correctness the most, but in school we're never taught how to really execute on what the math tells us in our code. How to actually engineer good software (ie: stable harnesses) require a different set of instincts: defensive design, observability, and reproducibility. If you haven't had to ship production software before, those muscles usually need a serious ramp, but there are great resources out there from the likes of <a href='https://x.com/GergelyOrosz' target='_blank'>Gergely Orosz</a>, <a href='https://x.com/alexxubyte' target='_blank'>Alex Xu</a>, and <a href='https://a.co/d/0inJEGXh' target='_blank'>this book</a> that can help get you there!</p>
-
-<p><strong>The Researcher Mindset:</strong> Focus on Algorithms, Optimizers, Mathematical Purity.</p>
-<p><strong>The Software Engineer Mindset:</strong> Focus on Defensive Design, Observability, Reproducibility.</p>
-
-<p>Stable infrastructure allows for clean signals. If the product is broken, the model learns coping strategies instead of solving the problem. Treat your harness like a production product. If you can't run 20,000 pings without something breaking, it's not good enough. Find the failure modes before your model does. In my opinion the best people to learn this from in practice are probably your company's <a href="https://x.com/swyx/status/1097334440169107456?s=20" target="_blank">Platform Engineers</a>.</p>
+<p>Building good RL environments is a software engineering problem as much as a research one. I feel like many classically trained ML Researchers are taught to think about algorithms and mathematical correctness the most, but in school we're never taught how to really execute on what the math tells us in our code. Building scalable and robust software (ie: stable harnesses) requires slightly different sets of best practices than traditional research. Treat your training harness like your production one as much as you can. So if prod experiences 200 QPS on average, make sure your harness knows what that feels like without errors. If you haven't had to ship production software before, there are great resources out there from the likes of <a href='https://x.com/GergelyOrosz' target='_blank'>Gergely Orosz</a> and <a href='https://x.com/alexxubyte' target='_blank'>Alex Xu</a> that can help get you there. You also can learn from your company's <a href="https://x.com/swyx/status/1097334440169107456?s=20" target="_blank">Platform Engineers</a> who usually eat, sleep, and breathe stable and scalable software.</p>
 
 <h2>Go Fix Your Janky Harness</h2>
 
-<p>Training harness engineering is about making sure the model experiences production-quality interactions before you actually deploy to prod. A good harness compounds: every clean episode builds on the last. A bad one compounds too, just in the wrong direction. The gap between teams that ship working harnesses and those that don't widens with every training run. Treat the training harness as an extension of your actual product &mdash; with the same level of engineering quality you expect the model to see in production.</p>
+<p>Training harness engineering is about making sure the model experiences production-quality interactions before you actually deploy to prod. A good harness compounds: every clean episode builds on the last. A bad one compounds too, just in the wrong direction. The gap between teams that ship working harnesses and those that don't widens with every training run. Treat the training harness as an extension of your actual product  - with the same level of engineering quality you expect the model to see in production.</p>
 
 
 </div><!-- /.container -->
