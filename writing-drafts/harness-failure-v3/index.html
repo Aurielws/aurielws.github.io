@@ -221,7 +221,7 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <div class="container">
 <div class="hero-series">Auriel's RL Pet Peeves Mini-Series</div>
 <h1><strong>Stop</strong> Shipping Low-Quality Harnesses and Calling It an "Environment"</h1>
-<p class="hero-sub">Today's post walks through one of the most important parts of making your reinforcement learning jobs converge : <strong>training/evaluation harness quality.</strong></p>
+<p class="hero-sub">Your broken harness is actively making the model worse. Here's what I keep seeing after years of eyeballing trajectories, and <strong>what you need to fix.</strong></p>
 </div>
 </header>
 
@@ -233,11 +233,11 @@ hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1
 <!-- ========== I DON'T WANT YOUR JANKY HARNESS ========== -->
 <h2>I Don't Want Your Janky Harness / Environment bro &#x1F642;</h2>
 
-<p>This is such a common problem I see, and probably the one I care about the most as a practitioner that also tries aligning models for real world use cases that users love.</p>
+<p>As someone who has spent years building production grade models I need you to hear this: researchers don't want your broken <a href="glossary.html#rl" style="color:var(--accent)">RL</a> environments because they will make our models worse. Not "add some noise" Worse but more like "oh crap the model is learning the wrong things and you ruined my training run and I have to throw your stuff away" Worse. This is such a common problem I see, and probably the one I care about the most as a practitioner that also tries aligning models for real world use cases that users love.</p>
 
-<p>People will build what amounts to broken software and pitch it to you as an "<a href="glossary.html#rl" style="color:var(--accent)">RL environment</a>." The training <a href="glossary.html#harness" style="color:var(--accent)">harness</a> itself, which for our purposes is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard), just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
+<p>People will build what amounts to broken software and pitch it as an "RL environment." The training <a href="glossary.html#harness" style="color:var(--accent)">harness</a> itself - the complete, interactive, and often simulated software system your RL agent trains inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard) - just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
 
-<p>Broken harnesses not only tend to plague the outputs of RL startups, but it also tends to curse researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
+<p>If you're a fresh grad researcher, a startup trying to post-train subagents for your product, or anyone building RL training infrastructure: this post is the list of harness failures I keep seeing, why they ruin your data, and how to fix them.</p>
 
 
 <!-- ══════════ VISUAL: STATIC ARCHITECTURE DIAGRAM ══════════ -->
