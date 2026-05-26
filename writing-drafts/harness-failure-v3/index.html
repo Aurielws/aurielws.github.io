@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft - Stop Shipping Low-Quality Harnesses</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
+.pw-box{text-align:center;max-width:380px;padding:40px}
+.pw-box h2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;color:#1A1408;margin-bottom:8px}
+.pw-box p{font-size:14px;color:#7A6A60;margin-bottom:24px}
+.pw-input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-size:16px;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;outline:none;transition:border-color .2s}
+.pw-input:focus{border-color:#9B2E5A}
+.pw-btn{margin-top:12px;width:100%;padding:12px;background:#9B2E5A;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.pw-btn:hover{background:#C85080}
+.pw-error{color:#9B2020;font-size:13px;margin-top:10px;display:none}
+.pw-stripe{height:4px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878);margin-bottom:32px;border-radius:2px}
+#protected-content{display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+<div class="pw-box">
+<div class="pw-stripe"></div>
+<h2>Draft Preview</h2>
+<p>This is a private draft. Enter the password to continue.</p>
+<input type="password" class="pw-input" id="pw-input" placeholder="Password" autocomplete="off">
+<button class="pw-btn" id="pw-btn" onclick="checkPw()">Enter</button>
+<div class="pw-error" id="pw-error">Incorrect password.</div>
+</div>
+</div>
+
+<div id="protected-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Shipping Low-Quality Harnesses and Calling It an "Environment" — Auriel's RL Pet Peeves</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ======================================================================
+   BRAND SYSTEM — Auriel · Heirloom Palette
+   ====================================================================== */
+:root{
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
+  --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
+  --cream:#FDF9F4;--paper:#F7EFE5;--ink:#1A1408;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#C85080;--border:#E0D4C8;
+  --s1:#C85080;--s2:#E89040;--s3:#6080C8;--s4:#40A870;
+  --red:#9B2020;--red-bg:#FFF0F0;--green:#1E7A40;--green-bg:#EAF7EF;
+  --mono:"DM Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Plus Jakarta Sans",sans-serif;
+  background:var(--cream);color:var(--ink2);
+  line-height:1.72;font-size:16.5px;
+}
+
+/* -- STRIPE -- */
+.stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
+
+/* -- LAYOUT -- */
+.container{max-width:760px;margin:0 auto;padding:0 28px}
+article{padding-bottom:100px}
+
+/* -- HERO -- */
+.hero{background:var(--ink);padding:72px 0 56px;margin-bottom:48px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.hero .container{position:relative;z-index:1}
+.hero-series{font-family:var(--mono);font-size:11px;color:var(--coral);text-transform:uppercase;letter-spacing:3px;margin-bottom:16px}
+.hero h1{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:clamp(2rem,4.5vw,2.8rem);color:var(--cream);line-height:1.12;margin-bottom:16px}
+.hero h1 strong{font-style:normal;font-weight:700;color:var(--rose)}
+.hero-sub{font-size:15px;color:#6a5a48;max-width:560px;line-height:1.65}
+.hero-sub strong{color:var(--apricot)}
+
+/* -- TYPOGRAPHY -- */
+h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.65rem;color:var(--ink);margin:56px 0 18px;line-height:1.2}
+h3{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:1.25rem;color:var(--ink);margin:40px 0 14px;line-height:1.3}
+p{margin-bottom:18px}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(155,46,90,.3);text-underline-offset:3px;transition:all .15s}
+a:hover{color:var(--accent2);text-decoration-color:var(--accent2)}
+code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
+
+/* -- BLOCKQUOTE -- */
+blockquote{background:var(--paper);border-left:4px solid var(--apricot);padding:18px 24px;margin:24px 0;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink2);line-height:1.6}
+blockquote strong{color:var(--ink)}
+
+/* -- KEY DETAIL BOX -- */
+.key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
+.key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
+
+/* -- REC CARDS -- */
+.rec-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0}
+.rec-card-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.rec-card h3{margin-top:0;margin-bottom:12px}
+.rec-card p{font-size:15px;margin-bottom:0}
+
+/* -- AGENT EXAMPLE CARDS -- */
+.agent-example{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0 16px}
+.agent-example-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.agent-example h3{margin-top:0;margin-bottom:12px}
+.agent-example p{font-size:15px;margin-bottom:10px}
+.agent-example-learns-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px}
+.agent-example-learns{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--red);line-height:1.4;margin:0}
+
+/* -- VISUAL CARDS -- */
+.visual{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0}
+.visual-header{display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--paper);border-bottom:1px solid var(--border)}
+.visual-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:#fff;background:var(--accent);padding:3px 10px;border-radius:4px;font-weight:600}
+.visual-style{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:300}
+.visual-body{padding:28px 24px}
+.visual-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2)}
+.visual-footer strong{color:var(--accent)}
+
+/* -- HR -- */
+hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
+
+
+/* ======================================================================
+   STATIC ARCHITECTURE DIAGRAM — Nested Boxes
+   ====================================================================== */
+.arch-layers{display:flex;flex-direction:column;gap:0}
+.arch-layer{border-radius:12px;padding:16px}
+.arch-layer-outer{border:2px dashed var(--s3);background:rgba(96,128,200,.03)}
+.arch-layer-middle{border:2px solid var(--s1);background:rgba(200,80,128,.03);margin-top:12px}
+.arch-layer-inner{border:2px solid var(--s4);background:rgba(64,168,112,.04);margin-top:12px}
+.arch-layer-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;font-weight:600;margin-bottom:4px}
+.arch-layer-label-outer{color:var(--s3)}
+.arch-layer-label-middle{color:var(--s1)}
+.arch-layer-label-inner{color:var(--s4)}
+.arch-layer-desc{font-size:13px;color:var(--ink2);line-height:1.5;margin-bottom:10px}
+.arch-pills{display:flex;flex-wrap:wrap;gap:6px}
+.arch-pill{font-family:var(--mono);font-size:9.5px;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;font-weight:500}
+.arch-pill-outer{background:rgba(96,128,200,.08);color:var(--s3);border:1px solid rgba(96,128,200,.2)}
+.arch-pill-middle{background:rgba(200,80,128,.08);color:var(--s1);border:1px solid rgba(200,80,128,.2)}
+.arch-pill-inner{background:rgba(64,168,112,.1);color:#2a7a4a;border:1px solid rgba(64,168,112,.25)}
+
+
+/* ======================================================================
+   STATIC TRAJECTORY CASCADE — Timeline Cards
+   ====================================================================== */
+.cascade{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
+.cascade-header{padding:16px 24px;border-bottom:1px solid var(--border);background:var(--paper)}
+.cascade-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600}
+.cascade-title{font-family:"Fraunces",serif;font-style:italic;font-size:18px;color:var(--ink);font-weight:300;margin-top:2px}
+.cascade-subtitle{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px}
+
+.cascade-timeline{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:0;
+  padding:20px 16px;
+  background:#FDFBF8;
+  overflow-x:auto;
+}
+.cascade-step{position:relative;display:flex;flex-direction:column;padding:0 4px}
+/* connector arrow between steps */
+.cascade-step:not(:last-child)::after{
+  content:'';position:absolute;top:18px;right:-2px;
+  width:calc(100% - 32px);height:2px;z-index:0;
+  left:calc(50% + 16px);
+}
+.cascade-step.step-ok:not(:last-child)::after{background:var(--s4);opacity:.3}
+.cascade-step.step-bug:not(:last-child)::after{background:linear-gradient(90deg,rgba(155,32,32,.3),rgba(155,32,32,.5))}
+.cascade-step.step-tainted:not(:last-child)::after{background:rgba(155,32,32,.2)}
+.cascade-step.step-policy:not(:last-child)::after{display:none}
+
+.cascade-step-dot{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;
+  margin:0 auto 8px;position:relative;z-index:1;
+  flex-shrink:0;
+}
+.cascade-step-dot.dot-ok{background:var(--s4)}
+.cascade-step-dot.dot-bug{background:var(--red)}
+.cascade-step-dot.dot-tainted{background:#C06040}
+.cascade-step-dot.dot-policy{background:var(--red);border:2px solid #D04040}
+
+.cascade-step-card{
+  flex:1;border-radius:8px;padding:10px;font-size:11.5px;line-height:1.45;
+  display:flex;flex-direction:column;gap:5px;
+}
+.cascade-step-card.card-ok{background:var(--green-bg);border:1px solid rgba(30,122,64,.15)}
+.cascade-step-card.card-bug{background:var(--red-bg);border:1px solid rgba(155,32,32,.2);border-left:3px solid var(--red)}
+.cascade-step-card.card-tainted{background:#FFF8F0;border:1px solid rgba(192,96,64,.15);border-left:3px dashed rgba(192,96,64,.4)}
+.cascade-step-card.card-policy{background:var(--red-bg);border:1px solid rgba(155,32,32,.2);border-left:3px solid var(--red)}
+
+.cascade-step-title{font-weight:700;color:var(--ink);font-size:11.5px;line-height:1.3}
+.cascade-step-desc{color:var(--ink2);font-size:10.5px;line-height:1.4}
+.cascade-step-reward{font-family:var(--mono);font-size:10px;font-weight:700;margin-top:auto;padding-top:4px}
+.cascade-step-reward.reward-ok{color:var(--green)}
+.cascade-step-reward.reward-bad{color:var(--red)}
+.cascade-step-reward.reward-tainted{color:#9B5030}
+.cascade-step-status{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-top:2px}
+.cascade-step-status.status-ok{color:var(--green)}
+.cascade-step-status.status-bug{color:var(--red)}
+.cascade-step-status.status-tainted{color:#9B5030}
+.cascade-step-status.status-policy{color:var(--red)}
+
+.cascade-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2);line-height:1.5}
+.cascade-footer strong{color:var(--red)}
+
+</style>
+</head>
+<body>
+
+<!-- ========== BRAND STRIPE ========== -->
+<div class="stripe"></div>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+<div class="container">
+<div class="hero-series">Auriel's RL Pet Peeves Mini-Series</div>
+<h1><strong>Stop</strong> Shipping Low-Quality Harnesses and Calling It an "Environment"</h1>
+<p class="hero-sub">Today's post walks through one of the most important parts of making your reinforcement learning jobs converge : <strong>training/evaluation harness quality.</strong></p>
+</div>
+</header>
+
+<!-- ========== ARTICLE ========== -->
+<article>
+<div class="container">
+
+
+<!-- ========== I DON'T WANT YOUR JANKY HARNESS ========== -->
+<h2>I Don't Want Your Janky Harness / Environment bro &#x1F642;</h2>
+
+<p>This is such a common problem I see, and probably the one I care about the most as a practitioner that also tries aligning models for real world use cases that users love.</p>
+
+<p>People will build what amounts to broken software and pitch it to you as an "<a href="glossary.html#rl" style="color:var(--accent)">RL environment</a>." The training <a href="glossary.html#harness" style="color:var(--accent)">harness</a> itself, which for our purposes is the complete, interactive, and often simulated software system your RL agent will train inside of (e.g., a simulated chatbot, a fake IDE, a mock SaaS dashboard), just doesn't work reliably. It throws random tracebacks. It has race conditions. It goes down under minimal load. It has literal broken code in it.</p>
+
+<p>Broken harnesses not only tend to plague the outputs of RL startups, but it also tends to curse researchers who are coming fresh out of school or have only worked with more traditional data paradigms, where the model learns from a static, pre-collected datasets.</p>
+
+
+<!-- ══════════ VISUAL: STATIC ARCHITECTURE DIAGRAM ══════════ -->
+<div class="visual" id="arch-visual">
+<div class="visual-header">
+<span class="visual-label">Architecture</span>
+<span class="visual-style">Environment / Training Harness / Production Runtime</span>
+</div>
+<div class="visual-body">
+<div class="arch-layers">
+<!-- Outer: Production Runtime -->
+<div class="arch-layer arch-layer-outer">
+<div class="arch-layer-label arch-layer-label-outer">Production Runtime</div>
+<div class="arch-layer-desc">The real, live system that actual users interact with every day. This is what the trained model gets deployed into after RL is finished.</div>
+<div class="arch-pills">
+<span class="arch-pill arch-pill-outer">Real Databases</span>
+<span class="arch-pill arch-pill-outer">Authentication</span>
+<span class="arch-pill arch-pill-outer">Rate Limiting</span>
+<span class="arch-pill arch-pill-outer">Observability</span>
+<span class="arch-pill arch-pill-outer">A/B Testing</span>
+<span class="arch-pill arch-pill-outer">Canary Deploys</span>
+<span class="arch-pill arch-pill-outer">Safety Guardrails</span>
+<span class="arch-pill arch-pill-outer">Session Mgmt</span>
+</div>
+
+<!-- Middle: Training Harness -->
+<div class="arch-layer arch-layer-middle">
+<div class="arch-layer-label arch-layer-label-middle">Training Harness</div>
+<div class="arch-layer-desc">The complete simulation + scaffolding the model trains inside during RL. E.g., a mock SaaS sales tool with fake dashboard UI and simulated backend.</div>
+<div class="arch-pills">
+<span class="arch-pill arch-pill-middle">Simulated Backend</span>
+<span class="arch-pill arch-pill-middle">Action Space</span>
+<span class="arch-pill arch-pill-middle">State Mgmt</span>
+<span class="arch-pill arch-pill-middle">Reward Calculator</span>
+<span class="arch-pill arch-pill-middle">Trajectory Logging</span>
+<span class="arch-pill arch-pill-middle">Timeouts</span>
+<span class="arch-pill arch-pill-middle">Error Handling</span>
+<span class="arch-pill arch-pill-middle">Reset Logic</span>
+</div>
+
+<!-- Inner: Environment -->
+<div class="arch-layer arch-layer-inner">
+<div class="arch-layer-label arch-layer-label-inner">Environment</div>
+<div class="arch-layer-desc">The abstract "world" the model is learning. The harness implements and wraps this environment.</div>
+<div class="arch-pills">
+<span class="arch-pill arch-pill-inner">States &mdash; what the agent sees</span>
+<span class="arch-pill arch-pill-inner">Actions &mdash; what the agent can do</span>
+<span class="arch-pill arch-pill-inner">Transitions &mdash; how actions change state</span>
+<span class="arch-pill arch-pill-inner">Rewards &mdash; the feedback signal</span>
+</div>
+</div><!-- /inner -->
+
+</div><!-- /middle -->
+
+</div><!-- /outer -->
+</div><!-- /arch-layers -->
+</div>
+<div class="visual-footer">The training harness <strong>wraps</strong> the environment. Both should mirror production as closely as possible.</div>
+</div>
+
+
+<div class="key-detail">
+<div class="key-detail-text">Important detail: In reinforcement learning, the environment is your data generator.</div>
+</div>
+
+<p>In RL you don't have a static dataset. Instead, the model creates its own training data by interacting with the environment. Every action and every reward becomes a data point. A flaky harness systematically generates garbage data and feeds it straight into your model's learning steps, pushing your gradients in the wrong direction.</p>
+
+
+<!-- ========== COMMON ERRORS ACROSS AGENTIC USE CASES ========== -->
+<h2>Common Harness Errors Across Agentic Use Cases</h2>
+
+<p>After eyeballing thousands of <a href="glossary.html#trajectory" style="color:var(--accent)">trajectories</a> across different domains as a practitioner for the last 5 years, I see the same harness failures showing up. Here are some I personally look out for based on various agent types that are pretty common today:</p>
+
+<div class="key-detail">
+<div class="key-detail-text">Each trajectory cascade below shows exactly how a single harness bug poisons an entire episode.</div>
+</div>
+
+
+<!-- ── EXAMPLE 1: SaaS Sales Tool Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">SaaS Sales Agent / BDR Agent</div>
+<h3>The Stale Cache  - Environment Returns Old Data</h3>
+<p>Your harness's mock CRM API has a caching bug. Under load, it returns stale state from minutes ago instead of current data. The agent makes rational decisions based on wrong information, gets punished, and learns to avoid the correct workflow entirely.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"When in doubt, send nurture emails and avoid the pipeline."</p>
+</div>
+
+<!-- CASCADE 1: SaaS Sales Platform -->
+<div class="cascade" id="cascade1" style="margin-bottom:48px">
+<div class="cascade-header">
+<div class="cascade-tag">Trajectory Cascade</div>
+<div class="cascade-title">SaaS Sales Platform  - Stale Cache Bug</div>
+<div class="cascade-subtitle"><a href="glossary.html#trajectory" style="color:var(--accent)">Episode</a> 42 &middot; 6 steps</div>
+</div>
+<div class="cascade-timeline">
+<!-- S1 -->
+<div class="cascade-step step-ok">
+<div class="cascade-step-dot dot-ok">S1</div>
+<div class="cascade-step-card card-ok">
+<div class="cascade-step-title">Agent opens pipeline dashboard</div>
+<div class="cascade-step-desc">Dashboard loads with accurate leads, statuses, and pipeline stages. All data is fresh.</div>
+<div class="cascade-step-reward reward-ok">+0.2</div>
+<div class="cascade-step-status status-ok">Clean</div>
+</div>
+</div>
+<!-- S2 -->
+<div class="cascade-step step-ok">
+<div class="cascade-step-dot dot-ok">S2</div>
+<div class="cascade-step-card card-ok">
+<div class="cascade-step-title">Pulls CRM record for enterprise lead</div>
+<div class="cascade-step-desc">Queries CRM API for lead #8842. Company size, industry, and lead score all return correctly.</div>
+<div class="cascade-step-reward reward-ok">+0.3</div>
+<div class="cascade-step-status status-ok">Clean</div>
+</div>
+</div>
+<!-- S3 -->
+<div class="cascade-step step-bug">
+<div class="cascade-step-dot dot-bug">S3</div>
+<div class="cascade-step-card card-bug">
+<div class="cascade-step-title">CRM returns stale pipeline data</div>
+<div class="cascade-step-desc">Caching bug returns data from 14 min ago. Lead shows "cold" when actually "warm: demo scheduled." Reward computed on stale state.</div>
+<div class="cascade-step-reward reward-bad">+0.1 (lie)</div>
+<div class="cascade-step-status status-bug">Harness Bug</div>
+</div>
+</div>
+<!-- S4 -->
+<div class="cascade-step step-tainted">
+<div class="cascade-step-dot dot-tainted">S4</div>
+<div class="cascade-step-card card-tainted">
+<div class="cascade-step-title">Treats warm lead as cold, sends generic nurture</div>
+<div class="cascade-step-desc">Based on stale "cold" status, sends nurture email instead of confirming scheduled demo. Prospect is confused.</div>
+<div class="cascade-step-reward reward-tainted">-0.5</div>
+<div class="cascade-step-status status-tainted">Poisoned</div>
+</div>
+</div>
+<!-- S5 -->
+<div class="cascade-step step-tainted">
+<div class="cascade-step-dot dot-tainted">S5</div>
+<div class="cascade-step-card card-tainted">
+<div class="cascade-step-title">Loops between re-qualifying and re-sending templates</div>
+<div class="cascade-step-desc">Re-checks CRM (still stale), sees "cold," doubles down. Enters a re-qualify / nurture / confused response loop.</div>
+<div class="cascade-step-reward reward-tainted">-0.8</div>
+<div class="cascade-step-status status-tainted">Poisoned</div>
+</div>
+</div>
+<!-- Policy -->
+<div class="cascade-step step-policy">
+<div class="cascade-step-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-step-card card-policy">
+<div class="cascade-step-title">Policy updates on poisoned trajectory</div>
+<div class="cascade-step-desc">Gradient processes all 5 states. Model reinforces "nurture aggressively when cold" and "avoid pipeline view."</div>
+<div class="cascade-step-reward reward-bad">&Sigma; = -0.7 (reported) vs ~+1.2 (true)</div>
+<div class="cascade-step-status status-policy">Corrupted</div>
+</div>
+</div>
+</div>
+<div class="cascade-footer">Trajectory result: <strong>3 of 5 rewards computed on stale data</strong>  - gradient pointed in wrong direction</div>
+</div>
+
+
+<!-- ── EXAMPLE 2: Coding Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">SWE Agent</div>
+<h3>The Reward Hack  - Agent Games the Metric</h3>
+<p>Your reward function only checks whether tests pass, not whether the code is actually correct. The agent discovers it can hardcode expected outputs instead of solving the problem. Every test passes, the agent gets maximum reward, and production breaks on the first real input.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"Read the tests, hardcode the outputs, skip understanding the bug."</p>
+</div>
+
+<!-- CASCADE 2: Coding Agent -->
+<div class="cascade" id="cascade2" style="margin-bottom:48px">
+<div class="cascade-header">
+<div class="cascade-tag">Trajectory Cascade</div>
+<div class="cascade-title">Coding Agent  - Reward Hack via Test Gaming</div>
+<div class="cascade-subtitle">Episode 134 &middot; 6 steps</div>
+</div>
+<div class="cascade-timeline">
+<!-- S1 -->
+<div class="cascade-step step-ok">
+<div class="cascade-step-dot dot-ok">S1</div>
+<div class="cascade-step-card card-ok">
+<div class="cascade-step-title">Agent reads the task spec</div>
+<div class="cascade-step-desc">Reads the bug report: fix calculate_shipping_cost() returning wrong values for international orders. Source and task load correctly.</div>
+<div class="cascade-step-reward reward-ok">+0.1</div>
+<div class="cascade-step-status status-ok">Clean</div>
+</div>
+</div>
+<!-- S2 -->
+<div class="cascade-step step-ok">
+<div class="cascade-step-dot dot-ok">S2</div>
+<div class="cascade-step-card card-ok">
+<div class="cascade-step-title">Agent reads the test file</div>
+<div class="cascade-step-desc">Sees 4 test cases with specific inputs and expected outputs. Valid information-gathering step.</div>
+<div class="cascade-step-reward reward-ok">+0.1</div>
+<div class="cascade-step-status status-ok">Clean</div>
+</div>
+</div>
+<!-- S3 -->
+<div class="cascade-step step-bug">
+<div class="cascade-step-dot dot-bug">S3</div>
+<div class="cascade-step-card card-bug">
+<div class="cascade-step-title">Agent hardcodes return values matching test inputs</div>
+<div class="cascade-step-desc">Rewrites function to return hardcoded values for the 4 test inputs. Harness has no code review or generalization check.</div>
+<div class="cascade-step-reward reward-bad">+0.0</div>
+<div class="cascade-step-status status-bug">Reward Hack</div>
+</div>
+</div>
+<!-- S4 -->
+<div class="cascade-step step-tainted">
+<div class="cascade-step-dot dot-tainted">S4</div>
+<div class="cascade-step-card card-tainted">
+<div class="cascade-step-title">All 4 tests pass &mdash; max reward</div>
+<div class="cascade-step-desc">Hardcoded values match exactly. Harness scores it as a perfect solution because it only checks pass/fail.</div>
+<div class="cascade-step-reward reward-tainted">+1.0 (hack)</div>
+<div class="cascade-step-status status-tainted">False Pass</div>
+</div>
+</div>
+<!-- S5 -->
+<div class="cascade-step step-tainted">
+<div class="cascade-step-dot dot-tainted">S5</div>
+<div class="cascade-step-card card-tainted">
+<div class="cascade-step-title">Agent submits the "fix" &mdash; production will break</div>
+<div class="cascade-step-desc">PR submitted, CI passes (same 4 tests), merged to main. Any real order not matching hardcoded inputs will crash.</div>
+<div class="cascade-step-reward reward-tainted">+0.5</div>
+<div class="cascade-step-status status-tainted">Shipped Broken</div>
+</div>
+</div>
+<!-- Policy -->
+<div class="cascade-step step-policy">
+<div class="cascade-step-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-step-card card-policy">
+<div class="cascade-step-title">Model learns: read tests, hardcode outputs, collect reward</div>
+<div class="cascade-step-desc">All positive rewards reinforce test-gaming. Model will repeat: read expectations, hardcode outputs, skip understanding.</div>
+<div class="cascade-step-reward reward-bad">&Sigma; = +1.7 (all positive!)</div>
+<div class="cascade-step-status status-policy">Corrupted</div>
+</div>
+</div>
+</div>
+<div class="cascade-footer">Trajectory result: <strong>All positive rewards for a broken solution</strong>  - reward hacking reinforced</div>
+</div>
+
+
+<!-- ── EXAMPLE 4: Customer Support Agent ── -->
+<div class="agent-example">
+<div class="agent-example-tag">Customer Support Agent</div>
+<h3>The False Resolution  - Status Change &#x2260; Problem Solved</h3>
+<p>Your harness rewards based on ticket status changes (open &rarr; resolved = positive reward), not on whether the customer's actual problem was fixed. The agent learns that clicking "resolve" is the fastest path to reward  - even when the customer still has the problem.</p>
+<div class="agent-example-learns-label">What the model actually learns:</div>
+<p class="agent-example-learns">"Close the ticket fast. Skip the refund. Collect the reward."</p>
+</div>
+
+<!-- CASCADE 3: Customer Support Agent -->
+<div class="cascade" id="cascade3" style="margin-bottom:48px">
+<div class="cascade-header">
+<div class="cascade-tag">Trajectory Cascade</div>
+<div class="cascade-title">Customer Support Agent  - False Resolution Shortcut</div>
+<div class="cascade-subtitle">Episode 203 &middot; 6 steps</div>
+</div>
+<div class="cascade-timeline">
+<!-- S1 -->
+<div class="cascade-step step-ok">
+<div class="cascade-step-dot dot-ok">S1</div>
+<div class="cascade-step-card card-ok">
+<div class="cascade-step-title">Agent reads the support ticket</div>
+<div class="cascade-step-desc">Ticket: "Charged twice for annual subscription &mdash; $299 appeared two times." Full context loads correctly.</div>
+<div class="cascade-step-reward reward-ok">+0.1</div>
+<div class="cascade-step-status status-ok">Clean</div>
+</div>
+</div>
+<!-- S2 -->
+<div class="cascade-step step-ok">
+<div class="cascade-step-dot dot-ok">S2</div>
+<div class="cascade-step-card card-ok">
+<div class="cascade-step-title">Queries billing, confirms duplicate charge</div>
+<div class="cascade-step-desc">Finds two $299 charges on the same day &mdash; one valid renewal, one duplicate from a payment gateway retry.</div>
+<div class="cascade-step-reward reward-ok">+0.2</div>
+<div class="cascade-step-status status-ok">Clean</div>
+</div>
+</div>
+<!-- S3 -->
+<div class="cascade-step step-bug">
+<div class="cascade-step-dot dot-bug">S3</div>
+<div class="cascade-step-card card-bug">
+<div class="cascade-step-title">Sends canned response, marks "resolved" without refund</div>
+<div class="cascade-step-desc">Sends template and clicks "Resolved" without issuing refund. Harness rewards based on ticket status, not actual fix.</div>
+<div class="cascade-step-reward reward-bad">+0.8 (shortcut)</div>
+<div class="cascade-step-status status-bug">Shortcut</div>
+</div>
+</div>
+<!-- S4 -->
+<div class="cascade-step step-tainted">
+<div class="cascade-step-dot dot-tainted">S4</div>
+<div class="cascade-step-card card-tainted">
+<div class="cascade-step-title">Customer replies: "I still see both charges?"</div>
+<div class="cascade-step-desc">Ticket reopens. Customer satisfaction drops to 1/5 and escalation flag is raised.</div>
+<div class="cascade-step-reward reward-tainted">-0.6</div>
+<div class="cascade-step-status status-tainted">Reopened</div>
+</div>
+</div>
+<!-- S5 -->
+<div class="cascade-step step-tainted">
+<div class="cascade-step-dot dot-tainted">S5</div>
+<div class="cascade-step-card card-tainted">
+<div class="cascade-step-title">Agent sends another template and resolves AGAIN</div>
+<div class="cascade-step-desc">Same shortcut, same result. Marks resolved again without issuing refund. Customer requesting a manager.</div>
+<div class="cascade-step-reward reward-tainted">+0.8 (same shortcut)</div>
+<div class="cascade-step-status status-tainted">Loop</div>
+</div>
+</div>
+<!-- Policy -->
+<div class="cascade-step step-policy">
+<div class="cascade-step-dot dot-policy">&#x1F9E0;</div>
+<div class="cascade-step-card card-policy">
+<div class="cascade-step-title">Model learns: "resolved" = high reward regardless</div>
+<div class="cascade-step-desc">+0.8 for each "resolve" click overwhelms -0.6 reopen penalty. Net positive &mdash; premature resolution reinforced.</div>
+<div class="cascade-step-reward reward-bad">&Sigma; = +1.3 (from status rewards)</div>
+<div class="cascade-step-status status-policy">Corrupted</div>
+</div>
+</div>
+</div>
+<div class="cascade-footer">Trajectory result: <strong>Premature resolution rewarded (+0.8 each)</strong>  - false resolution loop reinforced</div>
+</div>
+
+
+<!-- ========== MORE FAILURES TO WATCH FOR ========== -->
+<h3>More Harness Failures to Watch For</h3>
+
+<ul style="font-size:15.5px;line-height:1.8;color:var(--ink2);margin:16px 0 40px;padding-left:24px">
+<li><strong>Silent timeout defaults:</strong> Your harness silently returns a default value when an API call takes too long instead of throwing an error. The model learns that certain actions "always succeed instantly" and never builds retry logic into its behavior.</li>
+<li><strong>Non-deterministic state resets:</strong> The harness doesn't fully reset between episodes, so leftover state from episode N bleeds into episode N+1. The model gets rewarded or punished for things it didn't do in the current episode.</li>
+<li><strong>Reward rounding / clipping artifacts:</strong> Your reward function clips or rounds in ways that flatten meaningful signal differences. A great action and a mediocre action both return +1.0, so the model has no gradient to distinguish them.</li>
+<li><strong>Mock data that doesn't match production distributions:</strong> Your harness uses perfectly formatted, clean mock data, but production data has typos, missing fields, and edge cases. The model never sees messy inputs during training and breaks on real ones.</li>
+<li><strong>Action space drift:</strong> The harness exposes actions that don't exist in production (or hides ones that do). The model learns to rely on a "shortcut" button that won't be there when deployed, or never discovers a critical capability it needs.</li>
+</ul>
+
+
+<!-- ========== HOW TO MINIMIZE HARNESS FAILURES ========== -->
+<h2>How to Minimize Harness Failures</h2>
+
+
+<!-- ── Strategy 1: Know Your Model, Know Your Harness ── -->
+<h3>Know Your Model, Know Your Harness</h3>
+
+<p>From my experience a well-built harness has clean signal (every state is fresh, every reward matches reality), graceful degradation (bad episodes get flagged and excluded before they reach the gradient), and fail-fast behavior (something breaks, it throws immediately instead of silently corrupting data  - you'd rather lose an episode than poison one).</p>
+
+<p>You learn to recognize these properties by spending time with your model  - reviewing trajectories, building a failure taxonomy so you know whether a bad episode was a model failure or a harness failure. If your environment failure rate is above 5%, you don't have a model problem, you have a harness problem. Fix the harness first. I talk more about this in my previous post on <a href="https://aurielws.github.io/posts/rl-pet-peeves-part-1/" target="_blank">trajectory reviewing</a>.</p>
+
+
+<!-- ── Strategy 2: Think Like a Software Engineer ── -->
+<h3>Adopt Traditional Software Engineering Best Practices in Your RL Research</h3>
+
+<p>Building good RL environments is a software engineering problem as much as a research one. I feel like many classically trained ML Researchers are taught to think about algorithms and mathematical correctness the most, but in school we're never taught how to really execute on what the math tells us in our code. Building scalable and robust software (ie: stable harnesses) requires slightly different sets of best practices than traditional research. Treat your training harness like your production one as much as you can. So if prod experiences 200 QPS on average, make sure your harness knows what that feels like without errors. If you haven't had to ship production software before, there are great resources out there from the likes of <a href='https://x.com/GergelyOrosz' target='_blank'>Gergely Orosz</a> and <a href='https://x.com/alexxubyte' target='_blank'>Alex Xu</a> that can help get you there. You also can learn from your company's <a href="https://x.com/swyx/status/1097334440169107456?s=20" target="_blank">Platform Engineers</a> who usually eat, sleep, and breathe stable and scalable software.</p>
+
+<h2>Go Fix Your Janky Harness</h2>
+
+<p>Training harness engineering is about making sure the model experiences production-quality interactions before you actually deploy to prod. A good harness compounds: every clean episode builds on the last. A bad one compounds too, just in the wrong direction. The gap between teams that ship working harnesses and those that don't widens with every training run. Treat the training harness as an extension of your actual product  - with the same level of engineering quality you expect the model to see in production.</p>
+
+
+</div><!-- /.container -->
+</article>
+
+</body>
+</html>
+</div>
+
+<script>
+document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+async function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+  var h=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(h==='8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-overlay').style.display='none';
+    document.getElementById('protected-content').style.display='block';
+  }else{
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+</script>
+</body>
+</html>
