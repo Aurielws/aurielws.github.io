@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft - Your Tasks Are Not Grounded in Economic Reality</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
+.pw-box{text-align:center;max-width:380px;padding:40px}
+.pw-box h2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;color:#1A1408;margin-bottom:8px}
+.pw-box p{font-size:14px;color:#7A6A60;margin-bottom:24px}
+.pw-input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-size:16px;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;outline:none;transition:border-color .2s}
+.pw-input:focus{border-color:#9B2E5A}
+.pw-btn{margin-top:12px;width:100%;padding:12px;background:#9B2E5A;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.pw-btn:hover{background:#C85080}
+.pw-error{color:#9B2020;font-size:13px;margin-top:10px;display:none}
+.pw-stripe{height:4px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878);margin-bottom:32px;border-radius:2px}
+#protected-content{display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+<div class="pw-box">
+<div class="pw-stripe"></div>
+<h2>Draft Preview</h2>
+<p>This is a private draft. Enter the password to continue.</p>
+<input type="password" class="pw-input" id="pw-input" placeholder="Password" autocomplete="off">
+<button class="pw-btn" id="pw-btn" onclick="checkPw()">Enter</button>
+<div class="pw-error" id="pw-error">Incorrect password.</div>
+</div>
+</div>
+
+<div id="protected-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Tasks Are Not Grounded in Economic Reality - Auriel's RL Pet Peeves</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ======================================================================
+   BRAND SYSTEM - Auriel · Heirloom Palette
+   ====================================================================== */
+:root{
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
+  --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
+  --cream:#FDF9F4;--paper:#F7EFE5;--ink:#1A1408;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#C85080;--border:#E0D4C8;
+  --s1:#C85080;--s2:#E89040;--s3:#6080C8;--s4:#40A870;
+  --red:#9B2020;--red-bg:#FFF0F0;--green:#1E7A40;--green-bg:#EAF7EF;
+  --mono:"DM Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Plus Jakarta Sans",sans-serif;
+  background:var(--cream);color:var(--ink2);
+  line-height:1.72;font-size:16.5px;
+}
+
+/* -- STRIPE -- */
+.stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
+
+/* -- LAYOUT -- */
+.container{max-width:760px;margin:0 auto;padding:0 28px}
+article{padding-bottom:100px}
+
+/* -- HERO -- */
+.hero{background:var(--ink);padding:72px 0 56px;margin-bottom:48px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.hero .container{position:relative;z-index:1}
+.hero-series{font-family:var(--mono);font-size:11px;color:var(--coral);text-transform:uppercase;letter-spacing:3px;margin-bottom:16px}
+.hero h1{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:clamp(2rem,4.5vw,2.8rem);color:var(--cream);line-height:1.12;margin-bottom:16px}
+.hero h1 strong{font-style:normal;font-weight:700;color:var(--rose)}
+.hero-sub{font-size:15px;color:#6a5a48;max-width:560px;line-height:1.65}
+.hero-sub strong{color:var(--apricot)}
+
+/* -- TYPOGRAPHY -- */
+h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.65rem;color:var(--ink);margin:56px 0 18px;line-height:1.2}
+h3{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:1.25rem;color:var(--ink);margin:40px 0 14px;line-height:1.3}
+p{margin-bottom:18px}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(155,46,90,.3);text-underline-offset:3px;transition:all .15s}
+a:hover{color:var(--accent2);text-decoration-color:var(--accent2)}
+code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
+
+/* -- BLOCKQUOTE -- */
+blockquote{background:var(--paper);border-left:4px solid var(--apricot);padding:18px 24px;margin:24px 0;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink2);line-height:1.6}
+blockquote strong{color:var(--ink)}
+
+/* -- KEY DETAIL BOX -- */
+.key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
+.key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
+
+/* -- VISUAL CARDS -- */
+.visual{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0}
+.visual-header{display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--paper);border-bottom:1px solid var(--border)}
+.visual-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:#fff;background:var(--accent);padding:3px 10px;border-radius:4px;font-weight:600}
+.visual-style{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:300}
+.visual-body{padding:28px 24px}
+.visual-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2)}
+.visual-footer strong{color:var(--accent)}
+
+/* -- HR -- */
+hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
+
+
+/* ======================================================================
+   TASK VALUE TIER DIAGRAM
+   ====================================================================== */
+.tier{border-radius:10px;padding:20px 24px;margin-bottom:16px}
+.tier:last-of-type{margin-bottom:0}
+
+.tier-high{
+  border:2px solid var(--s4);
+  background:rgba(64,168,112,.04);
+}
+.tier-low{
+  border:2px solid var(--s2);
+  background:rgba(232,144,64,.04);
+}
+
+.tier-label{
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin-bottom:4px;
+}
+.tier-label-high{color:var(--s4)}
+.tier-label-low{color:var(--s2)}
+
+.tier-subtitle{
+  font-size:13.5px;
+  color:var(--muted);
+  line-height:1.5;
+  margin-bottom:14px;
+}
+
+.tier-pills{display:flex;flex-wrap:wrap;gap:8px}
+
+.tier-pill{
+  font-family:var(--mono);
+  font-size:10px;
+  padding:5px 12px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  font-weight:500;
+  line-height:1.3;
+}
+.tier-pill-high{
+  background:rgba(64,168,112,.1);
+  color:#2a7a4a;
+  border:1px solid rgba(64,168,112,.25);
+}
+.tier-pill-low{
+  background:rgba(232,144,64,.08);
+  color:#9a6020;
+  border:1px solid rgba(232,144,64,.25);
+}
+
+.tier-divider{
+  text-align:center;
+  padding:8px 0;
+  font-family:var(--mono);
+  font-size:18px;
+  color:var(--border);
+  letter-spacing:6px;
+  user-select:none;
+}
+
+/* -- SIGN-OFF / FOOTER -- */
+.sign-off{
+  margin-top:56px;
+  padding-top:32px;
+  border-top:2px solid var(--border);
+  font-size:14.5px;
+  color:var(--muted);
+  line-height:1.65;
+}
+.sign-off a{color:var(--accent)}
+.sign-off .disclaimer{
+  font-size:12.5px;
+  color:var(--muted);
+  margin-top:12px;
+  font-style:italic;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== BRAND STRIPE ========== -->
+<div class="stripe"></div>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+<div class="container">
+<div class="hero-series">Auriel's RL Data Pet Peeves Mini-Series</div>
+<h1>Your Tasks Are <strong>Not Grounded</strong> in Economic Reality</h1>
+<p class="hero-sub">If you can't explain why the domain matters economically, <strong>your task design is already off.</strong></p>
+</div>
+</header>
+
+<!-- ========== ARTICLE ========== -->
+<article>
+<div class="container">
+
+<p>You can have a solid RL environment and well-written rubrics and still end up training a model that nobody cares about. If the tasks you're training on don't map to work that real people actually do and pay for, you're optimizing for a universe that doesn't exist.</p>
+
+<!-- ========== KNOW THE DOMAIN ========== -->
+<h2>Know Why the Domain Matters</h2>
+
+<p>If you're building tasks for a domain, you should be able to articulate why that domain matters. How many people do this job? What does a day in their life actually look like? What are the high-value tasks that eat their time and that a model could realistically take on?</p>
+
+<p>Look at Bureau of Labor Statistics data. Ground your task design in the actual economic weight of the work. When you push for an environment for let's say digital copywriting, you should know what a digital copywriter actually does in a day, how much of the economy that represents, and which of those tasks your environment is targeting. That framing is what separates "we made some tasks" from "we've mapped the highest-value copywriting workflows and built evaluation surfaces for them." One of those is valuable. The other gets thrown away.</p>
+
+<!-- ========== PRIORITIZATION ========== -->
+<h2>This Helps You Prioritize</h2>
+
+<p>This also helps you prioritize. Not all tasks within a domain are equally valuable to train on. A model that can reliably do the $200/hour part of a Marketing Persona's job is a lot more interesting than one that does the $15/hour part. Ground the task selection in what actually moves the needle economically.</p>
+
+
+<!-- ══════════ VISUAL: TASK VALUE TIER DIAGRAM ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Task Value</span>
+<span class="visual-style">$200/hr vs $15/hr</span>
+</div>
+<div class="visual-body">
+
+<!-- High-Value Tier -->
+<div class="tier tier-high">
+<div class="tier-label tier-label-high">$200/hr Work</div>
+<div class="tier-subtitle">Domain judgment, strategic decisions, downstream consequences</div>
+<div class="tier-pills">
+<span class="tier-pill tier-pill-high">Contract negotiation strategy</span>
+<span class="tier-pill tier-pill-high">Architectural trade-off analysis</span>
+<span class="tier-pill tier-pill-high">Marketing campaign positioning</span>
+<span class="tier-pill tier-pill-high">Compliance risk assessment</span>
+</div>
+</div>
+
+<div class="tier-divider">- - - - - -</div>
+
+<!-- Low-Value Tier -->
+<div class="tier tier-low">
+<div class="tier-label tier-label-low">$15/hr Work</div>
+<div class="tier-subtitle">Template-solvable, commodity, format-checking</div>
+<div class="tier-pills">
+<span class="tier-pill tier-pill-low">Fill in template fields</span>
+<span class="tier-pill tier-pill-low">Reformat document</span>
+<span class="tier-pill tier-pill-low">Copy-paste with substitution</span>
+<span class="tier-pill tier-pill-low">Basic data entry</span>
+</div>
+</div>
+
+</div>
+<div class="visual-footer">If your task set lives in the bottom tier, <strong>your model plateaus there too.</strong></div>
+</div>
+
+
+<!-- ========== STARTUPS: CHECK YOUR PRODUCT FIRST ========== -->
+<h2>Startups: Check Your Own Product First</h2>
+
+<p>If you're a startup and you are trying to set your own product up as an RL environment to automate workflows in your product by making custom post-trained models, ask yourself before you begin doing all this work: is my own product actually even stable enough / doing well enough for me to justify starting to do post-training on? This is basically another way of applying this principle. If you don't have stable product metrics or any indicator that you have product-market fit (unless literally building a post-trained model is part of your differentiation in terms of product I guess?), you should be really, really careful before you start trying to post-train custom sub-agent models without justification that the process you are trying to automate out using RL is actually viable.</p>
+
+<p>Furthermore, it's going to be really hard to build a rubric if your product metrics and user experience are not stable. My fav tool in this space btw is <a href="https://hud.ai" target="_blank">hud.ai</a>.</p>
+
+
+<!-- ========== KEY DETAIL ========== -->
+<div class="key-detail">
+<div class="key-detail-text">Ground the task selection in what actually moves the needle economically.</div>
+</div>
+
+
+<!-- ========== SIGN-OFF ========== -->
+<div class="sign-off">
+<p>This is part of <strong>Auriel's RL Data Pet Peeves</strong> series. Visit <a href="https://aurielws.github.io/" target="_blank">aurielws.github.io</a> for more content.</p>
+<p class="disclaimer">These opinions are my own and don't represent the views of any of my affiliations or employer.</p>
+</div>
+
+</div><!-- /.container -->
+</article>
+
+</body>
+</html>
+
+</div>
+
+<script>
+document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+async function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+  var h=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(h==='8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-overlay').style.display='none';
+    document.getElementById('protected-content').style.display='block';
+  }else{
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+</script>
+</body>
+</html>

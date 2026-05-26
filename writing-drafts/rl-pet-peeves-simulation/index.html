@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft - Your Data Screams This Is a Simulation</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
+.pw-box{text-align:center;max-width:380px;padding:40px}
+.pw-box h2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;color:#1A1408;margin-bottom:8px}
+.pw-box p{font-size:14px;color:#7A6A60;margin-bottom:24px}
+.pw-input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-size:16px;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;outline:none;transition:border-color .2s}
+.pw-input:focus{border-color:#9B2E5A}
+.pw-btn{margin-top:12px;width:100%;padding:12px;background:#9B2E5A;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.pw-btn:hover{background:#C85080}
+.pw-error{color:#9B2020;font-size:13px;margin-top:10px;display:none}
+.pw-stripe{height:4px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878);margin-bottom:32px;border-radius:2px}
+#protected-content{display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+<div class="pw-box">
+<div class="pw-stripe"></div>
+<h2>Draft Preview</h2>
+<p>This is a private draft. Enter the password to continue.</p>
+<input type="password" class="pw-input" id="pw-input" placeholder="Password" autocomplete="off">
+<button class="pw-btn" id="pw-btn" onclick="checkPw()">Enter</button>
+<div class="pw-error" id="pw-error">Incorrect password.</div>
+</div>
+</div>
+
+<div id="protected-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Data Screams "This Is a Simulation" and the Model Acts Accordingly - Auriel's RL Pet Peeves</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ======================================================================
+   BRAND SYSTEM - Auriel · Heirloom Palette
+   ====================================================================== */
+:root{
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
+  --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
+  --cream:#FDF9F4;--paper:#F7EFE5;--ink:#1A1408;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#C85080;--border:#E0D4C8;
+  --s1:#C85080;--s2:#E89040;--s3:#6080C8;--s4:#40A870;
+  --red:#9B2020;--red-bg:#FFF0F0;--green:#1E7A40;--green-bg:#EAF7EF;
+  --mono:"DM Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Plus Jakarta Sans",sans-serif;
+  background:var(--cream);color:var(--ink2);
+  line-height:1.72;font-size:16.5px;
+}
+
+/* -- STRIPE -- */
+.stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
+
+/* -- LAYOUT -- */
+.container{max-width:760px;margin:0 auto;padding:0 28px}
+article{padding-bottom:100px}
+
+/* -- HERO -- */
+.hero{background:var(--ink);padding:72px 0 56px;margin-bottom:48px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.hero .container{position:relative;z-index:1}
+.hero-series{font-family:var(--mono);font-size:11px;color:var(--coral);text-transform:uppercase;letter-spacing:3px;margin-bottom:16px}
+.hero h1{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:clamp(2rem,4.5vw,2.8rem);color:var(--cream);line-height:1.12;margin-bottom:16px}
+.hero h1 strong{font-style:normal;font-weight:700;color:var(--rose)}
+.hero-sub{font-size:15px;color:#6a5a48;max-width:560px;line-height:1.65}
+.hero-sub strong{color:var(--apricot)}
+
+/* -- TYPOGRAPHY -- */
+h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.65rem;color:var(--ink);margin:56px 0 18px;line-height:1.2}
+h3{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:1.25rem;color:var(--ink);margin:40px 0 14px;line-height:1.3}
+p{margin-bottom:18px}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(155,46,90,.3);text-underline-offset:3px;transition:all .15s}
+a:hover{color:var(--accent2);text-decoration-color:var(--accent2)}
+code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
+
+/* -- BLOCKQUOTE -- */
+blockquote{background:var(--paper);border-left:4px solid var(--apricot);padding:18px 24px;margin:24px 0;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink2);line-height:1.6}
+blockquote strong{color:var(--ink)}
+
+/* -- KEY DETAIL BOX -- */
+.key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
+.key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
+
+/* -- REC CARDS -- */
+.rec-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0}
+.rec-card-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.rec-card h3{margin-top:0;margin-bottom:12px}
+.rec-card p{font-size:15px;margin-bottom:0}
+
+/* -- AGENT EXAMPLE CARDS -- */
+.agent-example{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:24px 26px;margin:28px 0 16px}
+.agent-example-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.agent-example h3{margin-top:0;margin-bottom:12px}
+.agent-example p{font-size:15px;margin-bottom:10px}
+.agent-example-learns-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px}
+.agent-example-learns{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--red);line-height:1.4;margin:0}
+
+/* -- VISUAL CARDS -- */
+.visual{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0}
+.visual-header{display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--paper);border-bottom:1px solid var(--border)}
+.visual-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:#fff;background:var(--accent);padding:3px 10px;border-radius:4px;font-weight:600}
+.visual-style{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:300}
+.visual-body{padding:28px 24px}
+.visual-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2)}
+.visual-footer strong{color:var(--accent)}
+
+/* -- HR -- */
+hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
+
+
+/* ======================================================================
+   BEHAVIOR DEGRADATION FLOW DIAGRAM
+   ====================================================================== */
+.flow-diagram{display:flex;flex-direction:column;align-items:center;gap:0}
+
+/* Top node */
+.flow-start{
+  background:var(--s1);color:#fff;
+  font-family:"Fraunces",serif;font-style:italic;font-weight:600;
+  font-size:1.05rem;
+  padding:14px 32px;border-radius:999px;
+  text-align:center;
+  line-height:1.3;
+  box-shadow:0 3px 12px rgba(200,80,128,.25);
+}
+
+/* Vertical connector from start to branches */
+.flow-connector-down{
+  width:2px;height:28px;
+  background:var(--border);
+}
+
+/* The splitting point */
+.flow-split{
+  display:flex;align-items:flex-start;justify-content:center;
+  position:relative;
+  width:100%;
+}
+
+/* Horizontal line across top of branches */
+.flow-split::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:min(80%, 480px);
+  height:2px;
+  background:var(--border);
+}
+
+/* Branch wrapper */
+.flow-branch{
+  display:flex;flex-direction:column;align-items:center;
+  flex:1;max-width:220px;
+  padding:0 8px;
+  position:relative;
+}
+
+/* Vertical line from horizontal bar into each branch card */
+.flow-branch::before{
+  content:'';
+  width:2px;height:24px;
+  background:var(--border);
+}
+
+/* Branch cards */
+.flow-branch-card{
+  border-radius:10px;
+  padding:18px 16px;
+  text-align:center;
+  width:100%;
+}
+.flow-branch-card.branch-cheats{
+  background:rgba(232,144,64,.06);
+  border:1.5px solid rgba(232,144,64,.3);
+}
+.flow-branch-card.branch-hacks{
+  background:rgba(200,80,128,.06);
+  border:1.5px solid rgba(200,80,128,.25);
+}
+.flow-branch-card.branch-checks-out{
+  background:rgba(74,88,120,.06);
+  border:1.5px solid rgba(74,88,120,.25);
+}
+
+.flow-branch-icon{
+  font-size:1.6rem;
+  margin-bottom:6px;
+  display:block;
+}
+.flow-branch-label{
+  font-family:var(--mono);font-size:10px;
+  text-transform:uppercase;letter-spacing:2px;
+  font-weight:700;margin-bottom:8px;
+  display:block;
+}
+.flow-branch-label.label-cheats{color:var(--s2)}
+.flow-branch-label.label-hacks{color:var(--s1)}
+.flow-branch-label.label-checks-out{color:var(--navy)}
+
+.flow-branch-desc{
+  font-size:12.5px;color:var(--ink2);line-height:1.5;
+}
+
+/* Vertical connectors below branches */
+.flow-branch::after{
+  content:'';
+  width:2px;height:24px;
+  background:var(--border);
+}
+
+/* Converge connector */
+.flow-converge-line{
+  width:min(80%, 480px);
+  height:2px;
+  background:var(--border);
+}
+
+.flow-connector-down-final{
+  width:2px;height:20px;
+  background:var(--border);
+}
+
+/* Bottom warning node */
+.flow-end{
+  background:var(--red-bg);
+  border:1.5px solid rgba(155,32,32,.25);
+  border-radius:10px;
+  padding:14px 28px;
+  text-align:center;
+  font-family:"Fraunces",serif;font-style:italic;
+  font-size:0.95rem;
+  color:var(--red);
+  font-weight:600;
+  line-height:1.3;
+  max-width:420px;
+}
+
+/* Arrow tips using pseudo-elements */
+.flow-arrow-down{
+  width:0;height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:8px solid var(--border);
+}
+
+/* Responsive: stack branches on mobile */
+@media(max-width:600px){
+  .flow-split{
+    flex-direction:column;
+    align-items:center;
+    gap:0;
+  }
+  .flow-split::before{
+    display:none;
+  }
+  .flow-branch{
+    max-width:280px;
+  }
+  .flow-branch::before{
+    width:2px;height:20px;
+    background:var(--border);
+  }
+  .flow-branch::after{
+    width:2px;height:20px;
+    background:var(--border);
+  }
+  .flow-converge-line{
+    display:none;
+  }
+}
+
+
+/* ======================================================================
+   FOOTER / SIGN-OFF
+   ====================================================================== */
+.sign-off{
+  margin-top:56px;
+  padding-top:32px;
+  border-top:2px solid var(--border);
+  font-size:14.5px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.sign-off a{
+  color:var(--accent);
+}
+.sign-off .disclaimer{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+  margin-top:12px;
+  letter-spacing:0.3px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== BRAND STRIPE ========== -->
+<div class="stripe"></div>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+<div class="container">
+<div class="hero-series">Auriel's RL Pet Peeves Mini-Series</div>
+<h1>Your Data <strong>Screams</strong> "This Is a Simulation" and the Model Acts Accordingly</h1>
+<p class="hero-sub">Models are shockingly good at detecting fake environments. When they do, <strong>behavior degrades in ways that are hard to predict and harder to fix.</strong></p>
+</div>
+</header>
+
+<!-- ========== ARTICLE ========== -->
+<article>
+<div class="container">
+
+
+<!-- ========== STANDALONE INTRO ========== -->
+<p>If you're running RL post-training and your trajectories look weirdly low-effort or the model keeps finding shortcuts you didn't expect, the problem might be that your environment feels fake. Models pick up on simulation artifacts faster than you think, and once they do, the training data is compromised.</p>
+
+
+<!-- ========== MAIN CONTENT ========== -->
+<h2>The Model Knows It's in a Simulation</h2>
+
+<p>When the data patterns are obviously templated, the model picks up on it. Models are shockingly good at detecting that they're in a simulation, and once they do, the behavior degrades in ways that are hard to predict and harder to fix.</p>
+
+<p>Sometimes the model starts trying to cheat like it'll web-search the answer because it recognizes the task is from an open-source project. Sometimes it reward-hacks its way around the rubric because it's figured out it's being graded, not deployed. Sometimes it just checks out and produces low-effort output because nothing about the environment signals that the work matters. In every case, you're generating trajectories that train the wrong behaviors.</p>
+
+<p>In small cases where, let's say, inside of a simulated SaaS software product you use mumbo jumbo emails instead of emails that are related to a real company domain, then this could tip the model off and it acts out of whack to just test its own boundaries. In the realm of interpretability, this can actually become an actual problem (see: <a href="https://www.anthropic.com/research/introspection" target="_blank">Anthropic's research on introspection</a>) and also ruin your model's learning. Other cool readings on this here: <a href="https://arxiv.org/abs/2505.15717" target="_blank">Exploration hacking: can reasoning models subvert RL?</a></p>
+
+
+<!-- ══════════ VISUAL: BEHAVIOR DEGRADATION FLOW ══════════ -->
+<div class="visual" id="degradation-visual">
+<div class="visual-header">
+<span class="visual-label">Behavior Degradation</span>
+<span class="visual-style">When the Model Detects the Simulation</span>
+</div>
+<div class="visual-body">
+<div class="flow-diagram">
+
+<!-- Starting node -->
+<div class="flow-start">Model Detects Simulation</div>
+<div class="flow-connector-down"></div>
+<div class="flow-arrow-down"></div>
+
+<!-- Three branches -->
+<div class="flow-split">
+
+<!-- Branch 1: Cheats -->
+<div class="flow-branch">
+<div class="flow-branch-card branch-cheats">
+<span class="flow-branch-icon">&#x1F50D;</span>
+<span class="flow-branch-label label-cheats">Cheats</span>
+<p class="flow-branch-desc">Web-searches the answer because it recognizes the task is from an open-source project</p>
+</div>
+</div>
+
+<!-- Branch 2: Reward Hacks -->
+<div class="flow-branch">
+<div class="flow-branch-card branch-hacks">
+<span class="flow-branch-icon">&#x1F3AF;</span>
+<span class="flow-branch-label label-hacks">Reward Hacks</span>
+<p class="flow-branch-desc">Games the rubric because it's figured out it's being graded, not deployed</p>
+</div>
+</div>
+
+<!-- Branch 3: Checks Out -->
+<div class="flow-branch">
+<div class="flow-branch-card branch-checks-out">
+<span class="flow-branch-icon">&#x1F4A4;</span>
+<span class="flow-branch-label label-checks-out">Checks Out</span>
+<p class="flow-branch-desc">Produces low-effort output because nothing signals the work matters</p>
+</div>
+</div>
+
+</div><!-- /flow-split -->
+
+<!-- Converge -->
+<div class="flow-converge-line"></div>
+<div class="flow-connector-down-final"></div>
+<div class="flow-arrow-down"></div>
+
+<!-- Bottom warning node -->
+<div class="flow-end">Fake trajectories &#x2192; Wrong behaviors trained</div>
+
+</div><!-- /flow-diagram -->
+</div>
+<div class="visual-footer"><strong>If it feels fake, the model will treat it as fake.</strong></div>
+</div>
+
+
+<h2>Make the Environment Feel Real</h2>
+
+<p>But also real-world tasks have unique context, messy real data, and enough depth that gaming the system isn't the path of least resistance. For the domain of let's say digital copywriting, that means actual brand guidelines, real competitor landscapes, performance metrics tied to real business outcomes. For SRE, that means realistic infrastructure configurations, not the same three-service Docker Compose file copy-pasted across every scenario. The environment, the available tools, the background documents - all of it should feel like a real workspace that a real practitioner would navigate. If it feels fake, the model will treat it as fake. And fake trajectories don't train real capabilities.</p>
+
+
+<!-- ========== KEY DETAIL ========== -->
+<div class="key-detail">
+<div class="key-detail-text">The environment, the available tools, the background documents - all of it should feel like a real workspace that a real practitioner would navigate.</div>
+</div>
+
+
+<!-- ========== SIGN-OFF ========== -->
+<div class="sign-off">
+<p>This is part of <a href="https://aurielws.github.io/">Auriel's RL Data Pet Peeves series</a>. Head over for more posts on what goes wrong in RL post-training and how to fix it.</p>
+<p class="disclaimer">These opinions are my own and don't represent the views of any of my affiliations or employer.</p>
+</div>
+
+
+</div><!-- /.container -->
+</article>
+
+</body>
+</html>
+
+</div>
+
+<script>
+document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+async function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+  var h=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(h==='8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-overlay').style.display='none';
+    document.getElementById('protected-content').style.display='block';
+  }else{
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+</script>
+</body>
+</html>

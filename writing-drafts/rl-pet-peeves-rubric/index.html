@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft - Your Rubric Was Written by Someone Who Has Never Done the Job</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.pw-overlay{position:fixed;inset:0;background:#FDF9F4;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Plus Jakarta Sans',sans-serif}
+.pw-box{text-align:center;max-width:380px;padding:40px}
+.pw-box h2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:24px;color:#1A1408;margin-bottom:8px}
+.pw-box p{font-size:14px;color:#7A6A60;margin-bottom:24px}
+.pw-input{width:100%;padding:12px 16px;border:1.5px solid #E0D4C8;border-radius:8px;font-size:16px;font-family:'Plus Jakarta Sans',sans-serif;background:#fff;outline:none;transition:border-color .2s}
+.pw-input:focus{border-color:#9B2E5A}
+.pw-btn{margin-top:12px;width:100%;padding:12px;background:#9B2E5A;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.pw-btn:hover{background:#C85080}
+.pw-error{color:#9B2020;font-size:13px;margin-top:10px;display:none}
+.pw-stripe{height:4px;background:linear-gradient(90deg,#A8485A,#C8786A,#E0A880,#D4B870,#8A9A7A,#4A5878);margin-bottom:32px;border-radius:2px}
+#protected-content{display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+<div class="pw-box">
+<div class="pw-stripe"></div>
+<h2>Draft Preview</h2>
+<p>This is a private draft. Enter the password to continue.</p>
+<input type="password" class="pw-input" id="pw-input" placeholder="Password" autocomplete="off">
+<button class="pw-btn" id="pw-btn" onclick="checkPw()">Enter</button>
+<div class="pw-error" id="pw-error">Incorrect password.</div>
+</div>
+</div>
+
+<div id="protected-content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Rubric Was Written by Someone Who Has Never Done the Job - Auriel's RL Pet Peeves</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ======================================================================
+   BRAND SYSTEM - Auriel · Heirloom Palette
+   ====================================================================== */
+:root{
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;
+  --gold:#D4B870;--sage:#8A9A7A;--navy:#4A5878;
+  --cream:#FDF9F4;--paper:#F7EFE5;--ink:#1A1408;--ink2:#3A2D26;--muted:#7A6A60;
+  --accent:#9B2E5A;--accent2:#C85080;--border:#E0D4C8;
+  --s1:#C85080;--s2:#E89040;--s3:#6080C8;--s4:#40A870;
+  --red:#9B2020;--red-bg:#FFF0F0;--green:#1E7A40;--green-bg:#EAF7EF;
+  --mono:"DM Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Plus Jakarta Sans",sans-serif;
+  background:var(--cream);color:var(--ink2);
+  line-height:1.72;font-size:16.5px;
+}
+
+/* -- STRIPE -- */
+.stripe{height:7px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy));position:sticky;top:0;z-index:100}
+
+/* -- LAYOUT -- */
+.container{max-width:760px;margin:0 auto;padding:0 28px}
+article{padding-bottom:100px}
+
+/* -- HERO -- */
+.hero{background:var(--ink);padding:72px 0 56px;margin-bottom:48px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.hero .container{position:relative;z-index:1}
+.hero-series{font-family:var(--mono);font-size:11px;color:var(--coral);text-transform:uppercase;letter-spacing:3px;margin-bottom:16px}
+.hero h1{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:clamp(2rem,4.5vw,2.8rem);color:var(--cream);line-height:1.12;margin-bottom:16px}
+.hero h1 strong{font-style:normal;font-weight:700;color:var(--rose)}
+.hero-sub{font-size:15px;color:#6a5a48;max-width:560px;line-height:1.65}
+.hero-sub strong{color:var(--apricot)}
+
+/* -- TYPOGRAPHY -- */
+h2{font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.65rem;color:var(--ink);margin:56px 0 18px;line-height:1.2}
+h3{font-family:"Fraunces",serif;font-style:italic;font-weight:400;font-size:1.25rem;color:var(--ink);margin:40px 0 14px;line-height:1.3}
+p{margin-bottom:18px}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(155,46,90,.3);text-underline-offset:3px;transition:all .15s}
+a:hover{color:var(--accent2);text-decoration-color:var(--accent2)}
+code{font-family:var(--mono);font-size:14px;background:rgba(0,0,0,.04);padding:2px 7px;border-radius:4px;color:var(--accent)}
+
+/* -- BLOCKQUOTE -- */
+blockquote{background:var(--paper);border-left:4px solid var(--apricot);padding:18px 24px;margin:24px 0;border-radius:0 8px 8px 0;font-size:15px;color:var(--ink2);line-height:1.6}
+blockquote strong{color:var(--ink)}
+
+/* -- KEY DETAIL BOX -- */
+.key-detail{background:linear-gradient(135deg,rgba(200,80,128,.06),rgba(200,80,128,.02));border:1.5px solid rgba(200,80,128,.2);border-radius:10px;padding:22px 28px;margin:28px 0;text-align:center}
+.key-detail-text{font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--accent);font-weight:400;line-height:1.4}
+
+/* -- VISUAL CARDS -- */
+.visual{background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:28px 0}
+.visual-header{display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--paper);border-bottom:1px solid var(--border)}
+.visual-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:#fff;background:var(--accent);padding:3px 10px;border-radius:4px;font-weight:600}
+.visual-style{font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink);font-weight:300}
+.visual-body{padding:28px 24px}
+.visual-footer{padding:14px 22px;font-family:var(--mono);font-size:11px;text-align:center;border-top:1px solid var(--border);background:var(--paper);color:var(--ink2)}
+.visual-footer strong{color:var(--accent)}
+
+/* -- HR -- */
+hr{border:none;height:2px;background:var(--border);margin:56px 0;border-radius:1px}
+
+
+/* ======================================================================
+   COMPARISON VISUAL - Two-Column Rubric Comparison
+   ====================================================================== */
+.comparison-columns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+@media(max-width:640px){
+  .comparison-columns{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+}
+
+.comparison-col{
+  border-radius:10px;
+  padding:20px 22px;
+}
+
+/* Left column - Surface-Level (warning/shallow) */
+.comparison-col-surface{
+  background:rgba(232,144,64,.04);
+  border:1.5px solid rgba(232,144,64,.25);
+}
+.comparison-col-surface .comparison-col-header{
+  color:var(--s2);
+}
+.comparison-col-surface .comparison-col-subtitle{
+  color:var(--muted);
+}
+.comparison-col-surface .comparison-check{
+  color:var(--s2);
+}
+.comparison-col-surface .comparison-item{
+  border-bottom:1px solid rgba(232,144,64,.12);
+}
+
+/* Right column - Practitioner-Informed (good) */
+.comparison-col-practitioner{
+  background:rgba(64,168,112,.04);
+  border:1.5px solid rgba(64,168,112,.25);
+}
+.comparison-col-practitioner .comparison-col-header{
+  color:var(--s4);
+}
+.comparison-col-practitioner .comparison-col-subtitle{
+  color:var(--muted);
+}
+.comparison-col-practitioner .comparison-check{
+  color:var(--s4);
+}
+.comparison-col-practitioner .comparison-item{
+  border-bottom:1px solid rgba(64,168,112,.12);
+}
+
+.comparison-col-header{
+  font-family:"Fraunces",serif;
+  font-style:italic;
+  font-weight:600;
+  font-size:1.05rem;
+  margin-bottom:2px;
+  line-height:1.3;
+}
+.comparison-col-subtitle{
+  font-family:var(--mono);
+  font-size:9.5px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin-bottom:16px;
+  line-height:1.5;
+}
+
+.comparison-items{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.comparison-item{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:10px 0;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--ink2);
+}
+.comparison-item:last-child{
+  border-bottom:none;
+}
+.comparison-check{
+  font-weight:700;
+  font-size:16px;
+  flex-shrink:0;
+  margin-top:1px;
+}
+
+
+/* ======================================================================
+   SIGN-OFF / FOOTER
+   ====================================================================== */
+.sign-off{
+  margin-top:56px;
+  padding-top:32px;
+  border-top:2px solid var(--border);
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.sign-off a{
+  color:var(--accent);
+}
+.sign-off .disclaimer{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+  margin-top:12px;
+  opacity:.8;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ========== BRAND STRIPE ========== -->
+<div class="stripe"></div>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+<div class="container">
+<div class="hero-series">Auriel's RL Data Pet Peeves Mini-Series &middot; 1 of 3</div>
+<h1>Your <strong>Rubric</strong> Was Written by Someone Who Has Never Done the Job</h1>
+<p class="hero-sub">Your verifier was built by someone who Googled the domain for an afternoon. Here's why that's <strong>ruining your model.</strong></p>
+</div>
+</header>
+
+<!-- ========== ARTICLE ========== -->
+<article>
+<div class="container">
+
+<p>If you're doing RL post-training and wondering why your model produces outputs that look right on paper but embarrass anyone who actually works in the domain, the problem might not be the model. It might be the rubric. This is one of the most common failures I see in both closed and open source labs.</p>
+
+<hr>
+
+<h2>The Problem with Googled Rubrics</h2>
+
+<p>This is painfully common in closed source and open source labs. An ML engineer or data contractor Googles a domain for an afternoon, writes a rubric, and now that rubric is supposedly the standard for what "good" looks like in finance, or law, or insurance, or whatever the domain is. The problem is that they have no idea what actually matters to a practitioner. They'll check for surface-level things - did the model produce an output? does it have the right number of items? is it formatted correctly? - while completely missing the qualitative judgment calls that a real professional would make in two seconds.</p>
+
+<p>If you're building a rubric for helping a chatbot write better legal contracts, does it just check that the contract exists and has the expected sections? Or does it verify that the indemnification clause actually limits liability in a way a lawyer would consider enforceable, that the governing law is appropriate for the jurisdiction, that the payment terms don't create ambiguity a counterparty would immediately flag? A first-year associate and a senior partner would score the same output very differently, and the senior partner's reasoning is what you actually want encoded in your rubric.</p>
+
+
+<!-- ══════════ VISUAL: Comparison Card ══════════ -->
+<div class="visual">
+<div class="visual-header">
+<span class="visual-label">Comparison</span>
+<span class="visual-style">Surface-Level vs. Practitioner-Informed</span>
+</div>
+<div class="visual-body">
+<div class="comparison-columns">
+
+<!-- Left Column: Surface-Level -->
+<div class="comparison-col comparison-col-surface">
+<div class="comparison-col-header">Surface-Level Rubric</div>
+<div class="comparison-col-subtitle">Written by: ML Engineer after an afternoon of Googling</div>
+<ul class="comparison-items">
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Contract exists?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Has expected sections?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Formatted correctly?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Output is non-empty?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Word count in range?</span>
+</li>
+</ul>
+</div>
+
+<!-- Right Column: Practitioner-Informed -->
+<div class="comparison-col comparison-col-practitioner">
+<div class="comparison-col-header">Practitioner-Informed Rubric</div>
+<div class="comparison-col-subtitle">Written by: Senior Partner with 15 years in contracts</div>
+<ul class="comparison-items">
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Indemnification clause limits liability appropriately?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Governing law matches jurisdiction?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Payment terms free of counterparty ambiguity?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Force majeure clause covers realistic scenarios?</span>
+</li>
+<li class="comparison-item">
+<span class="comparison-check">&#x2713;</span>
+<span>Non-compete scope is enforceable in target state?</span>
+</li>
+</ul>
+</div>
+
+</div><!-- /comparison-columns -->
+</div><!-- /visual-body -->
+<div class="visual-footer">The model optimizes for whatever the rubric rewards. If the rubric rewards <strong>surface-level correctness</strong>, that's what you get.</div>
+</div>
+
+
+<h2>The Model Will Optimize for Exactly What You Reward</h2>
+
+<p>If the verifier is informed by surface-level knowledge that a real person in that domain would never consider a marker of quality, the model will learn to optimize for the wrong things. It'll produce outputs that look right to someone who doesn't know the domain and look embarrassing to someone who does.</p>
+
+<h2>Elo Scores, POV Rubrics, and Evolving Artifacts</h2>
+
+<p>This is why I personally like getting both Elo scores and people's POV based rubrics because it gives a post-training team more things to reason about when analyzing trends across task outcomes. Reward functions and rubrics are ever-evolving artifacts that the whole post-training team needs to work on together. But the starting point has to be directionally correct, and "directionally correct" can only come from people who have actually lived in that domain. Give the rubric, then explain how the rubric was created. That's the difference between a checklist and a useful artifact.</p>
+
+
+<div class="key-detail">
+<div class="key-detail-text">Give the rubric, then explain how the rubric was created. That's the difference between a checklist and a useful artifact.</div>
+</div>
+
+
+<!-- ========== SIGN-OFF ========== -->
+<div class="sign-off">
+<p>This is part of <strong>Auriel's RL Data Pet Peeves</strong> series. Read more at <a href="https://aurielws.github.io/">aurielws.github.io</a>.</p>
+<p class="disclaimer">These opinions are my own and don't represent the views of any of my affiliations or employer.</p>
+</div>
+
+
+</div><!-- /.container -->
+</article>
+
+</body>
+</html>
+
+</div>
+
+<script>
+document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+async function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+  var h=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  if(h==='8220364368b414d03ebbe7337ba0ab9ed9108e5a040c7492e6fef3888f213ed8'){
+    document.getElementById('pw-overlay').style.display='none';
+    document.getElementById('protected-content').style.display='block';
+  }else{
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+</script>
+</body>
+</html>
