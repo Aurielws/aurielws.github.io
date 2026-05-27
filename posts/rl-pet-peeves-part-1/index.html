@@ -338,7 +338,7 @@
 
 <p>If your RL data keeps ending up in an abandoned directory, maybe start here &#x1F937;.</p>
 
-<h2>Today&rsquo;s Rant: Agentic Trajectory Eyeballing</h2>
+<h2 id="todays-rant">Today&rsquo;s Rant: Agentic Trajectory Eyeballing</h2>
 
 <p>You just fine-tuned an open-source model you found on <a href="https://x.com/akshay_pachaar/status/2029212227438518406?s=20">X/Twitter</a> for your customer-facing SaaS agent. Training loss looked reasonable, eval scores hit 81%. You ship it. Three days later, users are rage-quitting in the exact scenarios your product is supposed to handle. Half your team says retrain with more data. The other half says the evals were wrong. Nobody has opened a single trajectory.</p>
 
@@ -353,7 +353,7 @@
 
 <p>Ramble out loud and talk to yourself about why something does or does not make sense as a model behavior.</p>
 
-<h2>What I do Instead</h2>
+<h2 id="what-i-do-instead">What I do Instead</h2>
 <hr>
 
 <p><strong>Basically I wrote a guide about how I think about reviewing agentic trajectories.</strong></p>
@@ -367,7 +367,7 @@
 
 <p>Alright so here we go&hellip;</p>
 <hr>
-<h2><span class="section-num">#01</span> What is a trajectory, really</h2>
+<h2 id="what-is-a-trajectory"><span class="section-num">#01</span> What is a trajectory, really</h2>
 <p>A trajectory is a receipt for everything your model did on a task. Every decision, every tool call, every mistake. Not a chat log, but a complete decision record: every input your model saw, every intermediate output, every piece of reasoning it generated, from task start to final submission. Think tokens, API calls, drafted outputs, self-corrections. All of it, in sequence.</p>
 <!-- Pipeline Flow: trajectory lifecycle overview -->
 <div class="pf-flow">
@@ -500,7 +500,7 @@
 </div>
 <p>Your eval metrics only score the final output. That&rsquo;s it. Your trajectory shows you <em>how</em> the model got there &mdash; whether it actually reasoned correctly, stumbled into the right answer by dumb luck, found a shortcut your rubric didn&rsquo;t catch, or did something that you&rsquo;ve genuinely never seen before. A model that passes your eval can still be doing something that will embarrass you in front of paying users. Your trajectories are where that shows up first.</p>
 <hr>
-<h2><span class="section-num">#02</span> Sanity Check Your Harness</h2>
+<h2 id="sanity-check-harness"><span class="section-num">#02</span> Sanity Check Your Harness</h2>
 <div class="harness-def" style="background:var(--ink);color:var(--cream);padding:30px 34px;border-radius:8px;margin:40px 0;border-left:4px solid var(--yellow)">
 <div style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);margin-bottom:14px">Quick definition</div>
 <h3 style="font-family:’Fraunces’,serif;font-style:italic;font-weight:300;font-size:22px;color:var(--cream);margin-bottom:12px;line-height:1.3">What is a <strong style="font-style:normal;font-weight:700;color:var(--yellow)">harness</strong>?</h3>
@@ -530,7 +530,7 @@
 </div></div>
 <p>I&rsquo;ll do a full deep dive on harness architecture in a future post, but here&rsquo;s the TLDR is really check your harness before you jump to retraining. Your model learns from the trajectories it generates. If those have bad context, missing verifiers, or gameable rubrics, more training teaches the model to be confidently wrong. <strong>Read the traces before you rerun.</strong></p>
 <hr>
-<h2><span class="section-num">#03</span> The failure modes I look for first</h2>
+<h2 id="failure-modes"><span class="section-num">#03</span> The failure modes I look for first</h2>
 <p>After staring at enough of these, you start seeing the same failure modes over and over. Most trajectory failures fall into predictable buckets. Here&rsquo;s how I break it down on first Eyeballing pass:</p>
 <div class="fm-row"><div class="fm-badge red">CATEGORY 1<br>CHEATING<br>CREATIVELY</div><div class="fm-body"><h4>Your rubric is being satisfied. The skill is not being learned.</h4><p>Your e-commerce rec model regex-matches the expected answer format instead of reasoning. Your support bot pads every response to trigger thoroughness rewards. Your code agent traces the Python call stack, finds the correct answer already in the grader&rsquo;s memory, returns it directly, and disables CUDA sync to fake fast execution. <em>(METR caught this exact pattern on a real frontier model in 2025.)</em> Aggregate score: pass. Actual learning: zero.</p><p><strong>In prod:</strong> aces your eval set, produces confident garbage the moment a user phrases something differently.</p><span class="fix-tag fix-model">&rarr; Training job problem</span><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:8px">add anti-hack rubric checks, diversify task phrasings</span></div></div>
 <div class="fm-row"><div class="fm-badge yellow">CATEGORY 2<br>STUCK AT<br>THE SAME<br>FORK</div><div class="fm-body"><h4>The model fails at the same 2&ndash;3 decision points across every trajectory.</h4><p>A particular ambiguity in your domain &mdash; a claim classification edge case, a missing context type your harness doesn&rsquo;t provide, a tool call sequence it doesn&rsquo;t know how to exit cleanly. These patterns are <em>gold</em> for your next training iteration if you catch them. Completely invisible in aggregate pass rates.</p><p><strong>In prod:</strong> consistent failure on a task category your evals don&rsquo;t cover. Ten traces will show you the exact fork. Retraining won&rsquo;t fix what you haven&rsquo;t found.</p><span class="fix-tag fix-harness">&rarr; Often a harness problem first</span><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:8px">see if you can add extra system instructions and ask the agent to check its work for problems like this &mdash; really focus on making sure your product is giving the model proper context before you retrain</span></div></div>
@@ -581,7 +581,7 @@
 </div>
 <p>Do this enough and you build an intuition that no metric can replace. You start to <em>feel</em> when data is going to produce real learning versus when it&rsquo;s going to be noise. That intuition is what makes someone effective at RL evaluation, and there is no shortcut to developing it other than putting in the hours with the actual traces and though this guide is a start it&rsquo;s definitely very opinionated and 100% not exhaustive.</p>
 <hr>
-<h2>What you can do immediately</h2>
+<h2 id="what-you-can-do">What you can do immediately</h2>
 <div class="cta-box"><div class="cta-item"><h4>Grab 10 trajectories from your last training run.</h4><p>Run the checklist. Note what flags and whether it points to harness or training. DM me what you found.</p><a href="https://x.com/aurielws" class="cta-btn btn-primary">&#8594; DM me on X</a> <a href="https://www.linkedin.com/in/aurielws" class="cta-btn btn-secondary" style="margin-left:6px">&#8594; Tag me on LinkedIn</a></div><div class="cta-item"><h4>No trajectories yet and just wanna practice?</h4><p>Use the public dataset from this post: <code style="font-size:11px">nebius/SWE-rebench-openhands-trajectories</code> on Hugging Face. Row 0 is the failure shown above.</p><a href="https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories/viewer/default/train?views%5B%5D=train" class="cta-btn btn-secondary">&#8594; Open on Hugging Face</a></div></div>
 <div class="next-up"><div class="nu-label">Other things I&rsquo;m thinking about writing on</div>
 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
