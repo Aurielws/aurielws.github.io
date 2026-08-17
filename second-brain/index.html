@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curio — a demo-driven PRD</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@500;700;800&family=Caveat:wght@500;600&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root {
+    --paper: #F5F6F3;
+    --dot: #D9DBD3;
+    --surface: #FFFFFF;
+    --surface-2: #EDEFE9;
+    --ink: #26242E;
+    --ink-soft: #5C5966;
+    --ink-faint: #8B8794;
+    --line: #C7C9C0;
+    --accent: #6B4FD8;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #E7E0FA;
+    --good: #2E8F63;
+    --good-soft: #D8F0E4;
+    --warn: #C9762A;
+    --warn-soft: #F7E8D6;
+    --sticky-ink: #33303B;
+    --sun: #FFE28A; --rose: #FFC8DC; --mint: #B8ECC6; --sky: #BFDCFF; --lilac: #DCCFFF;
+    --shadow: 0 2px 10px rgba(38,36,46,.10);
+    --shadow-lift: 0 6px 18px rgba(38,36,46,.16);
+    --frame-border: #B9BCB2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #211F27;
+      --dot: #33303C;
+      --surface: #2B2933;
+      --surface-2: #343140;
+      --ink: #ECEAF2;
+      --ink-soft: #AEAABB;
+      --ink-faint: #7E7A8B;
+      --line: #453F55;
+      --accent: #A78BFA;
+      --accent-ink: #211F27;
+      --accent-soft: #3B3455;
+      --good: #5BC08F;
+      --good-soft: #274436;
+      --warn: #E8A25B;
+      --warn-soft: #4A3823;
+      --sun: #F0D277; --rose: #EFB2CB; --mint: #A3DCB3; --sky: #A9CBF1; --lilac: #CBBBF1;
+      --shadow: 0 2px 12px rgba(0,0,0,.35);
+      --shadow-lift: 0 8px 22px rgba(0,0,0,.45);
+      --frame-border: #4B4659;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #211F27;
+    --dot: #33303C;
+    --surface: #2B2933;
+    --surface-2: #343140;
+    --ink: #ECEAF2;
+    --ink-soft: #AEAABB;
+    --ink-faint: #7E7A8B;
+    --line: #453F55;
+    --accent: #A78BFA;
+    --accent-ink: #211F27;
+    --accent-soft: #3B3455;
+    --good: #5BC08F;
+    --good-soft: #274436;
+    --warn: #E8A25B;
+    --warn-soft: #4A3823;
+    --sun: #F0D277; --rose: #EFB2CB; --mint: #A3DCB3; --sky: #A9CBF1; --lilac: #CBBBF1;
+    --shadow: 0 2px 12px rgba(0,0,0,.35);
+    --shadow-lift: 0 8px 22px rgba(0,0,0,.45);
+    --frame-border: #4B4659;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image: radial-gradient(var(--dot) 1.1px, transparent 1.1px);
+    background-size: 24px 24px;
+    color: var(--ink);
+    font-family: 'Karla', 'Segoe UI', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  main { max-width: 1060px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 80px; }
+
+  h1, h2, h3 { font-family: 'Shantell Sans', 'Comic Sans MS', cursive; line-height: 1.2; text-wrap: balance; }
+  .hand { font-family: 'Caveat', 'Comic Sans MS', cursive; }
+
+  a { color: var(--accent); }
+  button { font-family: inherit; font-size: .92rem; cursor: pointer; }
+  button:focus-visible, [contenteditable]:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2.5px solid var(--accent); outline-offset: 2px;
+  }
+
+  /* wobbly hand-drawn borders */
+  .wob-a { border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+  .wob-b { border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px; }
+  .wob-c { border-radius: 125px 10px 145px 10px / 10px 145px 10px 125px; }
+
+  /* ============ hero ============ */
+  header.hero { text-align: left; padding: clamp(40px, 8vw, 84px) 0 8px; position: relative; }
+  .hero-kicker {
+    display: inline-block; font-family: 'Caveat', cursive; font-size: 1.35rem; color: var(--ink-soft);
+    transform: rotate(-2deg);
+  }
+  h1.title {
+    font-size: clamp(2.6rem, 7vw, 4.4rem); font-weight: 800; margin: .1em 0 .25em; letter-spacing: -.01em;
+  }
+  h1 .hl {
+    background: linear-gradient(104deg, transparent 4%, var(--sun) 5%, var(--sun) 95%, transparent 96%);
+    padding: 0 .12em; color: var(--sticky-ink);
+  }
+  .hero-sub { max-width: 62ch; font-size: 1.08rem; color: var(--ink-soft); }
+  .hero-note {
+    font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--accent);
+    margin-top: 10px; transform: rotate(-1.2deg); display: inline-block;
+  }
+
+  /* table of demos as stickies */
+  nav.toc { display: flex; flex-wrap: wrap; gap: 14px; margin: 34px 0 10px; }
+  nav.toc a {
+    display: block; text-decoration: none; color: var(--sticky-ink);
+    font-family: 'Shantell Sans', cursive; font-weight: 700; font-size: .86rem; line-height: 1.3;
+    padding: 12px 14px 14px; width: 132px; min-height: 84px;
+    box-shadow: var(--shadow); position: relative;
+  }
+  nav.toc a small { display: block; font-family: 'Karla', sans-serif; font-weight: 500; font-size: .72rem; margin-top: 5px; opacity: .75; }
+  nav.toc a:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px) rotate(0deg) !important; }
+  nav.toc a { transition: transform .15s ease, box-shadow .15s ease; }
+
+  /* ============ frames (sections) ============ */
+  section.frame {
+    margin: 72px 0 0; padding: clamp(18px, 3vw, 34px);
+    border: 2px dashed var(--frame-border);
+    border-radius: 14px;
+    position: relative;
+    background: color-mix(in srgb, var(--surface) 42%, transparent);
+  }
+  .frame-tag {
+    position: absolute; top: -16px; left: 22px;
+    background: var(--ink); color: var(--paper);
+    font-family: 'Shantell Sans', cursive; font-weight: 700; font-size: .78rem; letter-spacing: .06em;
+    padding: 4px 14px; border-radius: 999px;
+  }
+  section.frame > h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin: 4px 0 6px; font-weight: 800; }
+  .lede { color: var(--ink-soft); max-width: 68ch; margin-top: 0; }
+  .prod-note {
+    font-family: 'Caveat', cursive; font-size: 1.22rem; color: var(--ink-soft);
+    border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; margin: 18px 0 0; max-width: 60ch;
+  }
+  .prod-note b { color: var(--accent); font-weight: 600; }
+  .try {
+    font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--accent);
+    display: inline-block; transform: rotate(-1.5deg); margin: 6px 0 10px;
+  }
+
+  /* ============ shared bits ============ */
+  .btn {
+    border: 2px solid var(--ink); background: var(--surface); color: var(--ink);
+    padding: 7px 16px; font-weight: 700; box-shadow: 2.5px 2.5px 0 var(--ink);
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .btn:hover { transform: translate(-1px,-1px); box-shadow: 3.5px 3.5px 0 var(--ink); }
+  .btn:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--ink); }
+  .btn.small { padding: 4px 11px; font-size: .8rem; box-shadow: 2px 2px 0 var(--ink); }
+  .chip {
+    display: inline-block; font-size: .74rem; font-weight: 700; padding: 2px 10px;
+    border-radius: 999px; background: var(--accent-soft); color: var(--ink);
+    border: 1.5px solid var(--accent);
+  }
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(90px);
+    background: var(--ink); color: var(--paper); font-weight: 700; font-size: .9rem;
+    padding: 10px 22px; border-radius: 999px; box-shadow: var(--shadow-lift);
+    transition: transform .25s ease; z-index: 90; pointer-events: none; max-width: 90vw;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ============ concept map ============ */
+  .map-wrap { overflow-x: auto; }
+  .map { min-width: 720px; }
+  .map text { font-family: 'Karla', sans-serif; fill: var(--ink); }
+  .map .bx { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+  .map .bx.hub { fill: var(--accent); }
+  .map .hub-t { fill: var(--accent-ink); font-family: 'Shantell Sans', cursive; font-weight: 700; }
+  .map .edge { stroke: var(--ink-soft); stroke-width: 2; fill: none; stroke-linecap: round; stroke-dasharray: 1 7; }
+  .map .lbl { font-size: 12.5px; fill: var(--ink-soft); font-family: 'Caveat', cursive; font-size: 16px; }
+  .map .t { font-weight: 700; font-size: 14px; font-family: 'Shantell Sans', cursive; }
+  .map .s { font-size: 11.5px; fill: var(--ink-soft); }
+
+  /* ============ demo 1: board ============ */
+  .board-demo { display: grid; grid-template-columns: 250px 1fr; gap: 18px; }
+  @media (max-width: 760px) { .board-demo { grid-template-columns: 1fr; } }
+  .shelf { display: flex; flex-direction: column; gap: 10px; }
+  .shelf h3 { margin: 0; font-size: 1rem; }
+  .shelf-card {
+    background: var(--surface); border: 2px solid var(--ink); padding: 10px 12px;
+    box-shadow: var(--shadow); font-size: .84rem;
+  }
+  .shelf-card .doc-t { font-weight: 700; display: flex; gap: 7px; align-items: baseline; }
+  .shelf-card .doc-s { color: var(--ink-faint); font-size: .74rem; }
+  .shelf-card button { margin-top: 6px; }
+  .board {
+    position: relative; min-height: 460px; overflow: hidden;
+    background: var(--surface);
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 2px solid var(--ink); border-radius: 10px;
+    touch-action: none;
+  }
+  .board-tools { position: absolute; top: 10px; left: 10px; display: flex; gap: 8px; z-index: 20; align-items: center; }
+  .board-tools .lab { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--ink-soft); }
+  .dotbtn {
+    width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ink);
+    box-shadow: 1.5px 1.5px 0 var(--ink);
+  }
+  .dotbtn:hover { transform: translateY(-2px); }
+  .sticky {
+    position: absolute; width: 158px; min-height: 110px; padding: 12px 13px 14px;
+    color: var(--sticky-ink); box-shadow: var(--shadow);
+    font-family: 'Caveat', cursive; font-size: 1.28rem; line-height: 1.25; font-weight: 600;
+    cursor: grab; user-select: none;
+    transform: rotate(var(--rot, -1.5deg));
+  }
+  .sticky.dragging { cursor: grabbing; box-shadow: var(--shadow-lift); z-index: 30; transform: rotate(0deg) scale(1.03); }
+  .sticky .txt { outline: none; min-height: 60px; }
+  .sticky .txt[contenteditable="true"] { cursor: text; user-select: text; }
+  .sticky .pin {
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--ink);
+  }
+  .doc-on-board {
+    position: absolute; width: 190px; background: var(--surface);
+    border: 2px solid var(--ink); padding: 10px 12px; box-shadow: var(--shadow);
+    font-size: .8rem; cursor: grab; user-select: none;
+    transform: rotate(var(--rot, 1deg));
+  }
+  .doc-on-board.dragging { cursor: grabbing; box-shadow: var(--shadow-lift); z-index: 30; transform: rotate(0); }
+  .doc-on-board .doc-t { font-weight: 700; font-size: .85rem; }
+  .doc-on-board .doc-b { margin: 6px 0 0; padding-left: 16px; color: var(--ink-soft); }
+  .doc-on-board .doc-b li { margin: 2px 0; }
+  .doc-on-board .ribbon { height: 5px; margin: -10px -12px 8px; }
+
+  /* ============ demo 2: fork ============ */
+  .fork-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 820px) { .fork-demo { grid-template-columns: 1fr; } }
+  .thread {
+    background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; padding: 14px;
+  }
+  .thread h3 { margin: 0 0 10px; font-size: .95rem; display: flex; align-items: center; gap: 8px; }
+  .msg { display: flex; gap: 9px; margin: 9px 0; align-items: flex-start; font-size: .86rem; }
+  .msg .who {
+    flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+    font-size: .68rem; font-weight: 700; border: 2px solid var(--ink);
+  }
+  .msg.you .who { background: var(--rose); color: var(--sticky-ink); }
+  .msg.ai .who { background: var(--accent); color: var(--accent-ink); }
+  .msg .bub { background: var(--surface-2); padding: 7px 11px; border-radius: 10px; flex: 1; }
+  .msg label.pick { flex: none; display: grid; place-items: center; padding-top: 4px; cursor: pointer; }
+  .msg input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
+  .fork-right .empty {
+    border: 2px dashed var(--frame-border); border-radius: 12px; padding: 34px 20px; text-align: center;
+    color: var(--ink-faint); font-family: 'Caveat', cursive; font-size: 1.35rem;
+  }
+  .ctx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 10px; }
+  .fork-tree { margin-top: 14px; }
+  .fork-tree svg { width: 100%; max-width: 420px; display: block; }
+  .fork-tree .rail { stroke: var(--ink-soft); stroke-width: 2.5; fill: none; stroke-linecap: round; }
+  .fork-tree .rail.new { stroke: var(--accent); }
+  .fork-tree circle { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+  .fork-tree circle.live { fill: var(--accent); }
+  .fork-tree text { font-family: 'Caveat', cursive; font-size: 15px; fill: var(--ink-soft); }
+  .ok-note { color: var(--good); font-weight: 700; font-size: .82rem; }
+
+  /* ============ demo 3: decks ============ */
+  .deck-pick { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .deck-pick label {
+    display: flex; gap: 8px; align-items: center; background: var(--surface);
+    border: 2px solid var(--ink); padding: 7px 13px; font-size: .84rem; font-weight: 700; cursor: pointer;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .deck-pick input { accent-color: var(--accent); width: 16px; height: 16px; }
+  .player {
+    background: var(--surface); border: 2px solid var(--ink); border-radius: 12px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .slide-stage { min-height: 300px; display: grid; place-items: center; padding: 26px; position: relative; }
+  .slide { max-width: 560px; width: 100%; text-align: center; }
+  .slide .eyebrow { font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--accent); }
+  .slide h3 { font-size: clamp(1.4rem, 3vw, 2rem); margin: 4px 0 14px; }
+  .slide ul { text-align: left; display: inline-block; margin: 0; padding-left: 22px; color: var(--ink-soft); }
+  .slide ul li { margin: 7px 0; }
+  .slide .swatch { width: 74px; height: 10px; margin: 0 auto 12px; border-radius: 999px; }
+  .player-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border-top: 2px solid var(--ink); padding: 10px 14px; background: var(--surface-2);
+  }
+  .player-bar .dots { display: flex; gap: 6px; }
+  .player-bar .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .player-bar .dots i.on { background: var(--accent); }
+  .deck-empty { text-align: center; color: var(--ink-faint); font-family: 'Caveat', cursive; font-size: 1.4rem; padding: 40px 16px; }
+
+  /* ============ demo 4: constellation ============ */
+  .cons-demo { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; }
+  @media (max-width: 820px) { .cons-demo { grid-template-columns: 1fr; } }
+  .cons {
+    position: relative; background: var(--surface); border: 2px solid var(--ink); border-radius: 12px;
+    aspect-ratio: 10 / 7; overflow: hidden;
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px); background-size: 20px 20px;
+  }
+  .cons svg.wires { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cons .wires line { stroke: var(--line); stroke-width: 1.6; stroke-dasharray: 2 6; stroke-linecap: round; }
+  .cons .wires line.hot { stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: none; }
+  .node {
+    position: absolute; transform: translate(-50%, -50%);
+    border: 2px solid var(--ink); border-radius: 999px; padding: 5px 13px;
+    font-family: 'Shantell Sans', cursive; font-weight: 700; font-size: .78rem;
+    background: var(--surface); color: var(--ink); cursor: pointer; box-shadow: 2px 2px 0 var(--ink);
+    white-space: nowrap;
+  }
+  .node:hover { transform: translate(-50%, -50%) scale(1.07); }
+  .node.sel { background: var(--accent); color: var(--accent-ink); }
+  .node.known::after {
+    content: "✓"; position: absolute; top: -9px; right: -7px; width: 18px; height: 18px;
+    background: var(--good); color: #fff; border-radius: 50%; font-size: .68rem;
+    display: grid; place-items: center; border: 2px solid var(--ink); font-family: 'Karla', sans-serif;
+  }
+  .cardpane .flash {
+    background: var(--sun); color: var(--sticky-ink); border: 2px solid var(--ink);
+    padding: 20px 22px; min-height: 190px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 10px; justify-content: space-between;
+  }
+  .flash .side-lab { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .65; font-family: 'Karla', sans-serif; }
+  .flash .q { font-family: 'Caveat', cursive; font-size: 1.55rem; line-height: 1.25; font-weight: 600; }
+  .flash-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .cardpane .hint { color: var(--ink-faint); font-family: 'Caveat', cursive; font-size: 1.3rem; }
+  .streak { margin-top: 12px; font-size: .84rem; color: var(--ink-soft); }
+  .streak b { color: var(--good); }
+
+  /* ============ demo 5: video ============ */
+  .vid-demo { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+  @media (max-width: 820px) { .vid-demo { grid-template-columns: 1fr; } }
+  .vid {
+    background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; overflow: hidden;
+  }
+  .vid-screen {
+    aspect-ratio: 16 / 9; position: relative; display: grid; place-items: center;
+    background:
+      radial-gradient(circle at 30% 35%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 60%),
+      radial-gradient(circle at 72% 70%, color-mix(in srgb, var(--rose) 45%, transparent), transparent 55%),
+      var(--surface-2);
+  }
+  .vid-screen .playbtn {
+    width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--ink);
+    background: var(--surface); font-size: 1.4rem; box-shadow: 3px 3px 0 var(--ink);
+    display: grid; place-items: center;
+  }
+  .vid-screen .vtitle {
+    position: absolute; left: 12px; bottom: 10px; background: var(--ink); color: var(--paper);
+    font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 6px;
+  }
+  .cap-strip { padding: 12px 14px; border-top: 2px solid var(--ink); min-height: 66px; }
+  .cap-strip .cap-now { font-size: .9rem; }
+  .cap-strip .cap-time { color: var(--ink-faint); font-size: .72rem; font-variant-numeric: tabular-nums; }
+  .vid-progress { height: 6px; background: var(--surface-2); }
+  .vid-progress i { display: block; height: 100%; width: 0%; background: var(--accent); transition: width .4s linear; }
+  .quiz-pane .qcard {
+    background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; padding: 16px;
+    box-shadow: var(--shadow);
+  }
+  .qcard .q-eyebrow { font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.25rem; }
+  .qcard .q-text { font-weight: 700; margin: 4px 0 12px; font-size: .95rem; }
+  .qcard .opt {
+    display: block; width: 100%; text-align: left; margin: 7px 0; padding: 9px 13px;
+    background: var(--surface-2); border: 2px solid var(--line); border-radius: 9px; color: var(--ink);
+  }
+  .qcard .opt:hover { border-color: var(--accent); }
+  .qcard .opt.right { background: var(--good-soft); border-color: var(--good); font-weight: 700; }
+  .qcard .opt.wrong { background: var(--warn-soft); border-color: var(--warn); }
+  .qcard .verdict { font-size: .84rem; margin-top: 8px; }
+  .quiz-idle { color: var(--ink-faint); font-family: 'Caveat', cursive; font-size: 1.35rem; text-align: center; padding: 30px 12px; }
+  .scoreline { margin-top: 10px; font-size: .84rem; color: var(--ink-soft); }
+
+  /* ============ demo 6: audio ============ */
+  .audio-demo { display: grid; grid-template-columns: 1fr 300px; gap: 18px; align-items: start; }
+  @media (max-width: 760px) { .audio-demo { grid-template-columns: 1fr; } }
+  .audio-note {
+    background: var(--lilac); color: var(--sticky-ink); border: 2px solid var(--ink);
+    padding: 16px; box-shadow: var(--shadow);
+  }
+  .audio-note textarea {
+    width: 100%; min-height: 120px; border: none; background: transparent; resize: vertical;
+    font-family: 'Caveat', cursive; font-size: 1.4rem; line-height: 1.3; color: var(--sticky-ink);
+  }
+  .audio-ctl { background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; padding: 16px; }
+  .eq { display: flex; gap: 5px; align-items: flex-end; height: 52px; margin: 14px 0 8px; }
+  .eq i { width: 9px; background: var(--accent); border-radius: 4px 4px 0 0; height: 12%; transition: height .18s ease; }
+  .eq.playing i { animation: bounce 0.75s ease-in-out infinite alternate; }
+  .eq.playing i:nth-child(2n) { animation-duration: .6s; animation-delay: .12s; }
+  .eq.playing i:nth-child(3n) { animation-duration: .9s; animation-delay: .05s; }
+  .eq.playing i:nth-child(5n) { animation-duration: .5s; animation-delay: .2s; }
+  @keyframes bounce { from { height: 14%; } to { height: 96%; } }
+  .audio-status { font-size: .8rem; color: var(--ink-faint); min-height: 1.4em; }
+
+  /* ============ backend deck ============ */
+  .bslides .slide-stage { min-height: 380px; align-items: stretch; padding: 22px clamp(16px, 4vw, 40px); }
+  .bslide { width: 100%; max-width: 760px; margin: 0 auto; text-align: left; }
+  .bslide .eyebrow { font-family: 'Caveat', cursive; font-size: 1.35rem; color: var(--accent); }
+  .bslide h3 { font-size: clamp(1.35rem, 2.8vw, 1.9rem); margin: 2px 0 10px; }
+  .bslide p.say { color: var(--ink-soft); max-width: 62ch; margin: 0 0 16px; }
+  .pipe { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .pipe .bx {
+    background: var(--surface); border: 2px solid var(--ink); padding: 9px 14px;
+    font-weight: 700; font-size: .84rem; box-shadow: 2.5px 2.5px 0 var(--ink); text-align: center;
+  }
+  .pipe .bx small { display: block; font-weight: 500; color: var(--ink-faint); font-size: .72rem; }
+  .pipe .bx.hot { background: var(--accent); color: var(--accent-ink); }
+  .pipe .bx.hot small { color: var(--accent-ink); opacity: .75; }
+  .pipe .arr { font-size: 1.25rem; color: var(--ink-soft); font-family: 'Shantell Sans', cursive; }
+  .pipe-col { display: flex; flex-direction: column; gap: 10px; }
+  .fact-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .fact {
+    font-size: .8rem; padding: 8px 13px; border: 2px dashed var(--frame-border); border-radius: 10px;
+    color: var(--ink-soft); background: color-mix(in srgb, var(--surface) 55%, transparent);
+  }
+  .fact b { color: var(--ink); }
+
+  /* ============ roadmap ============ */
+  .road { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .road-col { padding: 16px 16px 18px; color: var(--sticky-ink); box-shadow: var(--shadow); transform: rotate(var(--rot)); }
+  .road-col h3 { margin: 0 0 2px; font-size: 1.05rem; }
+  .road-col .when { font-family: 'Caveat', cursive; font-size: 1.2rem; opacity: .7; }
+  .road-col ul { margin: 8px 0 0; padding-left: 18px; font-size: .84rem; }
+  .road-col li { margin: 5px 0; }
+  .road-col .why { font-family: 'Caveat', cursive; font-size: 1.18rem; margin-top: 10px; border-top: 1.5px dashed rgba(0,0,0,.25); padding-top: 8px; }
+
+  footer.endnote {
+    margin-top: 80px; text-align: center; color: var(--ink-faint); font-size: .85rem;
+  }
+  footer.endnote .hand { font-size: 1.4rem; color: var(--ink-soft); }
+</style>
+
+<main>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <span class="hero-kicker">a demo-driven PRD — nothing here is a mockup, every demo works ↓</span>
+  <h1 class="title">Curio: your knowledge, <span class="hl">out&nbsp;to&nbsp;play</span></h1>
+  <p class="hero-sub">
+    A personal second-brain studio where your Google Docs become artifacts you can drag onto a whiteboard,
+    fork into fresh LLM threads, deal into slide decks, flip as flashcards, quiz against YouTube videos,
+    and listen to out loud. Docs are where your thinking sleeps — Curio is where it wakes up.
+  </p>
+  <span class="hero-note">every section below is a playable slice of one feature. tap around!</span>
+
+  <nav class="toc" aria-label="Demo index">
+    <a href="#board" class="wob-a" style="background: var(--sun); --r: -2deg; transform: rotate(-2deg);">01 · The Board<small>whiteboard + doc artifacts</small></a>
+    <a href="#fork" class="wob-b" style="background: var(--rose); transform: rotate(1.4deg);">02 · Thread Forking<small>LLM context that travels</small></a>
+    <a href="#decks" class="wob-a" style="background: var(--mint); transform: rotate(-1deg);">03 · Instant Decks<small>teach-yourself slides</small></a>
+    <a href="#cards" class="wob-c" style="background: var(--sky); transform: rotate(2deg);">04 · Constellation<small>flashcards as a graph</small></a>
+    <a href="#video" class="wob-b" style="background: var(--lilac); transform: rotate(-1.6deg);">05 · Watch Party<small>YouTube + quizzes</small></a>
+    <a href="#audio" class="wob-a" style="background: var(--sun); transform: rotate(1.2deg);">06 · Read It To Me<small>notes → audio</small></a>
+    <a href="#backend" class="wob-c" style="background: var(--rose); transform: rotate(-.8deg);">07 · Under the Hood<small>backend, as slides</small></a>
+  </nav>
+</header>
+
+<!-- ═══════════════ CONCEPT MAP ═══════════════ -->
+<section class="frame" id="map">
+  <span class="frame-tag">THE BIG PICTURE</span>
+  <h2>One library, many playgrounds</h2>
+  <p class="lede">
+    The center of gravity is your <strong>artifact library</strong> — every Google Doc, note, and flashcard
+    becomes a small, colorful, recallable object. Every experience around the edge is just a different way
+    to play with the same objects. Nothing is siloed: a flashcard born in a YouTube quiz can land on the
+    board, join a deck, and get read aloud on a walk.
+  </p>
+  <div class="map-wrap">
+    <svg class="map" viewBox="0 0 760 360" role="img" aria-label="Concept map: Google Docs sync into the artifact library, which feeds the board, decks, flashcards, video companion and audio, with an LLM woven through everything">
+      <path class="edge" d="M150 80 C 230 90, 280 130, 330 160"/>
+      <path class="edge" d="M380 200 C 300 240, 240 260, 165 285"/>
+      <path class="edge" d="M420 160 C 480 110, 520 90, 590 70"/>
+      <path class="edge" d="M440 190 C 530 190, 570 185, 625 175"/>
+      <path class="edge" d="M430 215 C 500 255, 550 275, 610 290"/>
+      <path class="edge" d="M355 205 C 330 260, 320 285, 310 315"/>
+      <g>
+        <rect class="bx wob" x="55" y="45" width="150" height="58" rx="14"/>
+        <text class="t" x="130" y="70" text-anchor="middle">Google Docs</text>
+        <text class="s" x="130" y="88" text-anchor="middle">sync, don't migrate</text>
+      </g>
+      <g>
+        <rect class="bx hub" x="315" y="145" width="140" height="70" rx="35"/>
+        <text class="hub-t" x="385" y="175" text-anchor="middle" style="font-size:15px">Artifact</text>
+        <text class="hub-t" x="385" y="194" text-anchor="middle" style="font-size:15px">Library</text>
+      </g>
+      <g>
+        <rect class="bx" x="80" y="262" width="130" height="52" rx="12"/>
+        <text class="t" x="145" y="284" text-anchor="middle">The Board</text>
+        <text class="s" x="145" y="301" text-anchor="middle">stickies + artifacts</text>
+      </g>
+      <g>
+        <rect class="bx" x="545" y="38" width="120" height="52" rx="12"/>
+        <text class="t" x="605" y="60" text-anchor="middle">Decks</text>
+        <text class="s" x="605" y="77" text-anchor="middle">instant slides</text>
+      </g>
+      <g>
+        <rect class="bx" x="600" y="148" width="130" height="52" rx="12"/>
+        <text class="t" x="665" y="170" text-anchor="middle">Constellation</text>
+        <text class="s" x="665" y="187" text-anchor="middle">flashcard graph</text>
+      </g>
+      <g>
+        <rect class="bx" x="575" y="268" width="150" height="52" rx="12"/>
+        <text class="t" x="650" y="290" text-anchor="middle">Watch + Listen</text>
+        <text class="s" x="650" y="307" text-anchor="middle">YouTube · audio</text>
+      </g>
+      <g>
+        <rect class="bx" x="245" y="308" width="130" height="42" rx="21" style="stroke-dasharray: 4 5;"/>
+        <text class="t" x="310" y="334" text-anchor="middle" style="font-size:13px">LLM threads</text>
+      </g>
+      <text class="lbl" x="215" y="105">docs flow in</text>
+      <text class="lbl" x="470" y="245">every surface can quiz you</text>
+      <text class="lbl" x="238" y="255">fork anywhere</text>
+    </svg>
+  </div>
+  <p class="prod-note"><b>why this shape:</b> you never "open the knowledge base app." you open whichever mood you're in — build, drill, watch, listen — and the same artifacts follow you there.</p>
+</section>
+
+<!-- ═══════════════ DEMO 01: BOARD ═══════════════ -->
+<section class="frame" id="board">
+  <span class="frame-tag">DEMO 01</span>
+  <h2>The Board — thinking with your hands</h2>
+  <p class="lede">
+    An Excalidraw-style canvas that is <em>aware of your library</em>. Stickies for raw thought, and real
+    doc artifacts you pin from the shelf — each one a live card that remembers where it came from.
+    Scenario below: you're building your interview-prep framework.
+  </p>
+  <span class="try">→ drag anything, double-tap a sticky to rewrite it, pin a doc from the shelf</span>
+
+  <div class="board-demo">
+    <aside class="shelf" aria-label="Artifact shelf">
+      <h3>🗄️ Artifact shelf</h3>
+      <input id="shelf-search" type="search" placeholder="search your docs…" aria-label="Search artifacts"
+        style="padding:7px 11px; border:2px solid var(--ink); background:var(--surface); color:var(--ink); font-family:inherit; font-size:.85rem;">
+      <div id="shelf-list"></div>
+    </aside>
+    <div class="board" id="board-canvas">
+      <div class="board-tools">
+        <span class="lab">new sticky →</span>
+        <button class="dotbtn" data-c="sun" style="background:var(--sun)" aria-label="Add yellow sticky"></button>
+        <button class="dotbtn" data-c="rose" style="background:var(--rose)" aria-label="Add pink sticky"></button>
+        <button class="dotbtn" data-c="mint" style="background:var(--mint)" aria-label="Add mint sticky"></button>
+        <button class="dotbtn" data-c="sky" style="background:var(--sky)" aria-label="Add blue sticky"></button>
+      </div>
+    </div>
+  </div>
+  <p class="prod-note"><b>in prod:</b> a real Excalidraw canvas (it's open source and embeddable), with an artifact side-panel talking to the library API. Pinned docs stay linked — edit the doc in Google, the card on the board updates.</p>
+</section>
+
+<!-- ═══════════════ DEMO 02: FORK ═══════════════ -->
+<section class="frame" id="fork">
+  <span class="frame-tag">DEMO 02</span>
+  <h2>Thread forking — take your context, leave the thread whole</h2>
+  <p class="lede">
+    The LLM habit you described, made first-class: pick the messages that matter, fork them into a fresh
+    thread. The original conversation stays intact and readable. Context travels as <em>references</em>,
+    so forks are instant and the family tree stays visible.
+  </p>
+  <span class="try">→ check the two messages about your migration story, then fork</span>
+
+  <div class="fork-demo">
+    <div class="thread" id="fork-src">
+      <h3>💬 interview-prep <span class="chip">original</span></h3>
+      <div class="msg you"><label class="pick"><input type="checkbox" data-ctx="story bank criteria" aria-label="Select message: story bank"></label><span class="who">you</span><div class="bub">Help me build a story bank for behavioral interviews.</div></div>
+      <div class="msg ai"><label class="pick"><input type="checkbox" data-ctx="5-muscle framework" aria-label="Select message: framework"></label><span class="who">AI</span><div class="bub">Start with 5 stories that each flex a different muscle: leadership, conflict, failure, ambiguity, impact…</div></div>
+      <div class="msg you"><label class="pick"><input type="checkbox" data-ctx="migration story (raw)" checked aria-label="Select message: migration story"></label><span class="who">you</span><div class="bub">Here's my Q3 migration story — 40% infra cost down, two teams unblocked. Tighten it?</div></div>
+      <div class="msg ai"><label class="pick"><input type="checkbox" data-ctx="migration story (tight)" checked aria-label="Select message: tightened story"></label><span class="who">AI</span><div class="bub">Tightened: lead with the stakes, then the 40%, then what you'd do differently. Numbers first, adjectives second.</div></div>
+      <button class="btn primary" id="fork-btn" style="margin-top:10px">⑂ Fork with selected context</button>
+    </div>
+    <div class="fork-right" id="fork-dst">
+      <div class="empty">the fork will appear here —<br>your original thread won't even notice</div>
+    </div>
+  </div>
+
+  <div class="fork-tree" id="fork-tree" hidden>
+    <svg viewBox="0 0 420 110" role="img" aria-label="Thread family tree: the original thread continues while a fork branches off">
+      <path class="rail" d="M20 40 H 390"/>
+      <path class="rail new" d="M200 40 C 230 40, 235 80, 270 80 H 390"/>
+      <circle cx="60" cy="40" r="7"/><circle cx="140" cy="40" r="7"/><circle cx="200" cy="40" r="7"/>
+      <circle cx="290" cy="40" r="7"/><circle cx="360" cy="40" r="7"/>
+      <circle class="live" cx="330" cy="80" r="8"/>
+      <text x="20" y="22">interview-prep (keeps going)</text>
+      <text x="252" y="104">mock-interview fork ✨</text>
+    </svg>
+  </div>
+  <p class="prod-note"><b>in prod:</b> threads store a <b>context ledger</b> — a list of message and artifact references, not copies. Forking copies the ledger and a parent pointer. Cheap, instant, and the tree view falls out for free.</p>
+</section>
+
+<!-- ═══════════════ DEMO 03: DECKS ═══════════════ -->
+<section class="frame" id="decks">
+  <span class="frame-tag">DEMO 03</span>
+  <h2>Instant decks — teach yourself in 30 seconds</h2>
+  <p class="lede">
+    Pick artifacts, get a deck. Not a design tool — a <em>self-teaching</em> tool. The LLM turns each
+    artifact into a slide with the two or three things worth saying out loud, in your sticky-note visual
+    language, ready to present to an audience of one: you.
+  </p>
+  <span class="try">→ check a few docs, then build the deck. arrows flip slides</span>
+
+  <div class="deck-pick" id="deck-pick"></div>
+  <button class="btn primary" id="deck-build" style="margin-bottom:16px">▦ Build my deck</button>
+
+  <div class="player" id="deck-player">
+    <div class="slide-stage" id="deck-stage">
+      <div class="deck-empty">your deck shows up here — pick some docs above ☝︎</div>
+    </div>
+    <div class="player-bar">
+      <button class="btn small" id="deck-prev" aria-label="Previous slide">← prev</button>
+      <div class="dots" id="deck-dots" aria-hidden="true"></div>
+      <button class="btn small" id="deck-next" aria-label="Next slide">next →</button>
+    </div>
+  </div>
+  <p class="prod-note"><b>in prod:</b> deck generation is a one-shot LLM pipeline (artifacts → outline → slide JSON → your visual theme). Decks are artifacts too, so they land back in the library — and can be narrated by the audio engine below.</p>
+</section>
+
+<!-- ═══════════════ DEMO 04: CONSTELLATION ═══════════════ -->
+<section class="frame" id="cards">
+  <span class="frame-tag">DEMO 04</span>
+  <h2>The Constellation — flashcards that know each other</h2>
+  <p class="lede">
+    Flashcards aren't a stack, they're <em>nodes in your knowledge graph</em>. Edges come from your docs,
+    your board links, and embedding similarity. Drilling a card lights up its neighborhood, so review
+    stops being rote and starts being a little walk through connected ideas.
+  </p>
+  <span class="try">→ tap a star to flip its card; "got it" marks your streak</span>
+
+  <div class="cons-demo">
+    <div class="cons" id="cons-field">
+      <svg class="wires" viewBox="0 0 100 70" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+    <div class="cardpane" id="cons-pane">
+      <p class="hint">pick a node from the constellation ✦</p>
+    </div>
+  </div>
+  <p class="prod-note"><b>in prod:</b> spaced repetition (FSRS) picks tonight's cards, but review happens <b>in graph context</b> — neighbors shown, edges explained. Cards are born everywhere: highlight on the board, answer a video question, ask the LLM "make this a card."</p>
+</section>
+
+<!-- ═══════════════ DEMO 05: VIDEO ═══════════════ -->
+<section class="frame" id="video">
+  <span class="frame-tag">DEMO 05</span>
+  <h2>Watch Party — YouTube that checks you're really there</h2>
+  <p class="lede">
+    Curio recommends videos from your learning queue, reads the captions, and interrupts (gently) with
+    questions so the video becomes retention, not background noise. Right answers become flashcard
+    candidates for the Constellation.
+  </p>
+  <span class="try">→ press play; questions pop mid-“video”</span>
+
+  <div class="vid-demo">
+    <div class="vid">
+      <div class="vid-screen">
+        <button class="playbtn" id="vid-play" aria-label="Play video">▶</button>
+        <span class="vtitle">Designing Data-Intensive Apps — talk · 32 min</span>
+      </div>
+      <div class="vid-progress"><i id="vid-bar"></i></div>
+      <div class="cap-strip">
+        <div class="cap-time" id="cap-time">0:00</div>
+        <div class="cap-now" id="cap-now">captions will appear here…</div>
+      </div>
+    </div>
+    <div class="quiz-pane" id="quiz-pane">
+      <div class="quiz-idle">questions appear as checkpoints<br>while you watch ✎</div>
+    </div>
+  </div>
+  <p class="prod-note"><b>in prod:</b> YouTube Data API for your queue + transcripts, an LLM pass to place checkpoints at concept boundaries (not fixed timestamps), and every correct answer offers itself to the flashcard graph.</p>
+</section>
+
+<!-- ═══════════════ DEMO 06: AUDIO ═══════════════ -->
+<section class="frame" id="audio">
+  <span class="frame-tag">DEMO 06</span>
+  <h2>Read It To Me — your notes, in your ears</h2>
+  <p class="lede">
+    Any artifact — a note, a doc summary, a deck, tonight's flashcards — becomes an audio snippet.
+    For the audio-learner half of your brain: queue up your own thinking like a podcast.
+  </p>
+  <span class="try">→ edit the note, then hit listen (this demo uses your browser's voice)</span>
+
+  <div class="audio-demo">
+    <div class="audio-note wob-b">
+      <textarea id="audio-text" aria-label="Note to read aloud">Consistent hashing: when the node count changes, a hash ring only remaps about one over N of the keys. Picture the ring, not the modulo.</textarea>
+    </div>
+    <div class="audio-ctl">
+      <button class="btn primary" id="audio-play">▶ Listen</button>
+      <button class="btn small" id="audio-stop">■ stop</button>
+      <div class="eq" id="audio-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="audio-status" id="audio-status"></div>
+    </div>
+  </div>
+  <p class="prod-note"><b>in prod:</b> ElevenLabs voices (pick one you love, keep it consistent — it becomes "the voice of your brain"), generated server-side and cached as MP3s, with a daily auto-episode: "your 5 cards due + yesterday's board, 4 minutes."</p>
+</section>
+
+<!-- ═══════════════ BACKEND DECK ═══════════════ -->
+<section class="frame" id="backend">
+  <span class="frame-tag">DEMO 07 · FOR THE PARTS YOU CAN'T CLICK</span>
+  <h2>Under the hood — the backend, as a deck</h2>
+  <p class="lede">
+    You asked for the backend as slides that teach, not a spec. Five slides: the shape of the system,
+    how docs become artifacts, how the graph grows, how forking works, and what to build first.
+  </p>
+
+  <div class="player bslides">
+    <div class="slide-stage" id="b-stage"></div>
+    <div class="player-bar">
+      <button class="btn small" id="b-prev" aria-label="Previous slide">← prev</button>
+      <div class="dots" id="b-dots" aria-hidden="true"></div>
+      <button class="btn small" id="b-next" aria-label="Next slide">next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ROADMAP ═══════════════ -->
+<section class="frame" id="roadmap">
+  <span class="frame-tag">BUILD ORDER</span>
+  <h2>Four slices, each fun on its own</h2>
+  <p class="lede">Each slice is a complete toy — you get a real daily-use win before the next one starts. No slice depends on a future slice to be worth having.</p>
+  <div class="road">
+    <div class="road-col wob-a" style="background: var(--sun); --rot: -1.2deg;">
+      <h3>① The Board + Shelf</h3>
+      <div class="when">weeks 1–3</div>
+      <ul>
+        <li>Excalidraw embed + artifact side panel</li>
+        <li>Google Drive sync (read-only first)</li>
+        <li>Pin docs, stickies, manual links</li>
+      </ul>
+      <div class="why">the day-one habit: think here, not in a doc</div>
+    </div>
+    <div class="road-col wob-b" style="background: var(--mint); --rot: 1.4deg;">
+      <h3>② Decks + Forking</h3>
+      <div class="when">weeks 4–6</div>
+      <ul>
+        <li>LLM deck pipeline + sticky theme</li>
+        <li>Context ledger + fork UI</li>
+        <li>Decks saved back as artifacts</li>
+      </ul>
+      <div class="why">interview prep season, fully powered</div>
+    </div>
+    <div class="road-col wob-a" style="background: var(--sky); --rot: -0.8deg;">
+      <h3>③ Constellation</h3>
+      <div class="when">weeks 7–9</div>
+      <ul>
+        <li>Card creation from any surface</li>
+        <li>FSRS scheduling + graph edges</li>
+        <li>Nightly review walk</li>
+      </ul>
+      <div class="why">retention becomes a game you keep</div>
+    </div>
+    <div class="road-col wob-c" style="background: var(--rose); --rot: 1deg;">
+      <h3>④ Watch + Listen</h3>
+      <div class="when">weeks 10–13</div>
+      <ul>
+        <li>YouTube queue + checkpoint quizzes</li>
+        <li>ElevenLabs pipeline + daily episode</li>
+        <li>Cards flow back to the graph</li>
+      </ul>
+      <div class="why">learning follows you off the screen</div>
+    </div>
+  </div>
+</section>
+
+<footer class="endnote">
+  <p class="hand">— every demo above is the PRD. if a demo made you grin, that feature ships. —</p>
+  <p>Curio · demo-driven PRD · v0.1</p>
+</footer>
+
+</main>
+
+<div id="toast" role="status"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById('toast'), toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------- shared artifact data ---------- */
+  var ARTIFACTS = [
+    { id: 'sys',  title: 'System design cheat-sheet', color: 'sky',
+      meta: 'Google Doc · 14 pages',
+      bullets: ['Load balancer vs. API gateway — know which you mean', 'Back-of-envelope: 1M DAU ≈ 12 avg QPS', 'Name the trade-off out loud, every time'] },
+    { id: 'star', title: 'STAR stories bank', color: 'rose',
+      meta: 'Google Doc · 6 pages',
+      bullets: ['The migration that saved Q3', 'Conflict story: the designer hand-off', 'Numbers first, adjectives second'] },
+    { id: 'neg',  title: 'Negotiation notes', color: 'sun',
+      meta: 'Google Doc · 3 pages',
+      bullets: ['Never accept in the room', 'Know your BATNA before the call', 'Silence is a move too'] },
+    { id: 'pm',   title: 'PM frameworks I actually use', color: 'mint',
+      meta: 'Google Doc · 9 pages',
+      bullets: ['RICE, but with honest confidence scores', 'Working-backwards memo bones', 'Kano curves for cut lines'] },
+    { id: 'aud',  title: 'Audio learning log', color: 'lilac',
+      meta: 'Google Doc · 2 pages',
+      bullets: ['Podcasts at 1.4× stick better for me', 'Shadowing beats re-listening', 'Queue: systems talks, negotiation pods'] }
+  ];
+  function colorVar(c) { return 'var(--' + c + ')'; }
+
+  /* ==================================================
+     DEMO 01 — the board
+  ================================================== */
+  var board = document.getElementById('board-canvas');
+  var stickyCount = 0;
+
+  function makeDraggable(el) {
+    var startX, startY, origL, origT, dragging = false, downOnEditable = false;
+    el.addEventListener('pointerdown', function (e) {
+      var t = e.target;
+      downOnEditable = (t.isContentEditable || t.tagName === 'BUTTON');
+      if (downOnEditable) return;
+      dragging = true;
+      el.classList.add('dragging');
+      el.setPointerCapture(e.pointerId);
+      startX = e.clientX; startY = e.clientY;
+      origL = el.offsetLeft; origT = el.offsetTop;
+      e.preventDefault();
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var nl = origL + (e.clientX - startX);
+      var nt = origT + (e.clientY - startY);
+      nl = Math.max(-20, Math.min(nl, board.clientWidth - el.offsetWidth + 20));
+      nt = Math.max(0, Math.min(nt, board.clientHeight - 40));
+      el.style.left = nl + 'px';
+      el.style.top = nt + 'px';
+    });
+    function stop() { dragging = false; el.classList.remove('dragging'); }
+    el.addEventListener('pointerup', stop);
+    el.addEventListener('pointercancel', stop);
+  }
+
+  function addSticky(text, color, x, y, rot) {
+    var s = document.createElement('div');
+    s.className = 'sticky ' + (stickyCount % 2 ? 'wob-a' : 'wob-b');
+    s.style.background = colorVar(color);
+    s.style.left = x + 'px';
+    s.style.top = y + 'px';
+    s.style.setProperty('--rot', rot + 'deg');
+    s.innerHTML = '<span class="pin" aria-hidden="true"></span><div class="txt"></div>';
+    var txt = s.querySelector('.txt');
+    txt.textContent = text;
+    s.title = 'Drag me · double-tap to edit';
+    s.addEventListener('dblclick', function () {
+      txt.setAttribute('contenteditable', 'true');
+      txt.focus();
+      var sel = window.getSelection(), range = document.createRange();
+      range.selectNodeContents(txt); sel.removeAllRanges(); sel.addRange(range);
+    });
+    txt.addEventListener('blur', function () { txt.removeAttribute('contenteditable'); });
+    board.appendChild(s);
+    makeDraggable(s);
+    stickyCount++;
+    return s;
+  }
+
+  addSticky('Opening: who I am, in 90 seconds', 'sun', 60, 70, -2);
+  addSticky('Ask clarifying questions FIRST', 'rose', 250, 150, 1.6);
+  addSticky('Say the trade-offs out loud', 'mint', 90, 280, -1);
+
+  var stickySpots = [[300, 60], [420, 220], [180, 190], [360, 320], [40, 180]];
+  document.querySelectorAll('.dotbtn').forEach(function (btn, i) {
+    btn.addEventListener('click', function () {
+      var spot = stickySpots[stickyCount % stickySpots.length];
+      var jitter = (stickyCount * 37) % 60;
+      var s = addSticky('new thought…', btn.dataset.c, spot[0] + jitter, spot[1], (stickyCount % 2 ? 1.8 : -1.8));
+      s.dispatchEvent(new Event('dblclick'));
+    });
+  });
+
+  /* shelf */
+  var shelfList = document.getElementById('shelf-list');
+  function renderShelf(filter) {
+    shelfList.innerHTML = '';
+    ARTIFACTS.filter(function (a) {
+      return !filter || a.title.toLowerCase().indexOf(filter) !== -1 ||
+        a.bullets.join(' ').toLowerCase().indexOf(filter) !== -1;
+    }).forEach(function (a) {
+      var card = document.createElement('div');
+      card.className = 'shelf-card wob-c';
+      card.innerHTML =
+        '<div class="doc-t"><span style="display:inline-block;width:11px;height:11px;border-radius:3px;border:1.5px solid var(--ink);background:' + colorVar(a.color) + '"></span>' +
+        '<span></span></div><div class="doc-s"></div>';
+      card.querySelector('.doc-t span:last-child').textContent = a.title;
+      card.querySelector('.doc-s').textContent = a.meta;
+      var b = document.createElement('button');
+      b.className = 'btn small'; b.textContent = '📌 pin to board';
+      b.addEventListener('click', function () { pinDoc(a); });
+      card.appendChild(b);
+      shelfList.appendChild(card);
+    });
+    if (!shelfList.children.length) {
+      shelfList.innerHTML = '<p class="hand" style="color:var(--ink-faint);font-size:1.2rem">no docs match — yet ✎</p>';
+    }
+  }
+  var pinnedCount = 0;
+  function pinDoc(a) {
+    var d = document.createElement('div');
+    d.className = 'doc-on-board';
+    d.style.left = (200 + (pinnedCount % 3) * 60) + 'px';
+    d.style.top = (60 + (pinnedCount % 4) * 70) + 'px';
+    d.style.setProperty('--rot', (pinnedCount % 2 ? 1.4 : -1.4) + 'deg');
+    d.innerHTML = '<div class="ribbon" style="background:' + colorVar(a.color) + '"></div>' +
+      '<div class="doc-t"></div><ul class="doc-b"></ul>';
+    d.querySelector('.doc-t').textContent = '📄 ' + a.title;
+    var ul = d.querySelector('.doc-b');
+    a.bullets.slice(0, 2).forEach(function (t) {
+      var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
+    });
+    board.appendChild(d);
+    makeDraggable(d);
+    pinnedCount++;
+    toast('Pinned “' + a.title + '” — still linked to the Google Doc');
+  }
+  renderShelf('');
+  document.getElementById('shelf-search').addEventListener('input', function (e) {
+    renderShelf(e.target.value.trim().toLowerCase());
+  });
+
+  /* ==================================================
+     DEMO 02 — thread forking
+  ================================================== */
+  document.getElementById('fork-btn').addEventListener('click', function () {
+    var picked = Array.prototype.slice.call(
+      document.querySelectorAll('#fork-src input[type=checkbox]:checked'));
+    if (!picked.length) { toast('Pick at least one message to carry over'); return; }
+    var dst = document.getElementById('fork-dst');
+    var chips = picked.map(function (c) {
+      return '<span class="chip">⧉ ' + c.dataset.ctx + '</span>';
+    }).join(' ');
+    dst.innerHTML =
+      '<div class="thread">' +
+      '<h3>💬 mock-interview <span class="chip" style="background:var(--good-soft);border-color:var(--good)">fork ✨</span></h3>' +
+      '<div class="ctx-chips">' + chips + '</div>' +
+      '<div class="msg you"><span class="who">you</span><div class="bub">New thread: run a mock interview using my migration story. Push back hard on the numbers.</div></div>' +
+      '<div class="msg ai"><span class="who">AI</span><div class="bub">Got your context. Let’s start: “Walk me through the 40% — 40% of what, exactly?”</div></div>' +
+      '<p class="ok-note">✓ original thread untouched — it keeps its own future</p>' +
+      '</div>';
+    document.getElementById('fork-tree').hidden = false;
+    toast('Forked with ' + picked.length + ' context reference' + (picked.length > 1 ? 's' : ''));
+  });
+
+  /* ==================================================
+     DEMO 03 — instant decks
+  ================================================== */
+  var pickWrap = document.getElementById('deck-pick');
+  ARTIFACTS.forEach(function (a, i) {
+    var lab = document.createElement('label');
+    lab.className = 'wob-c';
+    lab.innerHTML = '<input type="checkbox" value="' + a.id + '"' + (i < 3 ? ' checked' : '') + '><span></span>';
+    lab.querySelector('span').textContent = a.title;
+    pickWrap.appendChild(lab);
+  });
+
+  var deckSlides = [], deckIdx = 0;
+  var deckStage = document.getElementById('deck-stage');
+  var deckDots = document.getElementById('deck-dots');
+
+  function renderDeck() {
+    if (!deckSlides.length) return;
+    var s = deckSlides[deckIdx];
+    deckStage.innerHTML =
+      '<div class="slide">' +
+      (s.color ? '<div class="swatch" style="background:' + colorVar(s.color) + '"></div>' : '') +
+      '<div class="eyebrow">' + s.eyebrow + '</div><h3></h3>' +
+      (s.bullets ? '<ul>' + s.bullets.map(function () { return '<li></li>'; }).join('') + '</ul>' : '') +
+      '</div>';
+    deckStage.querySelector('h3').textContent = s.title;
+    if (s.bullets) {
+      var lis = deckStage.querySelectorAll('li');
+      s.bullets.forEach(function (b, i) { lis[i].textContent = b; });
+    }
+    deckDots.innerHTML = deckSlides.map(function (_, i) {
+      return '<i class="' + (i === deckIdx ? 'on' : '') + '"></i>';
+    }).join('');
+  }
+  document.getElementById('deck-build').addEventListener('click', function () {
+    var chosen = Array.prototype.slice.call(pickWrap.querySelectorAll('input:checked'))
+      .map(function (c) { return ARTIFACTS.find(function (a) { return a.id === c.value; }); });
+    if (!chosen.length) { toast('Pick at least one doc for your deck'); return; }
+    deckSlides = [{ eyebrow: 'a deck by you, for you', title: 'Tonight’s study: ' + chosen.length + ' artifact' + (chosen.length > 1 ? 's' : ''), bullets: chosen.map(function (a) { return a.title; }) }]
+      .concat(chosen.map(function (a) {
+        return { eyebrow: 'from your Google Doc', title: a.title, bullets: a.bullets, color: a.color };
+      }))
+      .concat([{ eyebrow: 'the end', title: 'Now say it out loud 🎤', bullets: ['Present this deck to your webcam', 'Curio can quiz you on it tomorrow', 'Weak slides become flashcards'] }]);
+    deckIdx = 0;
+    renderDeck();
+    toast('Deck built: ' + deckSlides.length + ' slides from ' + chosen.length + ' docs');
+  });
+  document.getElementById('deck-prev').addEventListener('click', function () {
+    if (deckSlides.length) { deckIdx = (deckIdx - 1 + deckSlides.length) % deckSlides.length; renderDeck(); }
+  });
+  document.getElementById('deck-next').addEventListener('click', function () {
+    if (deckSlides.length) { deckIdx = (deckIdx + 1) % deckSlides.length; renderDeck(); }
+  });
+
+  /* ==================================================
+     DEMO 04 — constellation
+  ================================================== */
+  var NODES = [
+    { id: 'cap',  label: 'CAP theorem',        x: 22, y: 20, q: 'You can only pick two of three — which three?', a: 'Consistency, Availability, Partition-tolerance. And partitions aren’t optional — so really you’re choosing C vs A when the network splits.' },
+    { id: 'hash', label: 'Consistent hashing', x: 47, y: 38, q: 'Why not just hash(key) % N?', a: 'Because when N changes, nearly every key remaps. A hash ring moves only ~1/N of keys when a node joins or leaves.' },
+    { id: 'wal',  label: 'Write-ahead log',    x: 20, y: 55, q: 'Why write the log before the data?', a: 'If you crash mid-write, replaying the log walks you back to a consistent state. The log is the truth; the tables are a cache of it.' },
+    { id: 'rice', label: 'RICE',               x: 76, y: 18, q: 'What do the four letters weigh?', a: 'Reach × Impact × Confidence ÷ Effort. The honest one is Confidence — that’s where wishful thinking hides.' },
+    { id: 'kano', label: 'Kano model',         x: 82, y: 48, q: 'What happens to delighters over time?', a: 'They decay into basics. Yesterday’s wow is today’s expected — which is why delight is a treadmill, not a moat.' },
+    { id: 'batna',label: 'BATNA',              x: 55, y: 78, q: 'What sets your walk-away power?', a: 'Your Best Alternative To a Negotiated Agreement. A strong BATNA is what lets you use silence comfortably.' },
+    { id: 'zopa', label: 'ZOPA',               x: 28, y: 84, q: 'Where do deals actually live?', a: 'In the Zone Of Possible Agreement — the overlap between what you’ll accept and what they’ll offer. No overlap, no deal, no shame.' }
+  ];
+  var EDGES = [
+    ['cap', 'hash', 'both are “what breaks at scale” ideas'],
+    ['cap', 'wal', 'recovery vs. availability'],
+    ['hash', 'wal', 'from your system-design doc'],
+    ['rice', 'kano', 'both cut your roadmap'],
+    ['batna', 'zopa', 'from your negotiation notes'],
+    ['hash', 'rice', 'you linked these on the board']
+  ];
+  var field = document.getElementById('cons-field');
+  var wires = field.querySelector('svg.wires');
+  var pane = document.getElementById('cons-pane');
+  var knownCount = 0;
+
+  EDGES.forEach(function (e) {
+    var a = NODES.find(function (n) { return n.id === e[0]; });
+    var b = NODES.find(function (n) { return n.id === e[1]; });
+    var ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    ln.setAttribute('x1', a.x); ln.setAttribute('y1', a.y * 0.7);
+    ln.setAttribute('x2', b.x); ln.setAttribute('y2', b.y * 0.7);
+    ln.dataset.a = e[0]; ln.dataset.b = e[1];
+    wires.appendChild(ln);
+  });
+
+  NODES.forEach(function (n) {
+    var el = document.createElement('button');
+    el.className = 'node';
+    el.textContent = n.label;
+    el.style.left = n.x + '%';
+    el.style.top = n.y + '%';
+    el.addEventListener('click', function () { selectNode(n, el); });
+    field.appendChild(el);
+    n.el = el;
+  });
+
+  function selectNode(n, el) {
+    NODES.forEach(function (m) { m.el.classList.remove('sel'); });
+    el.classList.add('sel');
+    Array.prototype.forEach.call(wires.children, function (ln) {
+      ln.classList.toggle('hot', ln.dataset.a === n.id || ln.dataset.b === n.id);
+    });
+    var neighbors = EDGES.filter(function (e) { return e[0] === n.id || e[1] === n.id; })
+      .map(function (e) {
+        var otherId = e[0] === n.id ? e[1] : e[0];
+        var other = NODES.find(function (m) { return m.id === otherId; });
+        return { label: other.label, why: e[2] };
+      });
+    pane.innerHTML =
+      '<div class="flash wob-a"><div><span class="side-lab">question</span><div class="q"></div></div>' +
+      '<div class="flash-actions"><button class="btn small" id="flip">flip ↺</button>' +
+      '<button class="btn small" id="knew" hidden>✓ got it</button>' +
+      '<button class="btn small" id="again" hidden>↻ again soon</button></div></div>' +
+      '<div class="streak" id="cons-streak"></div><div id="nbrs" style="margin-top:10px"></div>';
+    pane.querySelector('.q').textContent = n.q;
+    var showingQ = true;
+    var flashEl = pane.querySelector('.flash');
+    pane.querySelector('#flip').addEventListener('click', function () {
+      showingQ = !showingQ;
+      pane.querySelector('.side-lab').textContent = showingQ ? 'question' : 'answer';
+      pane.querySelector('.q').textContent = showingQ ? n.q : n.a;
+      flashEl.style.background = showingQ ? 'var(--sun)' : 'var(--mint)';
+      pane.querySelector('#knew').hidden = showingQ;
+      pane.querySelector('#again').hidden = showingQ;
+    });
+    pane.querySelector('#knew').addEventListener('click', function () {
+      if (!el.classList.contains('known')) { el.classList.add('known'); knownCount++; }
+      updateStreak();
+      toast('“' + n.label + '” scheduled further out ✓');
+    });
+    pane.querySelector('#again').addEventListener('click', function () {
+      el.classList.remove('known');
+      updateStreak();
+      toast('“' + n.label + '” will come back tomorrow');
+    });
+    var nb = pane.querySelector('#nbrs');
+    nb.innerHTML = '<span class="side-lab" style="color:var(--ink-faint);font-family:Karla,sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase">connected to</span>';
+    neighbors.forEach(function (x) {
+      var row = document.createElement('div');
+      row.style.cssText = 'font-size:.83rem;margin-top:5px';
+      row.innerHTML = '<b></b> <span class="hand" style="color:var(--ink-faint);font-size:1.1rem"></span>';
+      row.querySelector('b').textContent = x.label;
+      row.querySelector('span').textContent = '— ' + x.why;
+      nb.appendChild(row);
+    });
+    updateStreak();
+    function updateStreak() {
+      knownCount = field.querySelectorAll('.node.known').length;
+      pane.querySelector('#cons-streak').innerHTML =
+        'tonight’s walk: <b>' + knownCount + ' / ' + NODES.length + '</b> constellations lit';
+    }
+  }
+
+  /* ==================================================
+     DEMO 05 — watch party
+  ================================================== */
+  var CAPTIONS = [
+    { t: '0:12', text: '“Data-intensive” means the bottleneck is data — its size, its change rate, its complexity — not CPU.' },
+    { t: '2:40', text: 'Reliability, scalability, maintainability: the three words this whole book hangs on.' },
+    { t: '5:05', text: 'Load is only meaningful once you pick a load parameter — requests per second, fan-out, read/write ratio…' },
+    { t: '8:31', text: 'Twitter’s home-timeline: fan-out on write vs. fan-out on read. Celebrities break your nice average.' },
+    { t: '11:56', text: 'Percentiles over averages: p99 is what your unluckiest — often biggest — customers feel.' },
+    { t: '14:22', text: 'Tail latency amplification: one slow backend call out of a hundred makes the whole page slow.' }
+  ];
+  var QUESTIONS = {
+    2: { q: 'Why does the speaker say “load” is meaningless on its own?',
+         opts: ['Because load always means requests per second', 'Because you must first choose a load parameter that fits your system', 'Because load only matters at Twitter’s scale'],
+         right: 1,
+         yes: 'Exactly — load needs a parameter: QPS, fan-out, ratio. That’s a flashcard.',
+         no: 'Not quite — the point is load needs a chosen parameter (QPS, fan-out…) before it means anything.' },
+    4: { q: 'Why prefer p99 to the average?',
+         opts: ['Averages are harder to compute', 'The average hides what the slowest — often most valuable — users experience', 'p99 is always smaller than the mean'],
+         right: 1,
+         yes: 'Yes — the tail is where your heaviest users live. Card material!',
+         no: 'The key idea: averages hide the tail, and the tail is where your biggest customers usually are.' }
+  };
+  var vidPlaying = false, capIdx = -1, vidTimer = null, vidScore = 0, vidAsked = 0;
+  var capNow = document.getElementById('cap-now');
+  var capTime = document.getElementById('cap-time');
+  var vidBar = document.getElementById('vid-bar');
+  var quizPane = document.getElementById('quiz-pane');
+  var playBtn = document.getElementById('vid-play');
+
+  function stepVideo() {
+    capIdx++;
+    if (capIdx >= CAPTIONS.length) {
+      stopVideo('That’s the demo clip! Final score: ' + vidScore + '/' + vidAsked);
+      quizPane.innerHTML += '<div class="scoreline">📈 ' + vidScore + '/' + vidAsked + ' → both answers offered to your Constellation as new cards.</div>';
+      return;
+    }
+    var c = CAPTIONS[capIdx];
+    capNow.textContent = c.text;
+    capTime.textContent = c.t;
+    vidBar.style.width = ((capIdx + 1) / CAPTIONS.length * 100) + '%';
+    if (QUESTIONS[capIdx]) {
+      pauseForQuestion(QUESTIONS[capIdx]);
+    } else {
+      vidTimer = setTimeout(stepVideo, 2400);
+    }
+  }
+  function pauseForQuestion(Q) {
+    vidAsked++;
+    playBtn.textContent = '⏸';
+    quizPane.innerHTML =
+      '<div class="qcard wob-c"><div class="q-eyebrow">checkpoint — video paused ✋</div>' +
+      '<div class="q-text"></div>' +
+      Q.opts.map(function (_, i) { return '<button class="opt" data-i="' + i + '"></button>'; }).join('') +
+      '<div class="verdict"></div></div>';
+    quizPane.querySelector('.q-text').textContent = Q.q;
+    var optEls = quizPane.querySelectorAll('.opt');
+    Q.opts.forEach(function (o, i) { optEls[i].textContent = o; });
+    optEls.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = +btn.dataset.i;
+        optEls.forEach(function (b) { b.disabled = true; });
+        optEls[Q.right].classList.add('right');
+        var v = quizPane.querySelector('.verdict');
+        if (i === Q.right) { vidScore++; v.textContent = '✓ ' + Q.yes; v.style.color = 'var(--good)'; }
+        else { btn.classList.add('wrong'); v.textContent = '✗ ' + Q.no; v.style.color = 'var(--warn)'; }
+        setTimeout(function () { if (vidPlaying) { playBtn.textContent = '⏸'; vidTimer = setTimeout(stepVideo, 1600); } }, 900);
+      }, { once: true });
+    });
+  }
+  function stopVideo(msg) {
+    vidPlaying = false;
+    clearTimeout(vidTimer);
+    playBtn.textContent = '▶';
+    if (msg) toast(msg);
+  }
+  playBtn.addEventListener('click', function () {
+    if (vidPlaying) { stopVideo(); return; }
+    vidPlaying = true;
+    playBtn.textContent = '⏸';
+    if (capIdx >= CAPTIONS.length - 1) { capIdx = -1; vidScore = 0; vidAsked = 0; vidBar.style.width = '0%'; }
+    quizPane.innerHTML = '<div class="quiz-idle">watching… first checkpoint<br>is coming up ✎</div>';
+    stepVideo();
+  });
+
+  /* ==================================================
+     DEMO 06 — audio
+  ================================================== */
+  var eq = document.getElementById('audio-eq');
+  var audioStatus = document.getElementById('audio-status');
+  var synth = window.speechSynthesis;
+  document.getElementById('audio-play').addEventListener('click', function () {
+    if (!synth) { audioStatus.textContent = 'This browser has no speech engine — in prod this is an ElevenLabs MP3 anyway.'; return; }
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(document.getElementById('audio-text').value);
+    u.rate = 1.02; u.pitch = 1.0;
+    var voices = synth.getVoices();
+    var nice = voices.find(function (v) { return /en/i.test(v.lang) && /female|Samantha|Google UK English Female|Zira/i.test(v.name); }) ||
+               voices.find(function (v) { return /en/i.test(v.lang); });
+    if (nice) u.voice = nice;
+    u.onstart = function () { eq.classList.add('playing'); audioStatus.textContent = 'playing (browser voice — imagine your ElevenLabs voice here)'; };
+    u.onend = function () { eq.classList.remove('playing'); audioStatus.textContent = 'done — in prod: cached MP3, queued like a podcast'; };
+    u.onerror = function () { eq.classList.remove('playing'); audioStatus.textContent = 'speech engine hiccup — try again'; };
+    synth.speak(u);
+  });
+  document.getElementById('audio-stop').addEventListener('click', function () {
+    if (synth) synth.cancel();
+    eq.classList.remove('playing');
+    audioStatus.textContent = '';
+  });
+
+  /* ==================================================
+     BACKEND DECK
+  ================================================== */
+  var BSLIDES = [
+    { eyebrow: 'slide 1 of 5', title: 'The whole system on one napkin',
+      say: 'Three layers. Sources flow in, one library holds everything as artifacts, and every experience is a thin client of that library. The LLM sits beside the library, not inside any one feature.',
+      html: '<div class="pipe-col">' +
+        '<div class="pipe"><span class="bx">Google Docs<small>Drive API</small></span><span class="bx">YouTube<small>transcripts</small></span><span class="bx">your stickies<small>board</small></span><span class="arr">⟶</span><span class="bx hot">Artifact Library<small>store + embeddings + graph</small></span></div>' +
+        '<div class="pipe"><span class="bx hot" style="visibility:hidden">.</span><span class="arr" style="transform:rotate(90deg)">⟶</span></div>' +
+        '<div class="pipe"><span class="bx">Board</span><span class="bx">Decks</span><span class="bx">Constellation</span><span class="bx">Watch</span><span class="bx">Listen</span><span class="arr">⟵</span><span class="bx">LLM orchestrator<small>generate · quiz · fork</small></span></div></div>',
+      facts: ['<b>One store, many views</b> — features never own data', '<b>LLM as a service layer</b> — every surface can call it', '<b>Everything is an artifact</b> — decks and cards included'] },
+    { eyebrow: 'slide 2 of 5', title: 'Docs become artifacts (you never migrate)',
+      say: 'Your Google Docs stay in Google. A sync worker watches for changes, chunks each doc into artifact-sized pieces, embeds them, and tags them. Deleting Curio loses nothing — it’s a lens, not a vault.',
+      html: '<div class="pipe"><span class="bx">Drive changes feed<small>webhook / poll</small></span><span class="arr">⟶</span><span class="bx">chunker<small>headings → pieces</small></span><span class="arr">⟶</span><span class="bx">embedder<small>vectors per chunk</small></span><span class="arr">⟶</span><span class="bx">auto-tagger<small>LLM, cheap model</small></span><span class="arr">⟶</span><span class="bx hot">artifact cards<small>title · bullets · link back</small></span></div>',
+      facts: ['<b>Read-only first</b> — write-back to Docs is a later slice', '<b>Link back always</b> — every card opens its source doc', '<b>Re-sync on edit</b> — the board card updates itself'] },
+    { eyebrow: 'slide 3 of 5', title: 'The graph grows three ways',
+      say: 'Edges aren’t hand-maintained homework. They come from behavior you’re already doing: writing docs that cite each other, linking things on the board, and embedding similarity filling in the rest — labeled so you always know why two things touch.',
+      html: '<div class="pipe-col">' +
+        '<div class="pipe"><span class="bx">explicit<small>you drew a line on the board</small></span><span class="bx">structural<small>doc cites doc, card born from video</small></span><span class="bx">semantic<small>embeddings say “these rhyme”</small></span><span class="arr">⟶</span><span class="bx hot">edge store<small>every edge keeps its reason</small></span></div></div>',
+      facts: ['<b>Edges carry provenance</b> — “you linked these” vs “these rhyme”', '<b>Semantic edges are suggestions</b> — dismissible, never pushy', '<b>Flashcards are nodes</b> — review walks the graph'] },
+    { eyebrow: 'slide 4 of 5', title: 'Forking = copying a list of pointers',
+      say: 'A thread never contains its context — it references it. Each thread keeps a context ledger: pointers to messages, artifacts, and board frames. Forking copies the ledger (cheap) and records a parent (free tree view). The original thread’s future is untouched.',
+      html: '<div class="pipe-col">' +
+        '<div class="pipe"><span class="bx">thread A<small>ledger: [m1, m3, doc:star]</small></span><span class="arr">⑂</span><span class="bx hot">thread B<small>ledger copied + parent: A</small></span></div>' +
+        '<div class="pipe"><span class="bx">thread A keeps going<small>new messages, same ledger</small></span><span class="bx">thread B diverges<small>add/remove context freely</small></span></div></div>',
+      facts: ['<b>References, not copies</b> — forks cost ~nothing', '<b>Parent pointers</b> — the family tree renders itself', '<b>Any provider</b> — the ledger compiles to any LLM’s context window'] },
+    { eyebrow: 'slide 5 of 5', title: 'Generation pipelines (decks, audio, quizzes)',
+      say: 'Three pipelines share one shape: gather artifacts → LLM structures them → render in your visual/audio language → save the result back as an artifact. Cache aggressively; regenerate only when sources change.',
+      html: '<div class="pipe-col">' +
+        '<div class="pipe"><span class="bx">decks<small>artifacts → outline → slide JSON</small></span><span class="arr">⟶</span><span class="bx">sticky theme renderer</span></div>' +
+        '<div class="pipe"><span class="bx">audio<small>artifact → script → ElevenLabs</small></span><span class="arr">⟶</span><span class="bx">cached MP3 + daily episode</span></div>' +
+        '<div class="pipe"><span class="bx">quizzes<small>transcript → checkpoints → questions</small></span><span class="arr">⟶</span><span class="bx hot">results feed the graph</span></div></div>',
+      facts: ['<b>Same shape everywhere</b> — one pipeline pattern to maintain', '<b>Outputs are artifacts</b> — a deck can be quizzed, a quiz can be listened to', '<b>Cache by content hash</b> — audio bills stay tiny'] }
+  ];
+  var bIdx = 0;
+  var bStage = document.getElementById('b-stage');
+  var bDots = document.getElementById('b-dots');
+  function renderB() {
+    var s = BSLIDES[bIdx];
+    bStage.innerHTML =
+      '<div class="bslide"><div class="eyebrow">' + s.eyebrow + '</div><h3></h3><p class="say"></p>' +
+      s.html +
+      '<div class="fact-row">' + s.facts.map(function (f) { return '<div class="fact">' + f + '</div>'; }).join('') + '</div></div>';
+    bStage.querySelector('h3').textContent = s.title;
+    bStage.querySelector('.say').textContent = s.say;
+    bDots.innerHTML = BSLIDES.map(function (_, i) {
+      return '<i class="' + (i === bIdx ? 'on' : '') + '"></i>';
+    }).join('');
+  }
+  document.getElementById('b-prev').addEventListener('click', function () {
+    bIdx = (bIdx - 1 + BSLIDES.length) % BSLIDES.length; renderB();
+  });
+  document.getElementById('b-next').addEventListener('click', function () {
+    bIdx = (bIdx + 1) % BSLIDES.length; renderB();
+  });
+  renderB();
+
+})();
+</script>
+</body>
+</html>
