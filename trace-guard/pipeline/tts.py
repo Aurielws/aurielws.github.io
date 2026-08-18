@@ -62,7 +62,7 @@ def estimate():
 
 def call_tts(seg, key, cache_dir):
     h = hashlib.sha1((seg["text"] + VOICES[seg["speaker"]] + MODEL_ID + OUTPUT_FORMAT).encode()).hexdigest()[:12]
-    cache = os.path.join(cache_dir, f"{seg['id']}_{h}.json")
+    cache = os.path.join(cache_dir, f"{h}.json")
     if os.path.exists(cache):
         return json.load(open(cache))
     url = (f"https://api.elevenlabs.io/v1/text-to-speech/{VOICES[seg['speaker']]}"
@@ -121,9 +121,9 @@ def run(mode, sample_only, out_dir):
             audio = b"\x00\x00" * int(dur * SAMPLE_RATE)
         start = len(pcm) / 2 / SAMPLE_RATE
         pcm += audio
-        gap = pause_after(seg, segs[i + 1] if i + 1 < len(segs) else None)
+        gap = pause_after(seg, segs[i + 1] if i + 1 < len(segs) else None) + seg.get("pause_extra", 0)
         pcm += b"\x00\x00" * int(gap * SAMPLE_RATE)
-        timeline.append(dict(id=seg["id"], start=round(start, 4), dur=round(dur, 4),
+        timeline.append(dict(id=seg["id"], start=round(start, 4), dur=round(dur, 4), gap=round(gap, 3),
                              chars=align["characters"],
                              char_starts=[round(start + t, 4) for t in align["character_start_times_seconds"]]))
         print(f"{seg['id']} {seg['speaker']:6s} {dur:6.2f}s  @{start:7.2f}s  {len(seg['text'])} chars")

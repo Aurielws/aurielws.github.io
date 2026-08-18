@@ -9,23 +9,26 @@ dip-to-white between slides. 1920x1080, 10 fps, h264 + aac.
 
 Usage: python2 render2.py BUILD_DIR SHAPES_JSON SLIDES_PNG_DIR OUT.mp4
 """
-import json, os, re, subprocess, sys
+import importlib, json, os, re, subprocess, sys
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from segments2 import SEGS
+SEGS = importlib.import_module(os.environ.get("SEGMENTS_MODULE", "segments2")).SEGS
 
 W, H, FPS = 1920, 1080, 10
 GHOST = 0.85          # how far ghosted shapes blend toward the background
 REVEAL_S = 0.45       # fade-in duration
+AUTO_SKIP = {1}       # slides that never ghost (title)
 KIND_COLORS = {       # light-mode layer palette; teach matches the deck's coral
     "teach": (232, 93, 93), "attrib": (232, 93, 93),
     "interviewer": (71, 85, 105), "say": (13, 148, 136),
     "think": (200, 108, 8), "rule": (124, 58, 237),
+    "yourturn": (200, 108, 8),
 }
 KIND_LABEL = {"teach": "DAN · TEACHING", "attrib": "DAN · NARRATOR",
               "interviewer": "RACHEL · INTERVIEWER", "say": "DAN · YOU SAY",
-              "think": "DAN · YOU THINK", "rule": "RACHEL · THE RULES"}
+              "think": "DAN · YOU THINK", "rule": "RACHEL · THE RULES",
+              "yourturn": "YOUR TURN · ANSWER OUT LOUD"}
 F_CHIP = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 23)
 
 SEG_BY_ID = {s["id"]: s for s in SEGS}
@@ -56,16 +59,34 @@ def find_region(shapes, anchor):
     return (hit["x"] - padl, hit["y"] - 10, hit["w"] + padl + 12, hit["h"] + 20)
 
 
+def auto_regions(shapes):
+    """Content rows for slides without hand anchors: leaf text shapes, top-to-bottom."""
+    rows = []
+    for s in shapes:
+        if not s["text"] or not (200 < s["y"] < 945):
+            continue
+        padl = min(85, s["x"])
+        rows.append((s["y"], s["x"], (s["x"] - padl, s["y"] - 8, s["w"] + padl + 10, s["h"] + 16)))
+    rows.sort()
+    return [r for _, _, r in rows]
+
+
 def build_events(timing, shapes_by_slide):
     """Per-slide reveal events [(t, region)] and marker events [(t0,t1,slide,region,kind)]."""
     reveals, markers = {}, []
+    anchored_slides = set()
+    for seg in SEGS:
+        if seg.get("spans") or seg.get("anchor"):
+            anchored_slides.add(seg["slideno"])
     for t in timing:
         seg = SEG_BY_ID[t["id"]]
         sn = seg["slideno"]
         shapes = shapes_by_slide[str(sn)]
         t0, t1 = t["start"], t["start"] + t["dur"]
         regions = []
-        if seg.get("spans"):
+        if seg["kind"] == "yourturn":
+            markers.append((t0, t1 + t.get("gap", 0) - 0.3, sn, None, "yourturn"))
+        elif seg.get("spans"):
             text = seg["text"]
             for anchor, sub in seg["spans"]:
                 idx = text.find(sub)
@@ -86,6 +107,35 @@ def build_events(timing, shapes_by_slide):
             key = reg
             if key not in reveals[sn] or ts < reveals[sn][key]:
                 reveals[sn][key] = ts
+
+    # auto row-by-row reveal for slides with no hand-authored anchors
+    first, last = {}, {}
+    for t in timing:
+        sn = SEG_BY_ID[t["id"]]["slideno"]
+        first.setdefault(sn, t["start"])
+        last[sn] = t["start"] + t["dur"]
+
+    def kind_at(ts):
+        for t in timing:
+            if t["start"] <= ts < t["start"] + t["dur"] + t.get("gap", 0):
+                return SEG_BY_ID[t["id"]]["kind"]
+        return "teach"
+
+    for sn in first:
+        if sn in anchored_slides or sn in AUTO_SKIP:
+            continue
+        regs = auto_regions(shapes_by_slide[str(sn)])
+        if not regs:
+            continue
+        a, b = first[sn] + 0.3, max(first[sn] + 0.3, last[sn] - 1.2)
+        times = [a + (b - a) * i / max(1, len(regs) - 1) for i in range(len(regs))]
+        for j, (ts, reg) in enumerate(zip(times, regs)):
+            te = times[j + 1] if j + 1 < len(regs) else last[sn]
+            k = kind_at(ts)
+            if k == "yourturn":
+                k = "teach"
+            reveals.setdefault(sn, {})[reg] = ts
+            markers.append((ts, te, sn, reg, k))
     return reveals, markers
 
 
@@ -161,6 +211,10 @@ def main(build_dir, shapes_json, png_dir, out_path):
             d.rounded_rectangle([cx, H - 52, cx + cw + 40, H - 14], radius=19,
                                 fill=(255, 255, 255), outline=col, width=2)
             d.text((cx + 20, H - 45), chip, font=F_CHIP, fill=col)
+            if kind == "yourturn" and t1 > t0:
+                remain = max(0.0, min(1.0, (t1 - now) / (t1 - t0)))
+                d.rounded_rectangle([cx, H - 62, cx + (cw + 40) * remain, H - 57],
+                                    radius=2, fill=col)
 
         # progress bar (deck coral)
         d.rectangle([0, H - 6, int(W * now / total), H], fill=(232, 93, 93))

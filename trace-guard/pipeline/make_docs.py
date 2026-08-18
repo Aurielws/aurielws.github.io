@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
-"""Generate the two script documents from segments.py (single source of truth)."""
-import os, sys
+"""Generate the two script documents from the segments module (default: segments3)."""
+import importlib, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from segments import SEGS
-from slides import SLIDES
+SEGS = importlib.import_module(os.environ.get("SEGMENTS_MODULE", "segments3")).SEGS
 
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-KIND_LABEL = {"narration": "narrates", "attrib": "narrates", "interviewer": "interviewer",
-              "think": "you think", "say": "you say", "nugget": "nugget"}
+KIND_LABEL = {"teach": "teaching", "attrib": "narrates", "interviewer": "interviewer",
+              "think": "you think", "say": "you say", "rule": "the rules",
+              "yourturn": "YOUR TURN cue"}
 
 # --- Version 1: speaker-tagged role-play script -----------------------------
 lines = ["# TRACE → GUARD — Role-Play Script (speaker-tagged)", "",
-         "Voices: **DAN** = narrator + you/the candidate. **RACHEL** = interviewer + nuggets.",
-         "Tags: every line is `SPEAKER (layer)`. Layers: narrates / interviewer / you think / you say / nugget.", ""]
-prev_slide = None
+         "Voices: **DAN** = teacher + you/the candidate. **RACHEL** = interviewer + the rules.",
+         "Slides refer to the study deck (v2). YOUR TURN cues are followed by a silent",
+         "countdown in the video so you can answer out loud before the model answer.", ""]
+prev = None
 for s in SEGS:
-    if s["slide"] != prev_slide:
-        spec = SLIDES[s["slide"]]
-        lines += [f"## Slide {spec['num']:02d} — {spec['title']}", ""]
-        prev_slide = s["slide"]
-    lines += [f"**{s['speaker'].upper()} ({KIND_LABEL[s['kind']]}):** {s['text']}", ""]
+    if s["slideno"] != prev:
+        lines += [f"## Slide {s['slideno']}", ""]
+        prev = s["slideno"]
+    pause = f" *(then {s['pause_extra']}s silent pause)*" if s.get("pause_extra") else ""
+    lines += [f"**{s['speaker'].upper()} ({KIND_LABEL[s['kind']]}):** {s['text']}{pause}", ""]
 open(os.path.join(DOCS, "script-roleplay.md"), "w").write("\n".join(lines))
 
 # --- Version 2: solo version with spoken slide cues (drop into ElevenLabs) --
@@ -27,15 +28,14 @@ out = ["# TRACE → GUARD — Solo Script with Spoken Slide Cues", "",
        "TTS-ready single-voice version. Paste the text below into ElevenLabs as one job",
        "(or per section). Slide cues are spoken so you can follow the deck hands-free.", "",
        "---", ""]
-prev_slide, prev_kind = None, None
+prev, prev_kind = None, None
 for s in SEGS:
-    if s["slide"] != prev_slide:
-        spec = SLIDES[s["slide"]]
-        out += [f"Slide cue. Switch to slide {spec['num']}.", ""]
-        prev_slide = s["slide"]
+    if s["slideno"] != prev:
+        out += [f"Slide cue. Switch to slide {s['slideno']}.", ""]
+        prev = s["slideno"]
     prefix = ""
-    if prev_kind not in ("attrib",):
-        if s["kind"] == "interviewer" and not s["text"].startswith("Hello"):
+    if prev_kind != "attrib":
+        if s["kind"] == "interviewer":
             prefix = "The interviewer says: "
         elif s["kind"] == "think":
             prefix = "What you should think: "
