@@ -11,10 +11,15 @@ Usage:
 
 OUT is a build directory. Never hardcode the API key here.
 """
-import base64, hashlib, json, os, struct, sys, time, urllib.request
+import base64, hashlib, importlib, json, os, struct, sys, time, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from segments import SEGS, SAMPLE_LAST_ID, PAUSE_DEFAULT, PAUSE_SLIDE_CHANGE, PAUSE_AFTER_NUGGET
+_seg_mod = importlib.import_module(os.environ.get("SEGMENTS_MODULE", "segments"))
+SEGS = _seg_mod.SEGS
+SAMPLE_LAST_ID = _seg_mod.SAMPLE_LAST_ID
+PAUSE_DEFAULT = _seg_mod.PAUSE_DEFAULT
+PAUSE_SLIDE_CHANGE = _seg_mod.PAUSE_SLIDE_CHANGE
+PAUSE_AFTER_NUGGET = _seg_mod.PAUSE_AFTER_NUGGET
 
 VOICES = {
     "dan": "Fahco4VZzobUeiPqni1S",     # narrator / candidate (user-supplied voice id)
@@ -39,9 +44,9 @@ def seg_list(sample_only):
 def pause_after(seg, nxt):
     if nxt is None:
         return 1.2
-    if nxt["slide"] != seg["slide"]:
+    if nxt.get("slide", nxt.get("slideno")) != seg.get("slide", seg.get("slideno")):
         return PAUSE_SLIDE_CHANGE
-    if seg["kind"] == "nugget":
+    if seg["kind"] in ("nugget", "rule"):
         return PAUSE_AFTER_NUGGET
     return PAUSE_DEFAULT
 
