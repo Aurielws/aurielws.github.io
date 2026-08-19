@@ -163,14 +163,14 @@ SEGS = [
  dict(id="ac03", slideno=2, kind="interviewer", speaker="rachel",
       text="An autonomous ops agent platform runs long, multi step runbooks, with side effecting "
            "tools. Since Tuesday, it has been repeating steps it already completed. Two hundred "
-           "fourteen customer notification emails were sent a second time. One finished migration "
+           "fourteen notification emails went out a second time. One finished migration "
            "step was re run. Errors are flat. Tool success is flat. Every duplicated action "
            "passed validation. The duplicate action rate went from zero point zero two percent, "
            "to three point one percent of sessions. Diagnose it.",
       anchor="An autonomous ops agent runs long runbooks"),
  dict(id="ac04", slideno=2, kind="yourturn", speaker="dan", pause_extra=12,
       text="Pause here. This one is yours first. Take ten seconds, or pause the video, and give "
-           "your opening out loud. Then compare."),
+           "your opening out loud."),
  dict(id="ac05", slideno=2, kind="teach", speaker="dan",
       text="A strong candidate responds in four moves. One. Translate the product contract. Each "
            "side effecting step should execute exactly once per runbook. Two. Restate the "
@@ -247,7 +247,7 @@ SEGS = [
       text="Out loud, that sounds like this."),
  dict(id="ac17", slideno=6, kind="say", speaker="dan",
       text="The failure requires a long session. That makes a model, or tool regression, less "
-           "likely, because the same model and tools serve short sessions cleanly. It raises "
+           "likely. The same model and tools serve short sessions cleanly. It raises "
            "anything the harness triggers on accumulated length. Truncation. Summarization. "
            "Memory eviction. So, what fires only when a session gets long?",
       anchor="A long session is required"),
@@ -267,7 +267,7 @@ SEGS = [
  dict(id="ac20", slideno=7, kind="attrib", speaker="dan",
       text="The interviewer hands over session metrics, and one affected trace."),
  dict(id="ac21", slideno=7, kind="interviewer", speaker="rachel",
-      text="Sessions per day, flat, near twelve thousand. Tool failures, flat. Tokens per "
+      text="Sessions per day, flat. Tool failures, flat. Tokens per "
            "session, down thirty eight percent since Monday. The duplicate action rate, up from "
            "zero point zero two, to three point one percent. And in your affected trace. Step "
            "twelve sends the notification emails. The result comes back, sent, O K. At step "
@@ -300,7 +300,7 @@ SEGS = [
            "regression, and a validator bug, less likely. Both behave, given their inputs. My "
            "fork is now. Does compaction corrupt the content of the summarized history? Or the "
            "ordering of what remains? The decisive artifact is a diff of the context, before "
-           "and after compaction, for one affected session.",
+           "and after compaction.",
       anchor="The duplicate sits downstream of a compaction event"),
  dict(id="ac26", slideno=8, kind="teach", speaker="dan",
       text="The beats. State the first divergence. Close the model, and validator branches. Name "
@@ -315,7 +315,7 @@ SEGS = [
       text="The interviewer reveals the rollout, and a one variable replay."),
  dict(id="ac28", slideno=9, kind="interviewer", speaker="rachel",
       text="Summarizer version two shipped Monday, at sixteen hundred. One hundred percent by "
-           "eighteen hundred. The first duplicate appears Tuesday morning, at nine twelve. In "
+           "eighteen hundred. The first duplicate appears Tuesday, at nine twelve. In "
            "the replay, one recorded session runs through both compactors. Version one keeps the "
            "structured tool result records. The action ledger is intact. No re proposal. Version "
            "two keeps the assistant's prose plan, but drops the tool result records. Step twelve "
@@ -346,7 +346,7 @@ SEGS = [
       text="The final diagnosis card. Cause. The version two summarizer drops tool results. "
            "Mechanism. No completion evidence remains in context. Timing. Duplicates begin after "
            "the Monday rollout. Evidence. The version one, versus version two, replay diff. "
-           "Alternative. A planner regression. Ruled out. The same model serves both replays.",
+           "Alternative. A planner regression. Ruled out by the replay.",
       spans=[("Cause: v2 summarizer drops tool results", "Cause."),
              ("Mechanism: no completion evidence left", "Mechanism."),
              ("Timing: dups begin after Mon rollout", "Timing."),
