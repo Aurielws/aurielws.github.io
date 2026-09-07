@@ -5,163 +5,115 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Auriel</title>
 <meta name="description" content="I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="quiet.css">
 </head>
 <body>
 
 <div class="stripe"></div>
 
-<!-- NAV -->
 <nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><strong>Auriel</strong></a>
-    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="about.html">About</a></li>
-      <li><a href="coaching.html">Coaching</a></li>
-      <li><a href="advising.html">Advising</a></li>
-      <li><a href="writing.html">Writing</a></li>
-      <li><a href="community.html">Community</a></li>
-      <li><a href="contact.html" class="btn btn--primary" style="padding:6px 18px;font-size:0.75rem">Work With Me</a></li>
-    </ul>
-  </div>
+  <a href="index.html" class="brand">Auriel</a>
+  <ul class="links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="coaching.html">Coaching</a></li>
+    <li><a href="advising.html">Advising</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a href="community.html">Community</a></li>
+    <li><a href="contact.html" class="cta">Work with me</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero hero--photo">
-  <div class="hero-grid">
-    <div class="hero-photo">
-      <img src="hero.jpg" alt="Auriel speaking on stage" loading="eager">
-    </div>
-    <div class="hero-text">
-      <div class="hero-eyebrow">AI Builder &middot; Investor &middot; Coach</div>
-      <h1 class="hero-name"><strong>Auriel</strong></h1>
-      <p class="hero-oneliner">I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.</p>
-      <p class="hero-credentials">Google DeepMind &middot; Google Brain &middot; YC W20 &middot; Harvard CS</p>
-      <div class="hero-ctas">
-        <a href="contact.html" class="btn btn--primary">Work with me</a>
-        <a href="writing.html" class="btn btn--secondary">Read my writing</a>
-        <a href="advising.html" class="btn btn--secondary">Angel Investing</a>
-      </div>
-    </div>
+<main class="wrap">
+
+  <div class="eyebrow">AI builder &middot; Investor &middot; Coach</div>
+  <h1 class="title">Auriel</h1>
+  <p class="lede">I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.</p>
+  <div class="creds">Google DeepMind &middot; Google Brain &middot; YC W20 &middot; Harvard CS</div>
+  <div class="ctas">
+    <a href="contact.html" class="btn">Work with me</a>
+    <a href="writing.html" class="btn">Read my writing</a>
+    <a href="advising.html" class="btn">Angel investing</a>
   </div>
-</section>
 
-<!-- SOCIAL PROOF BAR -->
-<div class="proof-bar">
-  <div class="proof-bar-inner">
-    <span class="proof-item">Google DeepMind</span>
-    <span class="proof-item">Google Brain</span>
-    <span class="proof-item">Y Combinator</span>
-    <span class="proof-item">Harvard</span>
-  </div>
-</div>
-
-<!-- WHAT I DO -->
-<div class="container">
-
-<section class="section">
-  <div class="sec-label">What I Do</div>
-  <h2 class="sec-title">Three ways I <strong>work</strong></h2>
-  <div class="sec-rule"></div>
-
-  <div class="cards-grid">
-    <div class="card">
-      <div class="card-icon">Build</div>
-      <h3 class="card-title">Frontier AI Products</h3>
-      <p class="card-body">I'm a Product Leader working on frontier AI autonomous agents, self-coding systems, and generative AI at scale. At Google Brain, I built the AI systems that powered Alphabet's most important products, including work recognized with a Cannes Lion award. At Google DeepMind, I worked on Gemini, self-evolving systems, and RL research.</p>
+  <section class="sec">
+    <div class="sec-head">What I do</div>
+    <div class="def">
+      <b>Frontier AI products</b>
+      <span>Product lead on autonomous agents, self-coding systems and generative AI at scale. Did Gemini, self-evolving systems and RL and Post Training research at Google DeepMind, built ML systems that fed Search, Pixel and Waymo; got a Cannes Lion for authentic representation in imaging @Google Brain; published at NeurIPS etc</span>
     </div>
-    <div class="card">
-      <div class="card-icon">Invest &amp; Advise</div>
-      <h3 class="card-title">Early-Stage AI</h3>
-      <p class="card-body">I angel invest in early-stage AI companies and advise founders on product strategy, go-to-market, and how to navigate the AI landscape. I bring a practitioner lens: I've been in the seat as a YC founder and as a builder at the world's leading AI labs.</p>
+    <div class="def">
+      <b>Early-stage AI, invested and advised</b>
+      <span>Angel checks and product, go-to-market and AI-landscape advice for founders. A practitioner lens: YC founder, builder at the leading labs. I especially like to help student founders/first time founders since I did YC when I was in college and my Harvard Computer Science degree helped me build a lasting interest in how intelligent systems perceive and make sense of the world.</span>
     </div>
-    <div class="card">
-      <div class="card-icon">Coach &amp; Convene</div>
-      <h3 class="card-title">Executive AI Coaching</h3>
-      <p class="card-body">I coach senior executives at Fortune 500 companies on leading through AI transformation, from hands-on personal AI stack development to leadership team workshops. I also host intimate AI founder dinners and the Females in Tech Tea Party series for high-signal people doing real work in AI.</p>
+    <div class="def">
+      <b>Executive AI coaching</b>
+      <span>Coaching Fortune 500 leaders through AI transformation, from personal AI stacks to leadership workshops. Host of AI founder dinners and the Females in Tech Tea Party series.</span>
     </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">Writing &middot; RL Fundamentals Mini-Series</div>
+    <div class="list">
+      <a class="row" href="https://howtoposttrain.com/rl-pet-peeves-part-1/">
+        <span class="num">01</span>
+        <div>
+          <div class="rt">You&rsquo;ve Never Spent Real Time with Your Model and We Can ALL Tell</div>
+          <div class="rs">A no-BS guide for startups post-training their own models</div>
+        </div>
+        <span class="st">Live</span>
+      </a>
+      <a class="row" href="https://howtoposttrain.com/rl-pet-peeves-rubric/">
+        <span class="num">02</span>
+        <div>
+          <div class="rt">Your Rubric Was Written by Someone Who Has Never Done the Job</div>
+          <div class="rs">Why your evals are measuring the wrong thing</div>
+        </div>
+        <span class="st">Live</span>
+      </a>
+      <a class="row" href="https://howtoposttrain.com/rl-pet-peeves-economic/">
+        <span class="num">03</span>
+        <div>
+          <div class="rt">Your Tasks Are Not Grounded in Economic Reality</div>
+          <div class="rs">Ground your task design in what actually moves the needle</div>
+        </div>
+        <span class="st">Live</span>
+      </a>
+      <a class="row" href="https://howtoposttrain.com/rl-pet-peeves-simulation/">
+        <span class="num">04</span>
+        <div>
+          <div class="rt">Your Data Screams &ldquo;This Is a Simulation&rdquo;</div>
+          <div class="rs">Models detect fake environments and the behavior degrades fast</div>
+        </div>
+        <span class="st">Live</span>
+      </a>
+      <a class="row" href="https://howtoposttrain.com/rl-pet-peeves-harness/">
+        <span class="num">05</span>
+        <div>
+          <div class="rt">Stop Shipping Low-Quality Harnesses and Calling It an &ldquo;Environment&rdquo;</div>
+          <div class="rs">Why a flaky harness quietly poisons your gradients</div>
+        </div>
+        <span class="st">Live</span>
+      </a>
+    </div>
+    <p class="note">The full series lives at <a href="https://howtoposttrain.com/">howtoposttrain.com</a>.</p>
+  </section>
+
+  <section class="sec paper">
+    <p>Want to connect? I'm always open to conversations with founders, operators, and executives building at the frontier.</p>
+    <a href="contact.html" class="btn">Get in touch</a>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <span><strong>Auriel</strong> &middot; San Francisco &amp; Atlanta</span>
+    <span class="foot-links">
+      <a href="https://x.com/aurielws" target="_blank" rel="noopener">X / Twitter</a>
+      <a href="https://www.linkedin.com/in/aurielws/" target="_blank" rel="noopener">LinkedIn</a>
+    </span>
   </div>
-</section>
-
-<!-- FEATURED WRITING -->
-<section class="section">
-  <div class="sec-label">Writing</div>
-  <h2 class="sec-title">Latest <strong>Posts</strong></h2>
-  <div class="sec-rule"></div>
-
-  <ul class="writing-list">
-    <li class="writing-item">
-      <a href="/posts/rl-pet-peeves-part-1/" style="text-decoration:none;color:inherit;display:contents">
-      <span class="wi-num">01</span>
-      <div>
-        <div class="wi-title">You've Never Spent Real Time with Your Model and We Can ALL Tell</div>
-        <div class="wi-sub">A no-BS guide for startups post-training their own models</div>
-      </div>
-      <span class="wi-status live">Live</span>
-      </a>
-    </li>
-    <li class="writing-item">
-      <a href="/writing/rl-pet-peeves-rubric/" style="text-decoration:none;color:inherit;display:contents">
-      <span class="wi-num">02</span>
-      <div>
-        <div class="wi-title">Your Rubric Was Written by Someone Who Has Never Done the Job</div>
-        <div class="wi-sub">Why your evals are measuring the wrong thing</div>
-      </div>
-      <span class="wi-status live">Live</span>
-      </a>
-    </li>
-    <li class="writing-item">
-      <a href="/writing/rl-pet-peeves-economic/" style="text-decoration:none;color:inherit;display:contents">
-      <span class="wi-num">03</span>
-      <div>
-        <div class="wi-title">Your Tasks Are Not Grounded in Economic Reality</div>
-        <div class="wi-sub">Ground your task design in what actually moves the needle</div>
-      </div>
-      <span class="wi-status live">Live</span>
-      </a>
-    </li>
-    <li class="writing-item">
-      <a href="/writing/rl-pet-peeves-simulation/" style="text-decoration:none;color:inherit;display:contents">
-      <span class="wi-num">04</span>
-      <div>
-        <div class="wi-title">Your Data Screams "This Is a Simulation"</div>
-        <div class="wi-sub">Models detect fake environments and the behavior degrades fast</div>
-      </div>
-      <span class="wi-status live">Live</span>
-      </a>
-    </li>
-    <li class="writing-item">
-      <span class="wi-num">05</span>
-      <div>
-        <div class="wi-title">Environment Quality</div>
-        <div class="wi-sub">The pre-training problems that doom your run before it starts</div>
-      </div>
-      <span class="wi-status soon">Coming</span>
-    </li>
-  </ul>
-</section>
-
-<!-- FOOTER CTA -->
-<div class="cta-block">
-  <p class="cta-block-text">Want to connect? I'm always open to conversations with founders, operators, and executives building at the frontier.</p>
-  <a href="contact.html" class="btn btn--primary">Get in touch</a>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-name"><strong>Auriel</strong></div>
-  <div class="footer-links">
-    <a href="https://x.com/aurielws" target="_blank">X / Twitter</a>
-    <a href="https://www.linkedin.com/in/aurielws/" target="_blank">LinkedIn</a>
-  </div>
-  <div class="footer-stripe"></div>
 </footer>
-
-</div>
 
 </body>
 </html>

@@ -1,0 +1,135 @@
+/* ==========================================================================
+   Auriel — "Quiet" theme
+   --------------------------------------------------------------------------
+   LessWrong skeleton (cream ground, Palatino body at 19px, hairline rules,
+   system fonts only) with the Heirloom rose and navy as the only accents.
+   Used by index.html and about.html; the remaining pages still load the
+   older styles.css until they are converted.
+   ========================================================================== */
+
+:root{
+  --rose:#A8485A;      --rose-dark:#944050;
+  --navy:#4A5878;      --navy-dark:#3c4a66;
+  --paper:#F7EFE5;     --sage:#8A9A7A;
+  --bg:#f8f4ee;        --hover:#f0ebe6;
+  --text:rgba(0,0,0,.87); --text-slight:rgba(0,0,0,.8); --text-dim:rgba(0,0,0,.54);
+  --sep:rgba(0,0,0,.05);  --border:rgba(0,0,0,.15);
+  --serif:warnock-pro,Palatino,"Palatino Linotype","Palatino LT STD","Book Antiqua",Georgia,serif;
+  --sans:Calibri,gill-sans-nova,"Gill Sans","Gill Sans MT","Myriad Pro",Myriad,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--serif);font-size:19px;line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--rose);text-decoration:none}
+a:hover{color:var(--rose-dark);text-decoration:underline}
+.sans{font-family:var(--sans)}
+
+/* -- chrome -- */
+.stripe{height:4px;background:linear-gradient(90deg,#4A5878,#8A9A7A,#D4B870,#E0A880,#C8786A,#A8485A)}
+.nav{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+  max-width:1000px;margin:0 auto;padding:20px 24px 18px;
+}
+.brand{font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--rose)}
+.brand:hover{text-decoration:none;color:var(--rose-dark)}
+.links{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--sans);font-size:14px;list-style:none}
+.links a{color:var(--text-dim)}
+.links a:hover{color:var(--rose);text-decoration:none}
+.links a.active{color:var(--text)}
+.links a.cta{color:var(--rose)}
+
+.wrap{max-width:760px;margin:0 auto;padding:28px 24px 0}
+
+/* -- page head -- */
+.eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--rose);margin-bottom:10px}
+.title{font-size:39px;font-weight:400;line-height:1.15;color:var(--rose);margin-bottom:14px;letter-spacing:-.01em}
+.lede{font-size:19px;line-height:1.62;color:var(--text-slight);max-width:36em;margin-bottom:12px}
+.creds{font-family:var(--sans);font-size:14px;color:var(--text-dim);margin-bottom:22px}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+
+.btn{
+  display:inline-block;font-family:var(--sans);font-size:14px;
+  padding:9px 18px;border-radius:3px;
+  border:1px solid var(--navy);color:#fff;background:var(--navy);
+}
+.btn:hover{background:var(--navy-dark);color:#fff;text-decoration:none}
+
+/* -- sections -- */
+.sec{margin-top:46px}
+.sec-head{
+  font-family:var(--sans);font-size:13px;letter-spacing:.09em;text-transform:uppercase;
+  color:#757575;padding-bottom:7px;margin-bottom:2px;border-bottom:1px solid var(--border);
+}
+.prose{margin-top:14px;color:var(--text-slight);max-width:36em}
+.prose p+p{margin-top:14px}
+
+/* definition rows (What I do) */
+.def{padding:12px 0;border-bottom:2px solid var(--sep);max-width:40em}
+.def:last-child{border-bottom:none}
+.def b{font-weight:600;font-size:18px}
+.def span{display:block;font-family:var(--sans);font-size:14px;line-height:1.5;color:var(--text-dim);margin-top:2px}
+
+/* post list rows (Writing) */
+.list{list-style:none}
+.row{
+  display:grid;grid-template-columns:2.1rem 1fr auto;gap:0 14px;align-items:baseline;
+  padding:13px 10px 13px 4px;margin:0 -10px 0 -4px;border-bottom:2px solid var(--sep);
+  color:inherit;
+}
+.row:last-child{border-bottom:none}
+.row:hover{background:var(--hover);text-decoration:none;color:inherit}
+.num{font-family:var(--sans);font-size:13px;color:#9e9e9e;font-variant-numeric:tabular-nums}
+.rt{font-size:20px;line-height:1.3;color:var(--rose)}
+.row:hover .rt{text-decoration:underline;text-underline-offset:2px}
+.rs{font-family:var(--sans);font-size:14px;line-height:1.45;color:var(--text-dim);margin-top:3px}
+.st{font-family:var(--sans);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--sage);white-space:nowrap}
+.note{font-family:var(--sans);font-size:14px;color:var(--text-dim);margin-top:18px}
+
+/* connect box */
+.paper{background:var(--paper);border:1px solid var(--sep);padding:28px 28px 26px}
+.paper p{font-size:20px;color:var(--text-slight);max-width:30em;margin-bottom:16px}
+
+/* career arc */
+.arc{display:grid;grid-template-columns:150px 1fr;gap:0 20px;padding:14px 0;border-bottom:2px solid var(--sep)}
+.arc:last-child{border-bottom:none}
+.arc-l{font-family:var(--sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--rose);padding-top:6px}
+.arc h3{font-size:21px;font-weight:600;line-height:1.3;color:#424242;margin-bottom:6px}
+.arc p{font-size:17px;line-height:1.6;color:var(--text-slight)}
+
+/* beliefs */
+.beliefs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px;margin-top:16px}
+.beliefs h3{font-size:19px;font-weight:600;margin-bottom:4px;color:#424242}
+.beliefs p{font-size:16px;line-height:1.55;color:rgba(0,0,0,.72)}
+
+/* at a glance */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;list-style:none}
+.chip{font-family:var(--sans);font-size:14px;padding:6px 12px;border:1px solid var(--border);border-radius:3px;color:rgba(0,0,0,.72)}
+
+/* -- footer -- */
+.foot{border-top:1px solid var(--sep);margin-top:72px}
+.foot-in{
+  max-width:1000px;margin:0 auto;padding:22px 24px 48px;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--sans);font-size:14px;color:var(--text-dim);
+}
+.foot-in strong{color:var(--rose);font-weight:600}
+.foot-in a{color:var(--text-dim)}
+.foot-in a:hover{color:var(--rose)}
+.foot-links{display:flex;gap:18px}
+
+@media (max-width:700px){
+  body{font-size:18px}
+  .title{font-size:31px}
+  .wrap{padding-top:20px}
+  .arc{grid-template-columns:1fr;gap:2px 0}
+  .beliefs{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr auto}
+  .num{display:none}
+  .links{gap:12px}
+  .paper{padding:22px 20px}
+}
