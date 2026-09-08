@@ -14,12 +14,14 @@
   --ink:     #1A1408;
   --muted:   #9A8878;
   --rule:    #E8DDD0;
+  --font-serif: warnock-pro, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  --font-sans:  Calibri, gill-sans-nova, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-serif);
   background: var(--cream);
   color: var(--ink);
   line-height: 1.6;
@@ -54,7 +56,7 @@ body {
   height: 56px;
 }
 .nav-logo {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 1.2rem;
@@ -62,7 +64,7 @@ body {
   text-decoration: none;
 }
 .nav-logo strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 800;
   color: var(--rose);
@@ -73,9 +75,10 @@ body {
   list-style: none;
 }
 .nav-links a {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 500;
-  color: var(--muted);
+  color: #fff;
   text-decoration: none;
   padding: 6px 14px;
   border-radius: 4px;
@@ -84,8 +87,8 @@ body {
 }
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--cream);
-  background: rgba(168, 72, 90, 0.15);
+  color: #fff;
+  background: rgba(168, 72, 90, 0.25);
 }
 
 /* Mobile nav toggle */
@@ -163,7 +166,7 @@ body {
   padding: 56px 48px;
 }
 .hero-name {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: clamp(2.4rem, 5vw, 3.6rem);
@@ -172,7 +175,7 @@ body {
   margin-bottom: 16px;
 }
 .hero-name strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 800;
   color: var(--rose);
@@ -186,7 +189,7 @@ body {
 }
 
 .hero-eyebrow {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   color: var(--coral);
   text-transform: uppercase;
@@ -194,7 +197,7 @@ body {
   margin-bottom: 20px;
 }
 .hero-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: clamp(2.4rem, 5vw, 3.6rem);
@@ -203,7 +206,7 @@ body {
   margin-bottom: 24px;
 }
 .hero-title strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 800;
   color: var(--rose);
@@ -216,7 +219,7 @@ body {
   margin-bottom: 12px;
 }
 .hero-credentials {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   color: var(--muted);
   margin-bottom: 36px;
@@ -243,7 +246,7 @@ body {
 }
 .page-header .container { position: relative; z-index: 1; }
 .page-header-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   color: var(--coral);
   text-transform: uppercase;
@@ -251,7 +254,7 @@ body {
   margin-bottom: 14px;
 }
 .page-header-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
@@ -260,7 +263,7 @@ body {
   margin-bottom: 14px;
 }
 .page-header-title strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 800;
   color: var(--rose);
@@ -275,7 +278,7 @@ body {
 /* ── BUTTONS ── */
 .btn {
   display: inline-block;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   font-weight: 600;
   text-decoration: none;
@@ -326,7 +329,7 @@ body {
   flex-wrap: wrap;
 }
 .proof-item {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   color: var(--muted);
   text-transform: uppercase;
@@ -341,7 +344,7 @@ body {
 }
 .section:last-child { border-bottom: none; }
 .sec-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.6rem;
   color: var(--muted);
   text-transform: uppercase;
@@ -349,7 +352,7 @@ body {
   margin-bottom: 8px;
 }
 .sec-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 1.6rem;
@@ -358,7 +361,7 @@ body {
   margin-bottom: 8px;
 }
 .sec-title strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 800;
   color: var(--rose);
@@ -399,7 +402,7 @@ body {
   transform: translateY(-2px);
 }
 .card-icon {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.6rem;
   color: var(--coral);
   text-transform: uppercase;
@@ -407,7 +410,7 @@ body {
   margin-bottom: 12px;
 }
 .card-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1.15rem;
@@ -436,7 +439,7 @@ body {
   border-left: 3px solid var(--rose);
 }
 .detail-card-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1.05rem;
@@ -481,7 +484,7 @@ body {
   border: 2px solid var(--cream);
 }
 .timeline-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.62rem;
   color: var(--coral);
   text-transform: uppercase;
@@ -489,7 +492,7 @@ body {
   margin-bottom: 4px;
 }
 .timeline-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1.1rem;
@@ -513,7 +516,7 @@ body {
   padding: 20px 0;
 }
 .belief-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   font-size: 0.95rem;
@@ -568,7 +571,7 @@ body {
   border-radius: 6px;
 }
 .wi-num {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   color: var(--muted);
   font-weight: 500;
@@ -585,7 +588,7 @@ body {
   margin-top: 2px;
 }
 .wi-status {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.58rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -612,7 +615,7 @@ body {
   border-radius: 8px;
 }
 .cat-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1rem;
@@ -646,7 +649,7 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
 }
 .lc-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.58rem;
   color: var(--muted);
   text-transform: uppercase;
@@ -672,7 +675,7 @@ body {
 }
 .offering-item:last-child { border-bottom: none; }
 .offering-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   color: var(--coral);
   text-transform: uppercase;
@@ -735,7 +738,7 @@ body {
   background: linear-gradient(90deg, var(--rose), var(--coral), var(--apricot));
 }
 .event-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.58rem;
   color: var(--coral);
   text-transform: uppercase;
@@ -743,7 +746,7 @@ body {
   margin-bottom: 12px;
 }
 .event-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   font-size: 1.1rem;
@@ -766,6 +769,7 @@ body {
 }
 .form-label {
   display: block;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--ink);
@@ -775,7 +779,7 @@ body {
 .form-select,
 .form-textarea {
   width: 100%;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.86rem;
   color: var(--ink);
   background: var(--cream);
@@ -802,6 +806,7 @@ body {
   padding-right: 36px;
 }
 .form-hint {
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   color: var(--muted);
   margin-top: 4px;
@@ -816,7 +821,7 @@ body {
   margin-top: 48px;
 }
 .cta-block-text {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 1.2rem;
@@ -835,7 +840,7 @@ body {
   text-align: center;
 }
 .footer-name {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
   font-size: 1.4rem;
@@ -843,13 +848,13 @@ body {
   margin-bottom: 6px;
 }
 .footer-name strong {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
   font-weight: 800;
   color: var(--rose);
 }
 .footer-bio {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-sans);
   font-size: 0.62rem;
   color: var(--muted);
   line-height: 1.7;
@@ -862,6 +867,7 @@ body {
   margin-bottom: 20px;
 }
 .footer-links a {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--muted);
   text-decoration: none;

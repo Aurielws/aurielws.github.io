@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Options</title>
+<style>
+:root {
+  --rose:#A8485A;--coral:#C8786A;--apricot:#E0A880;--gold:#D4B870;
+  --sage:#8A9A7A;--navy:#4A5878;--cream:#FDF9F4;--paper:#F7EFE5;
+  --ink:#1A1408;--muted:#9A8878;--rule:#E8DDD0;
+  --font-serif: warnock-pro, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  --font-sans:  Calibri, gill-sans-nova, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-serif);background:#E8E0D8;color:var(--ink);line-height:1.6}
+
+/* Page chrome */
+.page-title{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:28px;color:var(--rose);padding:40px 28px 8px;max-width:960px;margin:0 auto}
+.page-sub{font-family:var(--font-sans);font-size:12px;color:var(--muted);padding:0 28px 40px;max-width:960px;margin:0 auto}
+.option-label{font-family:var(--font-sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);padding:0 28px;max-width:960px;margin:0 auto 8px;display:flex;align-items:center;gap:10px}
+.option-label::after{content:'';flex:1;height:1px;background:var(--rule)}
+.option-desc{font-size:13px;color:var(--muted);font-style:italic;padding:0 28px;max-width:960px;margin:0 auto 16px}
+.option-wrap{max-width:960px;margin:0 auto 60px;border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.1)}
+
+/* Shared hero base */
+.hero{background:var(--ink);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+.stripe{height:6px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--apricot),var(--gold),var(--sage),var(--navy))}
+
+/* Shared elements */
+.h-eyebrow{font-family:var(--font-sans);font-size:0.68rem;color:var(--coral);text-transform:uppercase;letter-spacing:0.18em;margin-bottom:20px}
+.h-name{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--cream);line-height:1.08;margin-bottom:16px}
+.h-name strong{font-family:var(--font-sans);font-style:normal;font-weight:800;color:var(--rose)}
+.h-oneliner{font-size:0.92rem;color:#C0B0A0;line-height:1.7;margin-bottom:12px}
+.h-creds{font-family:var(--font-sans);font-size:0.7rem;color:var(--muted);margin-bottom:32px;letter-spacing:0.02em}
+.h-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;font-family:var(--font-sans);font-size:0.82rem;font-weight:600;text-decoration:none;padding:12px 28px;border-radius:6px;transition:all 0.15s}
+.btn--p{background:var(--rose);color:var(--cream)}
+.btn--s{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,.2)}
+
+/* ══════════════════════════════════════
+   OPTION D: Split-screen 50/50 — PHOTO LEFT
+   ══════════════════════════════════════ */
+.hero-d{padding:0}
+.hero-d .inner{display:grid;grid-template-columns:1fr 1fr;min-height:520px;position:relative;z-index:1}
+.hero-d .text{padding:56px 48px;display:flex;flex-direction:column;justify-content:center}
+.hero-d .photo{position:relative;overflow:hidden}
+.hero-d .photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+/* Gradient edge on the RIGHT side of photo (where it meets text) */
+.hero-d .photo::after{content:'';position:absolute;right:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--rose),var(--coral),var(--apricot),var(--gold));z-index:2}
+.hero-d .h-name{font-size:clamp(2rem,3.5vw,2.8rem)}
+
+/* Proof bar */
+.proof{background:var(--paper);padding:18px 0;display:flex;justify-content:center;gap:36px;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.proof span{font-family:var(--font-sans);font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="page-title">Hero Layout Options — Photo on Left</div>
+<div class="page-sub">All D variations with photo swapped to the left side. Same content + brand system.</div>
+
+<!-- ════════ OPTION D1 ════════ -->
+<div class="option-label">Option D1: 50/50 Split — Center Center (photo left)</div>
+<div class="option-desc">object-position: center center. Anchors right on the middle of the image.</div>
+<div class="option-wrap">
+  <div class="stripe"></div>
+  <div class="hero hero-d">
+    <div class="inner">
+      <div class="photo">
+        <img src="UpFront_26_ClarkStudio_0018227.jpg" alt="Auriel speaking" style="object-position:center center">
+      </div>
+      <div class="text">
+        <div class="h-eyebrow">AI Builder &middot; Investor &middot; Coach</div>
+        <h1 class="h-name"><strong>Auriel</strong></h1>
+        <p class="h-oneliner">I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.</p>
+        <p class="h-creds">Post-Training &amp; Gemini at Google DeepMind &middot; Google Brain &middot; YC W20 Founder &middot; Harvard CS</p>
+        <div class="h-ctas">
+          <a href="#" class="btn btn--p">Work with me</a>
+          <a href="#" class="btn btn--s">Read my writing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proof">
+    <span>Google DeepMind</span><span>Google Brain</span><span>Y Combinator</span><span>Harvard</span>
+  </div>
+</div>
+
+<!-- ════════ OPTION D2 ════════ -->
+<div class="option-label">Option D2: 50/50 Split — Center 30% (face-focused, photo left)</div>
+<div class="option-desc">object-position: center 30%. Shifts up slightly to center on face + upper body.</div>
+<div class="option-wrap">
+  <div class="stripe"></div>
+  <div class="hero hero-d">
+    <div class="inner">
+      <div class="photo">
+        <img src="UpFront_26_ClarkStudio_0018227.jpg" alt="Auriel speaking" style="object-position:center 30%">
+      </div>
+      <div class="text">
+        <div class="h-eyebrow">AI Builder &middot; Investor &middot; Coach</div>
+        <h1 class="h-name"><strong>Auriel</strong></h1>
+        <p class="h-oneliner">I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.</p>
+        <p class="h-creds">Post-Training &amp; Gemini at Google DeepMind &middot; Google Brain &middot; YC W20 Founder &middot; Harvard CS</p>
+        <div class="h-ctas">
+          <a href="#" class="btn btn--p">Work with me</a>
+          <a href="#" class="btn btn--s">Read my writing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proof">
+    <span>Google DeepMind</span><span>Google Brain</span><span>Y Combinator</span><span>Harvard</span>
+  </div>
+</div>
+
+<!-- ════════ OPTION D3 ════════ -->
+<div class="option-label">Option D3: 50/50 Split — Contain (no crop, photo left)</div>
+<div class="option-desc">object-fit: contain. Shows the entire image with no cropping at all. Dark background fills any gaps.</div>
+<div class="option-wrap">
+  <div class="stripe"></div>
+  <div class="hero hero-d">
+    <div class="inner">
+      <div class="photo" style="background:var(--ink)">
+        <img src="UpFront_26_ClarkStudio_0018227.jpg" alt="Auriel speaking" style="object-fit:contain;object-position:center center">
+      </div>
+      <div class="text">
+        <div class="h-eyebrow">AI Builder &middot; Investor &middot; Coach</div>
+        <h1 class="h-name"><strong>Auriel</strong></h1>
+        <p class="h-oneliner">I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.</p>
+        <p class="h-creds">Post-Training &amp; Gemini at Google DeepMind &middot; Google Brain &middot; YC W20 Founder &middot; Harvard CS</p>
+        <div class="h-ctas">
+          <a href="#" class="btn btn--p">Work with me</a>
+          <a href="#" class="btn btn--s">Read my writing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proof">
+    <span>Google DeepMind</span><span>Google Brain</span><span>Y Combinator</span><span>Harvard</span>
+  </div>
+</div>
+
+<!-- ════════ OPTION D4 ════════ -->
+<div class="option-label">Option D4: 50/50 Split — Taller 640px (photo left)</div>
+<div class="option-desc">Same as D1 but taller container (640px instead of 520px) so more of the image is visible naturally.</div>
+<div class="option-wrap">
+  <div class="stripe"></div>
+  <div class="hero hero-d" style="min-height:0">
+    <div class="inner" style="min-height:640px">
+      <div class="photo">
+        <img src="UpFront_26_ClarkStudio_0018227.jpg" alt="Auriel speaking" style="object-position:center center">
+      </div>
+      <div class="text">
+        <div class="h-eyebrow">AI Builder &middot; Investor &middot; Coach</div>
+        <h1 class="h-name"><strong>Auriel</strong></h1>
+        <p class="h-oneliner">I build frontier AI products, back early-stage founders, and help leaders navigate the AI era.</p>
+        <p class="h-creds">Post-Training &amp; Gemini at Google DeepMind &middot; Google Brain &middot; YC W20 Founder &middot; Harvard CS</p>
+        <div class="h-ctas">
+          <a href="#" class="btn btn--p">Work with me</a>
+          <a href="#" class="btn btn--s">Read my writing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proof">
+    <span>Google DeepMind</span><span>Google Brain</span><span>Y Combinator</span><span>Harvard</span>
+  </div>
+</div>
+
+</body>
+</html>
