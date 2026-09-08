@@ -47,6 +47,8 @@ a:hover{color:var(--rose-dark);text-decoration:underline}
 
 .wrap{max-width:760px;margin:0 auto;padding:28px 24px 0}
 
+.header-photo{width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--border);margin-bottom:28px}
+
 /* -- page head -- */
 .eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--rose);margin-bottom:10px}
 .title{font-size:39px;font-weight:400;line-height:1.15;color:var(--rose);margin-bottom:14px;letter-spacing:-.01em}
